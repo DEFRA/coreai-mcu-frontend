@@ -1,0 +1,4 @@
+{{- include "adp-helm-library.cluster-ip-service" (list . "coreai-mcu-frontend.cluster-ip-service") -}}
+{{- define "coreai-mcu-frontend.cluster-ip-service" -}}
+{{- end -}}
+

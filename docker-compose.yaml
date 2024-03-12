@@ -1,0 +1,10 @@
+services:
+  coreai-mcu-frontend:
+    build:
+      context: .
+      target: production
+    image: coreai-mcu-frontend
+    container_name: coreai-mcu-frontend
+    environment:
+      APPINSIGHTS_CLOUDROLE: coreai-mcu-frontend-local
+      APPINSIGHTS_CONNECTIONSTRING: ${APPINSIGHTS_CONNECTIONSTRING}

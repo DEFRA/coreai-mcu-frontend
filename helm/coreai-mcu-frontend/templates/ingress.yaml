@@ -1,0 +1,3 @@
+{{- include "adp-helm-library.azure-ingress" (list . "coreai-mcu-frontend.ingress") -}}
+{{- define "coreai-mcu-frontend.ingress" -}}
+{{- end -}}

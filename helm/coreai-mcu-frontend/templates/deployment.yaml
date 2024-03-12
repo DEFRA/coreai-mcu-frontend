@@ -1,0 +1,8 @@
+{{- include "adp-helm-library.deployment" (list . "coreai-mcu-frontend.deployment") -}}
+{{- define "coreai-mcu-frontend.deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+      - {{ include "adp-helm-library.container" (list . "coreai-mcu-frontend.container") }}
+{{- end -}}
