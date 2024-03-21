@@ -63,14 +63,14 @@
                 <label class="govuk-label govuk-radios__label" for="upload-type-2">
                   Text entry
                 </label>
-                {% if err and uploadtype == 'text' and usertext == '' %}
-                <p class="govuk-error-message">
-                  <span class="govuk-visually-hidden">Error:</span> Enter some text
-                </p>
-                {% endif %}
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-upload-type-2">
                 <div class="govuk-form-group">
+                  {% if err and uploadtype == 'text' and usertext == '' %}
+                  <p class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span> Enter some text
+                  </p>
+                  {% endif %}
                   <div id="more-detail-hint" class="govuk-hint">
                     Do not include personal or financial information, like your National Insurance number or credit card details.
                   </div>
