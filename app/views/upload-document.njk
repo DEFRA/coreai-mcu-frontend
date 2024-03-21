@@ -1,0 +1,102 @@
+{# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
+{% extends '_layout.njk' %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Upload a new document",
+        href: "#"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-body">
+
+      <h1 class="govuk-heading-xl">Upload a document</h1>
+
+<ol>
+  <li> {{ ValidationError }}</li>
+  <li> {{ err }}</li>
+  <li> {{ errorMessage }}</li>
+  <li> {{ errorMessage.text }}</li>
+</ol>
+
+
+      <form method="post" novalidate="novalidate" enctype="multipart/form-data">
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="upload-type-hint">
+            <div class="govuk-radios" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="upload-type" name="upload-type" type="radio" value="file" data-aria-controls="conditional-upload-type" checked>
+                <label class="govuk-label govuk-radios__label" for="upload-type">
+                  Upload a file
+                </label>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-upload-type">
+                <div class="govuk-form-group">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="file-upload-1">
+                      Choose a file to upload
+                    </label>
+                    <input class="govuk-file-upload" id="file-upload-1" name="document" type="file">
+                  </div>
+                  <div id="location-upload-hint">
+                    <p>The file should:</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                      <li>Have an extension of .doc or .docx</li>
+                      <li>Be no larger than 50 MB</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="upload-type-2" name="upload-type" type="radio" value="text" data-aria-controls="conditional-upload-type-2">
+                <label class="govuk-label govuk-radios__label" for="upload-type-2">
+                  Text entry
+                </label>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-upload-type-2">
+                <div class="govuk-form-group">
+                  <div id="more-detail-hint" class="govuk-hint">
+                    Do not include personal or financial information, like your National Insurance number or credit card details.
+                  </div>
+                  <textarea class="govuk-textarea" id="more-detail" name="moreDetail" rows="5" aria-describedby="more-detail-hint"></textarea>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="govuk-!-margin-top-7">
+            <label class="govuk-label" for="sort">
+              Category
+            </label>
+            <select class="govuk-select" id="category" name="category">
+              <option></option>
+              {% for category in categories %}
+              <option value="{{ category }}">{{ category }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="govuk-!-margin-top-7">
+            <button type="submit" class="govuk-button" data-module="govuk-button">
+              Upload document
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

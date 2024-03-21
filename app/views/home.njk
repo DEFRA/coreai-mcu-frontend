@@ -1,4 +1,4 @@
- {# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
+{# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
 {% extends '_layout.njk' %}
 
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
@@ -10,49 +10,84 @@
     items: [
       {
         text: "Home",
-        href: "#"
-      }]
+        href: "/"
+      }
+    ]
   }) }}
 {% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
 
-      <h1 class="govuk-heading-xl">coreai-mcu-frontend</h1>
+      <h1 class="govuk-heading-xl">Document queue</h1>
 
-      <p class="govuk-body">
-        This is a demo application for the technical investigation of patterns and practices
-        in developing production quality containerised, cloud native, microservice based applications
-        within the coreai-mcu-frontend.
-      </p>
- {# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
-      {{ govukWarningText({
-        text: "This is not a real service and is for demonstration and investigation purposes only.",
-        iconFallbackText: "Warning"
-      }) }}
+      <div class="govuk-grid-row header govuk-body">
+        <div class="govuk-grid-column-one-third">
+          <div class="search" data-module="search" data-path-to-site-root="/" data-search-module-started="true">
+            <form action="#" method="post" role="search">
+              <label class="govuk-label search__label" for="search" aria-hidden="true">Search</label>
+              <input type="text" id="search" name="q" class="govuk-input govuk-!-margin-bottom-0 search__input" aria-controls="search-results" placeholder="Search">
+              <button class="search__button" type="submit" enterkeyhint="search">
+                <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                  <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                  <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          &nbsp;
+        </div>
+        <div class="govuk-grid-column-one-third govuk-!-text-align-right">
+          <form action="/upload-document" method="get" role="upload">
+            <button type="submit" class="govuk-button" data-module="govuk-button">
+              Upload a new document
+            </button>
+          </form>
+        </div>
+      </div>
 
+      <div class="govuk-grid-row header govuk-body">
+        <div class="govuk-grid-column-one-third">
+          <strong>Name</strong>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <strong>Date</strong>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <strong>Category</strong>
+        </div>
+      </div>
 
-      <h2 class="govuk-heading-m">Before you start</h2>
-
-      <p class="govuk-body">This is a proof of concept sample application. </p>
-    </div>
-    <div class="govuk-grid-column-one-third">
-      <aside class="app-related-items" role="complementary">
-        <h2 class="govuk-heading-m" id="subsection-title">
-          Useful links
-        </h2>
-        <nav role="navigation" aria-labelledby="subsection-title">
-          <ul class="govuk-list govuk-!-font-size-16">
-            <li>
-              <a class="govuk-link" href="/">
-                Home
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-
+      {% for document in documents %}
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third col1">
+              <span class="govuk-details__summary-text">
+                {{ document.name }}
+              </span>
+            </div>
+            <div class="govuk-grid-column-one-third col2">
+              {{ document.date }}
+            </div>
+            <div class="govuk-grid-column-one-third col3">
+              {{ document.category }}
+            </div>
+          </div>
+        </summary>
+        <div class="govuk-details__text">
+          <p>
+            {{ document.content }}
+          </p>
+          <button type="submit" class="govuk-button" data-module="govuk-button">
+            Proceed
+          </button>
+        </div>
+      </details>
+      {% endfor %}
     </div>
   </div>
 {% endblock %}
