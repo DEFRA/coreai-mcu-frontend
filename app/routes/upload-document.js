@@ -32,52 +32,43 @@ module.exports = [{
     },
     validate: {
       payload: Joi.object({
-        document: Joi.object({
-          hapi: Joi.object({
-            filename: Joi.string().regex(/^(.+)\.(pdf|doc|docx)$/).message('Incorrect document file type. Must be .pdf, .doc or .docx.')
-          }).required().unknown(true)
-        }).required().unknown(true),
-        category: Joi.string().min(3)
-
-
-
-
-
-
-
-
-
-      }),
+        uploadtype: Joi.string().valid('file', 'text'),
+        document: Joi.when('uploadtype', {
+          is: 'file',
+          then: Joi.object({
+            hapi: Joi.object({
+              filename: Joi.string().regex(/^(.+)\.(pdf|doc|docx)$/).message('Incorrect document file type. Must be .pdf, .doc or .docx.')
+            }).required().unknown(true)
+          }).required().unknown(true),
+          otherwise: Joi.optional()
+        }),
+        usertext: Joi.when('uploadtype', {
+          is: 'text',
+          then: Joi.string().required(),
+          otherwise: Joi.optional()
+        }),
+        category: Joi.string().valid('Farming', 'Fishing', 'Environment').required()
+      }).required().unknown(true),
       failAction: (request, h, err) => {
-        console.log(err)
-        return h.view('upload-document', { err }).takeover(400)
-        //return h.view('upload-document', new ViewModel(err)).takeover(400)
+        return h.view('upload-document', {
+          categories,
+          uploadtype: request.payload.uploadtype,
+          filename: request.payload.document.hapi.filename,
+          filetype: request.payload.document.hapi.filename.substr(request.payload.document.hapi.filename.lastIndexOf('.') + 1),
+          usertext: request.payload.usertext,
+          category: request.payload.category,
+          err
+        }).takeover(400)
       }
     },
     handler: async (request, h) => {
-      const playground = request.payload.playground
-      const persona = request.payload.persona
-      const version = request.payload.version
-      const filename = `mcu-document-${new Date().toISOString()}`
-      const fileBuffer = request.payload.document._data
 
-      /*const stream = new Readable()
-      stream.push(fileBuffer)
-      stream.push(null)
+      // Upload the file or text
 
-      await uploadFile(filename, stream, blobConfig.documentContainer, 'new/')
-      const documentsContent = await mammoth.extractRawText({ buffer: fileBuffer })
+      // Generate embeddings, save to vector store
 
-      if (playground !== 'true') {
-        const promptDirectory = `mcu/${persona}/${version}/`
-        const systemPrompt = await downloadFileToString('system-prompt.txt', blobConfig.promptContainer, promptDirectory)
-        const prompt = await downloadFileToString('prompt.txt', blobConfig.promptContainer, promptDirectory)
-        const output = await ask(`${prompt} ${documentsContent.value}`, systemPrompt)
-        await addToTable(filename, documentsContent.value, null, JSON.stringify(output), null, null, null, null)
-        return h.redirect(`${uploadConstants.routes.document.redirectToGenerateDocument}?name=${filename}&persona=${persona}&version=${version}`)
-      }
+      // Redirect to next page
 
-      await addToTable(filename, documentsContent.value, null, null, null, null, null, null)*/
       ///////////return h.redirect(`${uploadConstants.routes.document.redirectToPlayground}?name=${filename}&persona=${persona}&version=${version}`)
     }
   }
