@@ -90,6 +90,14 @@ details.govuk-details {
   border-bottom: 1px solid lightgrey;
 }
 
+details.govuk-details.govuk-details-no-border {
+  border: none;
+}
+
+details.govuk-details.govuk-details-no-border ul {
+  margin-top: 0;
+}
+
 details.govuk-details div.govuk-details__text {
   margin-bottom: 15px;
 }
@@ -111,9 +119,6 @@ summary.govuk-details__summary:focus {
   background-color: transparent;
   box-shadow: none;
 }
-
-
-
 
 div.search {
   position: relative;
@@ -155,3 +160,18 @@ div.search .search__button {
   overflow: hidden;
 }
 
+div.summary, p.summary {
+  background-color: #f3f2f1;
+  padding: 20px;
+  border: 1px solid #b1b4b6;
+}
+
+
+details.govuk-details form button {
+  margin-bottom: 0;
+}
+
+hr.divider {
+  margin-bottom: 30px;
+  border: 1px solid #f3f2f1;
+}

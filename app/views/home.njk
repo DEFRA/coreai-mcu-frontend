@@ -67,24 +67,27 @@
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-third col1">
               <span class="govuk-details__summary-text">
-                {{ document.name }}
+                {{ document.SourceName }}
               </span>
             </div>
             <div class="govuk-grid-column-one-third col2">
-              {{ document.date }}
+              {{ document.UploadedDate }}
             </div>
             <div class="govuk-grid-column-one-third col3">
-              {{ document.category }}
+              {{ document.SuggestedCategory }}
             </div>
           </div>
         </summary>
         <div class="govuk-details__text">
           <p>
-            {{ document.content }}
+            {{ document.Contents | replace("\n", "<br>") | safe }}
           </p>
-          <button type="submit" class="govuk-button" data-module="govuk-button">
-            Proceed
-          </button>
+          <form action="/document-configure-response" method="get" role="upload">
+            <button type="submit" class="govuk-button" data-module="govuk-button">
+              Proceed
+            </button>
+            <input type="hidden" name="DocumentID" value="{{ document.DocumentID }}">
+          </form>
         </div>
       </details>
       {% endfor %}
