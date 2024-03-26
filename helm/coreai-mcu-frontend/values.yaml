@@ -1,7 +1,9 @@
 # These are populated when your service is created via the ADP Portal scaffolder. Do not change these, as they are abstracted from your service and are mandatory. They are for your reference here.
+environment: development
+environmentCode:
 name: coreai-mcu-frontend
-namespace: mcu-ai
-workstream: mcu-ai
+namespace: coreai-mcu
+workstream: coreai-mcu
 image: coreai-mcu-frontend
 
 # You may add further labels to identify the service or what your component does.
