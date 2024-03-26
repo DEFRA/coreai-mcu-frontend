@@ -12,7 +12,7 @@
       },
       {
         text: "Document response",
-        href: "/document-response?DocumentID=" + DocumentID
+        href: "/document-response?documentId=" + documentId
       },
       {
         text: "Document history",
@@ -30,19 +30,19 @@
 
       <h2 class="govuk-heading-m">Original correspondence</h2>
 
-      <p class="govuk-body summary">{{ document.Contents | replace("\n", "<br>") }}</p>
+      <p class="govuk-body summary">{{ document.contents | replace("\n", "<br>") }}</p>
 
       {% for response in responses %}
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-          <p class="govuk-grid-column-one-quarter govuk-body"><strong>{% if response.ModelResponse %}Agent{% else %}User{% endif %}</strong></p>
-          <p class="govuk-grid-column-three-quarters govuk-body">{% if response.ModelResponse %}{{ response.ModelResponse | replace("\n", "<br>") | safe }}{% else %}{{ response.UserResponse | replace("\n", "<br>") | safe }}{% endif %}</p>
+          <p class="govuk-grid-column-one-quarter govuk-body"><strong>{% if response.modelResponse %}Agent{% else %}User{% endif %}</strong></p>
+          <p class="govuk-grid-column-three-quarters govuk-body">{% if response.modelResponse %}{{ response.modelResponse | replace("\n", "<br>") | safe }}{% else %}{{ response.userResponse | replace("\n", "<br>") | safe }}{% endif %}</p>
         </div>
       </div>
       <hr class="divider">
       {% endfor %}
 
-      <a href="./document-response?DocumentID={{ DocumentID }}" class="govuk-back-link">Back</a>
+      <a href="./document-response?documentId={{ documentId }}" class="govuk-back-link">Back</a>
     </div>
   </div>
 {% endblock %}

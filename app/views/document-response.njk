@@ -39,13 +39,13 @@
 
       <div class="govuk-grid-row govuk-body">
         <div class="govuk-grid-column-one-quarter">
-          {{ document.SourceName }}
+          {{ document.sourceName }}
         </div>
         <div class="govuk-grid-column-one-quarter">
-          {{ document.UploadedDate }}
+          {{ document.uploadedDate }}
         </div>
         <div class="govuk-grid-column-one-quarter">
-          {{ document.SuggestedCategory }}
+          {{ document.suggestedCategory }}
         </div>
         <div class="govuk-grid-column-one-quarter govuk-!-text-align-right">
           <button type="button" class="govuk-button" data-module="govuk-button" onclick="document.getElementById('Correspondence').style.display = 'block'">
@@ -53,7 +53,7 @@
           </button>
         </div>
       </div>
-      <p id="Correspondence" class="govuk-body" style="display: none;">{{ document.Contents | replace("\n", "<br>") | safe }}</p>
+      <p id="Correspondence" class="govuk-body" style="display: none;">{{ document.contents | replace("\n", "<br>") | safe }}</p>
 
       <form action="/document-response" method="get">
         <div class="govuk-grid-row govuk-body">
@@ -82,12 +82,12 @@
 
         <h2 class="govuk-heading-m">Response</h2>
 
-        <p class="govuk-body summary">{{ lastResponse.ModelResponse | replace("\n", "<br>") | safe }}</p>
+        <p class="govuk-body summary">{{ lastResponse.modelResponse | replace("\n", "<br>") | safe }}</p>
 
         <button type="submit" class="govuk-button" data-module="govuk-button">
           Send this response
         </button>
-        <p class="govuk-body">This will get {% if document.SourceType == 'email' %}emailed{% endif %}{% if document.SourceType == 'letter' %}posted{% endif %} to {{ document.SourceAddress }}
+        <p class="govuk-body">This will get {% if document.sourceType == 'email' %}emailed{% endif %}{% if document.sourceType == 'letter' %}posted{% endif %} to {{ document.sourceAddress }}
       </form>
 
       <form action="/document-response" method="post">
@@ -122,7 +122,7 @@
           </button>
         </div>
 
-        <input type="hidden" name="DocumentID" value="{{ DocumentID }}">
+        <input type="hidden" name="documentId" value="{{ documentId }}">
       </form>
     </div>
   </div>

@@ -1,12 +1,6 @@
-const mammoth = require('mammoth')
 const Joi = require('joi')
+const { categories } = require('../models/constants')
 
-
-const categories = [
-  'Farming',
-  'Fishing',
-  'Environment'
-]
 
 module.exports = [{
   method: 'GET',
@@ -62,14 +56,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-
-      // Upload the file or text
-
-      // Generate embeddings, save to vector store
-
-      // Redirect to next page
-
-      ///////////return h.redirect(`${uploadConstants.routes.document.redirectToPlayground}?name=${filename}&persona=${persona}&version=${version}`)
+      return h.view('upload-document', { categories })
     }
   }
 }]

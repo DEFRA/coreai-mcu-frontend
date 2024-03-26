@@ -38,20 +38,20 @@
 
       <div class="govuk-grid-row govuk-body">
         <div class="govuk-grid-column-one-third">
-          {{ document.SourceName }}
+          {{ document.sourceName }}
         </div>
         <div class="govuk-grid-column-one-third">
-          {{ document.UploadedDate }}
+          {{ document.uploadedDate }}
         </div>
         <div class="govuk-grid-column-one-third">
           <select class="govuk-select" id="category" name="category">
             {% for c in categories %}
-            <option value="{{ c }}"{% if c == document.SuggestedCategory %} selected{% endif %}>{{ c }}</option>
+            <option value="{{ c }}"{% if c == document.suggestedCategory %} selected{% endif %}>{{ c }}</option>
             {% endfor %}
           </select>
         </div>
       </div>
-      <p class="govuk-body summary">{{ document.Contents | replace("\n", "<br>") | safe }}</p>
+      <p class="govuk-body summary">{{ document.contents | replace("\n", "<br>") | safe }}</p>
 
       <h2 class="govuk-heading-m">Response</h2>
 
@@ -60,7 +60,7 @@
           Persona<br>
           <select class="govuk-select" id="persona" name="persona">
             {% for p in personas %}
-            <option value="{{ p.PersonaID }}">{{ p.Title }}</option>
+            <option value="{{ p.personaId }}">{{ p.title }}</option>
             {% endfor %}
           </select>
         </P>
@@ -72,7 +72,7 @@
           Prompt<br>
           <select class="govuk-select" id="prompt" name="prompt">
             {% for p in prompts %}
-            <option value="{{ p.PromptID }}">{{ p.Title }}</option>
+            <option value="{{ p.promptId }}">{{ p.title }}</option>
             {% endfor %}
           </select>
         </P>
@@ -84,7 +84,7 @@
           Model<br>
           <select class="govuk-select" id="model" name="model">
             {% for m in models %}
-            <option value="{{ m.Model }}">{{ m.Model }}</option>
+            <option value="{{ m.model }}">{{ m.model }}</option>
             {% endfor %}
           </select>
         </P>
@@ -92,7 +92,7 @@
         <button type="submit" class="govuk-button" data-module="govuk-button">
           Next
         </button>
-        <input type="hidden" name="DocumentID" value="{{ DocumentID }}">
+        <input type="hidden" name="documentId" value="{{ documentId }}">
       </form>
     </div>
   </div>
