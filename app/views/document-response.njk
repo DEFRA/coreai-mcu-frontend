@@ -1,0 +1,129 @@
+{# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
+{% extends '_layout.njk' %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% set lastResponse = responses[responses.length - 1] %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Document response",
+        href: "#"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">Document response</h1>
+
+      <div class="govuk-grid-row govuk-body">
+        <div class="govuk-grid-column-one-quarter">
+          <strong>Name</strong>
+        </div>
+        <div class="govuk-grid-column-one-quarter">
+          <strong>Date</strong>
+        </div>
+        <div class="govuk-grid-column-one-quarter">
+          <strong>Category</strong>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row govuk-body">
+        <div class="govuk-grid-column-one-quarter">
+          {{ document.sourceName }}
+        </div>
+        <div class="govuk-grid-column-one-quarter">
+          {{ document.uploadedDate }}
+        </div>
+        <div class="govuk-grid-column-one-quarter">
+          {{ document.suggestedCategory }}
+        </div>
+        <div class="govuk-grid-column-one-quarter govuk-!-text-align-right">
+          <button type="button" class="govuk-button" data-module="govuk-button" onclick="document.getElementById('Correspondence').style.display = 'block'">
+            View
+          </button>
+        </div>
+      </div>
+      <p id="Correspondence" class="govuk-body" style="display: none;">{{ document.contents | replace("\n", "<br>") | safe }}</p>
+
+      <form action="/document-response" method="get">
+        <div class="govuk-grid-row govuk-body">
+          <div class="govuk-grid-column-one-quarter">
+            <strong>Persona</strong>
+          </div>
+          <div class="govuk-grid-column-one-quarter">
+            <strong>Prompt</strong>
+          </div>
+          <div class="govuk-grid-column-one-quarter">
+            <strong>Model</strong>
+          </div>
+        </div>
+
+        <div class="govuk-grid-row govuk-body">
+          <div class="govuk-grid-column-one-quarter">
+            {{ lastResponse.PersonaTitle }}
+          </div>
+          <div class="govuk-grid-column-one-quarter">
+            {{ lastResponse.PromptTitle }}
+          </div>
+          <div class="govuk-grid-column-one-quarter">
+            {{ lastResponse.LLMModel }}
+          </div>
+        </div>
+
+        <h2 class="govuk-heading-m">Response</h2>
+
+        <p class="govuk-body summary">{{ lastResponse.modelResponse | replace("\n", "<br>") | safe }}</p>
+
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Send this response
+        </button>
+        <p class="govuk-body">This will get {% if document.sourceType == 'email' %}emailed{% endif %}{% if document.sourceType == 'letter' %}posted{% endif %} to {{ document.sourceAddress }}
+      </form>
+
+      <form action="/document-response" method="post">
+        <h2 class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
+
+        <textarea class="govuk-textarea" id="more-detail" name="usertext" rows="5" aria-describedby="more-detail-hint">{{ usertext }}</textarea>
+        <details class="govuk-details govuk-details-no-border">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              Show examples
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            <ul>
+              <li>Remove the first paragraph</li>
+              <li>Add a section explaining the boundary grants that are available</li>
+            </ul>
+          </div>
+        </details>
+
+        <div class="govuk-button-group govuk-!-margin-top-8">
+          <button type="submit" name="action" value="Generate" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
+            Generate response
+          </button>
+
+          <button type="submit" name="action" value="History" data-prevent-double-click="true" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+            Response history
+          </button>
+
+          <button type="submit" name="action" value="Start" data-prevent-double-click="true" class="govuk-button govuk-button--warning" data-module="govuk-button">
+            Start over
+          </button>
+        </div>
+
+        <input type="hidden" name="documentId" value="{{ documentId }}">
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
+{% extends '_layout.njk' %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Document response",
+        href: "#"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">Document response</h1>
+
+      <div class="govuk-grid-row govuk-body">
+        <div class="govuk-grid-column-one-third">
+          <strong>Name</strong>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <strong>Date</strong>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <strong>Category</strong>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row govuk-body">
+        <div class="govuk-grid-column-one-third">
+          {{ document.sourceName }}
+        </div>
+        <div class="govuk-grid-column-one-third">
+          {{ document.uploadedDate }}
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <select class="govuk-select" id="category" name="category">
+            {% for c in categories %}
+            <option value="{{ c }}"{% if c == document.suggestedCategory %} selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <p class="govuk-body summary">{{ document.contents | replace("\n", "<br>") | safe }}</p>
+
+      <h2 class="govuk-heading-m">Response</h2>
+
+      <form action="/document-response" method="post">
+        <p class="govuk-body govuk-!-margin-top-6">
+          Persona<br>
+          <select class="govuk-select" id="persona" name="persona">
+            {% for p in personas %}
+            <option value="{{ p.personaId }}">{{ p.title }}</option>
+            {% endfor %}
+          </select>
+        </P>
+        <p>
+          <a href="#" class="govuk-link">View persona</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#" class="govuk-link">Manage personas</a>
+        </p>
+
+        <p class="govuk-body govuk-!-margin-top-6">
+          Prompt<br>
+          <select class="govuk-select" id="prompt" name="prompt">
+            {% for p in prompts %}
+            <option value="{{ p.promptId }}">{{ p.title }}</option>
+            {% endfor %}
+          </select>
+        </P>
+        <p>
+          <a href="#" class="govuk-link">View prompt</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#" class="govuk-link">Manage prompts</a>
+        </p>
+
+        <p class="govuk-body govuk-!-margin-top-6">
+          Model<br>
+          <select class="govuk-select" id="model" name="model">
+            {% for m in models %}
+            <option value="{{ m.model }}">{{ m.model }}</option>
+            {% endfor %}
+          </select>
+        </P>
+
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Next
+        </button>
+        <input type="hidden" name="documentId" value="{{ documentId }}">
+      </form>
+    </div>
+  </div>
+{% endblock %}
