@@ -67,20 +67,20 @@
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-third col1">
               <span class="govuk-details__summary-text">
-                {{ document.sourceName }}
+                {{ document.metadata.file_name }}
               </span>
             </div>
             <div class="govuk-grid-column-one-third col2">
-              {{ document.uploadedDate }}
+              {{ document.properties.createdOn }}
             </div>
             <div class="govuk-grid-column-one-third col3">
-              {{ document.suggestedCategory }}
+              {{ document.metadata.suggested_category }}
             </div>
           </div>
         </summary>
         <div class="govuk-details__text">
           <p>
-            {{ document.contents | replace("\n", "<br>") | safe }}
+            {{ document.properties.contentMD5 | replace("\n", "<br>") | safe }}
           </p>
           <a href="/document/{{ document.documentId }}/configure" type="submit" class="govuk-button" data-module="govuk-button">
             Proceed
