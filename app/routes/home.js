@@ -1,6 +1,5 @@
 const { documents } = require('../models/constants')
 
-
 module.exports = {
   method: 'GET',
   path: '/',

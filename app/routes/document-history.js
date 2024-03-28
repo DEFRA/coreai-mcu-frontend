@@ -1,6 +1,5 @@
 const { document, responses } = require('../models/constants')
 
-
 module.exports = {
   method: 'GET',
   path: '/document-history',
