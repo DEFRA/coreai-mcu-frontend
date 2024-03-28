@@ -1,3 +1,4 @@
+const { sendGenerationRequest } = require('../messaging/outbound/generation-request')
 const { categories, document, responses, personas, prompts, models } = require('../models/constants')
 
 module.exports = [{
@@ -21,15 +22,19 @@ module.exports = [{
   method: 'POST',
   path: '/document-response',
   options: {
-    handler: (request, h) => {
+    handler: async (request, h) => {
       const documentId = request.payload.documentId
 
-      if (request.payload.action == 'Generate') {
-
-        //
-      } else if (request.payload.action == 'History') {
+      if (request.payload.action === 'Generate') {
+        await sendGenerationRequest({
+          documentId,
+          userPrompt: request.payload.usertext,
+          knowledge: []
+        })
+        return h.redirect(`/document-response?documentId=${documentId}`)
+      } else if (request.payload.action === 'History') {
         return h.redirect(`/document-history?documentId=${documentId}`)
-      } else if (request.payload.action == 'Start') {
+      } else if (request.payload.action === 'Start') {
         return h.redirect(`/document-configure-response?documentId=${documentId}`)
       }
 
