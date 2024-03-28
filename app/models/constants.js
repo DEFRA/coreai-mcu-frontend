@@ -86,7 +86,7 @@ const responses = [
     modelVendor: 'OpenAI',
     LLMModel: 'ChatGPT3.5',
     modelResponse: null,
-    userResponse: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis lacus, tristique eu convallis non, accumsan in arcu. Ut sodales ultrices orci. Phasellus a ipsum lectus. Fusce tincidunt rutrum est, quis iaculis eros lobortis sed. Duis pulvinar iaculis justo. Nulla nec mattis ligula, a auctor ipsum. Nunc semper est non tempus venenatis.`,
+    userResponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis lacus, tristique eu convallis non, accumsan in arcu. Ut sodales ultrices orci. Phasellus a ipsum lectus. Fusce tincidunt rutrum est, quis iaculis eros lobortis sed. Duis pulvinar iaculis justo. Nulla nec mattis ligula, a auctor ipsum. Nunc semper est non tempus venenatis.',
     responseSent: false
   },
   {
@@ -142,5 +142,5 @@ module.exports = {
   responses,
   personas,
   prompts,
-  models,
+  models
 }

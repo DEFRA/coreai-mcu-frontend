@@ -1,6 +1,5 @@
 const { categories, document, personas, prompts, models } = require('../models/constants')
 
-
 module.exports = {
   method: 'GET',
   path: '/document-configure-response',

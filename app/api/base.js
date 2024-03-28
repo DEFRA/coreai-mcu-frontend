@@ -12,7 +12,7 @@ const get = async (url, json) => {
     ...getOptions(),
     json
   }
-  
+
   const { payload } = await Wreck.get(url, options)
 
   return payload
@@ -34,7 +34,7 @@ const put = async (url, data) => {
     ...getOptions(),
     payload: data
   }
-  
+
   const { payload } = await Wreck.put(url, options)
 
   return payload
