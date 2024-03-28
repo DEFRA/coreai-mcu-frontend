@@ -1,8 +1,8 @@
 const Joi = require('joi')
 
-const schema = {
+const schema = Joi.object({
   baseUrl: Joi.string().required()
-}
+})
 
 const config = {
   baseUrl: process.env.DOCUMENTS_API_BASE_URL

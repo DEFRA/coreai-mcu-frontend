@@ -3,7 +3,10 @@ const config = require('../config/documents-api')
 
 const baseUrl = config.baseUrl
 
+console.log(baseUrl)
+
 const getDocuments = async () => {
+  console.log(`${baseUrl}/documents`)
   return get(`${baseUrl}/documents`)
 }
 

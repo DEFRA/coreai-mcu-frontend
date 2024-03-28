@@ -18,10 +18,10 @@ const get = async (url, json) => {
   return payload
 }
 
-const post = async (url, payload, headers) => {
+const post = async (url, data, headers) => {
   const options = {
     ...getOptions(headers),
-    payload
+    payload: data
   }
 
   const { payload } = await Wreck.post(url, options)
@@ -29,13 +29,19 @@ const post = async (url, payload, headers) => {
   return payload
 }
 
-const put = async (url, payload) => {
+const put = async (url, data) => {
   const options = {
-    ...getOptions(headers),
-    payload
+    ...getOptions(),
+    payload: data
   }
   
   const { payload } = await Wreck.put(url, options)
 
   return payload
+}
+
+module.exports = {
+  get,
+  post,
+  put
 }
