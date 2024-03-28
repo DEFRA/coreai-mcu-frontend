@@ -1,5 +1,5 @@
 const { get, post, put } = require('./base')
-const config = require('../config/documents-api')
+const { documentsApi: config } = require('../config/api')
 
 const baseUrl = config.baseUrl
 
