@@ -6,7 +6,7 @@ module.exports = {
   options: {
     handler: async (request, h) => {
       const documentsService = new DocumentsService()
-      const documents = await documentsService.getDocuments()
+      const documents = await documentsService.getDocumentsData()
 
       return h.view('home', { documents }).code(201)
     }
