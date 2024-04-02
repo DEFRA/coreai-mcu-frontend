@@ -9,9 +9,8 @@ const sharedConfigSchema = {
 }
 
 const schema = Joi.object({
-  generationSubscription: {
+  generationTopic: {
     address: Joi.string(),
-    topic: Joi.string(),
     type: Joi.string(),
     ...sharedConfigSchema
   }
@@ -26,10 +25,9 @@ const sharedConfig = {
 }
 
 const config = {
-  generationSubscription: {
-    address: process.env.GENERATION_REQUEST_OAI_SUBSCRIPTION,
-    topic: process.env.GENERATION_REQUEST_TOPIC,
-    type: 'subscription',
+  generationTopic: {
+    address: process.env.GENERATION_REQUEST_TOPIC,
+    type: 'topic',
     ...sharedConfig
   }
 }

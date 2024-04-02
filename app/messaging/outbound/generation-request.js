@@ -1,11 +1,11 @@
 const { MessageSender } = require('ffc-messaging')
-const { generationSubscription } = require('../../config/messaging')
+const { generationTopic } = require('../../config/messaging')
 const { GENERATION_REQUEST } = require('../../constants/events')
 
 const createMessage = (data) => ({
   body: {
     document_id: data.documentId,
-    userPrompt: data.userPrompt,
+    user_prompt: data.userPrompt,
     knowledge: data.knowledge
   },
   type: GENERATION_REQUEST,
@@ -13,7 +13,7 @@ const createMessage = (data) => ({
 })
 
 const sendGenerationRequest = async (data) => {
-  const sender = new MessageSender(generationSubscription)
+  const sender = new MessageSender(generationTopic)
 
   const message = createMessage(data)
 
