@@ -1,20 +1,17 @@
 const { sendGenerationRequest } = require('../messaging/outbound/generation-request')
-const { categories, document, responses, personas, prompts, models } = require('../models/constants')
+const { getLatestResponse } = require('../services/responses')
+const { document } = require('../models/constants')
 
 module.exports = [{
   method: 'GET',
   path: '/document/{id}/response',
   options: {
-    handler: (request, h) => {
+    handler: async (request, h) => {
       const documentId = request.params.id
 
-      const fullResponses = responses.map(x => ({
-        ...x,
-        PersonaTitle: personas.find(p => p.personaId === x.personaId).title,
-        PromptTitle: prompts.find(p => p.promptId === x.promptId).title
-      }))
+      const response = await getLatestResponse(documentId)
 
-      return h.view('document-response', { documentId, categories, document, responses: fullResponses, personas, prompts, models })
+      return h.view('document-response', { document, response })
     }
   }
 },
