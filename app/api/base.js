@@ -7,7 +7,7 @@ const getOptions = (headers) => ({
   json: true
 })
 
-const get = async (url, json) => {
+const get = async (url, json = true) => {
   const options = {
     ...getOptions(),
     json
