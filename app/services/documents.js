@@ -4,7 +4,7 @@ class DocumentsService {
 
     constructor() {}
 
-    async getDocumentsData() {
+    async getDocuments() {
         try {
             const documents = await getDocuments()
  
