@@ -2,7 +2,6 @@
 {% extends '_layout.njk' %}
 
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{% set lastResponse = responses[responses.length - 1] %}
 
 {% block beforeContent %}
   {{ govukBreadcrumbs({
@@ -70,19 +69,19 @@
 
         <div class="govuk-grid-row govuk-body">
           <div class="govuk-grid-column-one-quarter">
-            {{ lastResponse.PersonaTitle }}
+            {{ response.PersonaTitle }}
           </div>
           <div class="govuk-grid-column-one-quarter">
-            {{ lastResponse.PromptTitle }}
+            {{ response.PromptTitle }}
           </div>
           <div class="govuk-grid-column-one-quarter">
-            {{ lastResponse.LLMModel }}
+            {{ response.LLMModel }}
           </div>
         </div>
 
         <h2 class="govuk-heading-m">Response</h2>
 
-        <p class="govuk-body summary">{{ lastResponse.modelResponse | replace("\n", "<br>") | safe }}</p>
+        <p class="govuk-body summary">{{ response.response | replace("\n", "<br>") | safe }}</p>
 
         <button type="submit" class="govuk-button" data-module="govuk-button">
           Send this response
