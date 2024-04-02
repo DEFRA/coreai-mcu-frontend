@@ -8,7 +8,7 @@ const getDocuments = async () => {
 }
 
 const getDocumentById = async (id) => {
-  return get(`${baseUrl}/documents/${id}`)
+  return get(`${baseUrl}/documents/${id}`, false)
 }
 
 const getDocumentMetadata = async (id) => {

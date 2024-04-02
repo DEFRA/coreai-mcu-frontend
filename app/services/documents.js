@@ -22,9 +22,8 @@ const formatDocuments = (documents) => {
 const getDocumentsData = async () => {
   try {
     const documents = await getDocuments()
-    const documentsJSONData = JSON.parse(documents)
 
-    return formatDocuments(documentsJSONData)
+    return formatDocuments(documents)
   } catch (error) {
     console.error('There was a problem getting documents data', error)
     throw error
@@ -34,9 +33,8 @@ const getDocumentsData = async () => {
 const getDocumentData = async (id) => {
   try {
     const document = await getDocumentMetadata(id)
-    const documentJSONData = JSON.parse(document)
 
-    return formatDocument(documentJSONData)
+    return formatDocument(document)
   } catch (error) {
     console.error('There was a problem getting document data', error)
     throw error
