@@ -90,7 +90,7 @@
         <p class="govuk-body">This will get {% if document.sourceType == 'email' %}emailed{% endif %}{% if document.sourceType == 'letter' %}posted{% endif %} to {{ document.sourceAddress }}
       </form>
 
-      <form action="/document-response" method="post">
+      <form action="/document/response" method="post">
         <h2 class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
 
         <textarea class="govuk-textarea" id="more-detail" name="usertext" rows="5" aria-describedby="more-detail-hint">{{ usertext }}</textarea>
@@ -109,20 +109,20 @@
         </details>
 
         <div class="govuk-button-group govuk-!-margin-top-8">
-          <button type="submit" name="action" value="Generate" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
+          <button type="submit" name="action" value="generate" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
             Generate response
           </button>
 
-          <button type="submit" name="action" value="History" data-prevent-double-click="true" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+          <a href="/document/{{ document.documentId }}/response/history" data-prevent-double-click="true" class="govuk-button govuk-button--secondary" data-module="govuk-button">
             Response history
-          </button>
+          </a>
 
-          <button type="submit" name="action" value="Start" data-prevent-double-click="true" class="govuk-button govuk-button--warning" data-module="govuk-button">
+          <button type="submit" name="action" value="start_over" data-prevent-double-click="true" class="govuk-button govuk-button--warning" data-module="govuk-button">
             Start over
           </button>
         </div>
 
-        <input type="hidden" name="documentId" value="{{ documentId }}">
+        <input type="hidden" name="documentId" value="{{ document.documentId }}">
       </form>
     </div>
   </div>

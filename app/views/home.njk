@@ -82,12 +82,9 @@
           <p>
             {{ document.contents | replace("\n", "<br>") | safe }}
           </p>
-          <form action="/document-configure-response" method="get" role="upload">
-            <button type="submit" class="govuk-button" data-module="govuk-button">
-              Proceed
-            </button>
-            <input type="hidden" name="documentId" value="{{ document.documentId }}">
-          </form>
+          <a href="/document/{{ document.documentId }}/configure" type="submit" class="govuk-button" data-module="govuk-button">
+            Proceed
+          </a>
         </div>
       </details>
       {% endfor %}

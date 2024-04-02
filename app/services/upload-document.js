@@ -43,10 +43,6 @@ const upload = async (payload) => {
 
   const metadataPayload = buildMetadataPayload(payload)
 
-  if (type === 'text/plain') {
-    metadataPayload
-  }
-
   await updateDocumentMetadata(id, metadataPayload)
 }
 
