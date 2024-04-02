@@ -1,16 +1,12 @@
-const { documents } = require('../models/constants')
-const { getDocuments } = require('../api/documents')
+const DocumentsService = require('../services/documents')
 
 module.exports = {
   method: 'GET',
   path: '/',
   options: {
     handler: async (request, h) => {
-
-      // this needs to be moved into a controller / service and called from here. the result being passed into the view
-      const documentsData = await getDocuments()
-      const documents = JSON.parse(documentsData.toString())
-      // end
+      const documentsService = new DocumentsService()
+      const documents = await documentsService.getDocumentsData()
 
       return h.view('home', { documents }).code(201)
     }
