@@ -21,7 +21,7 @@ const config = {
 const { error, value } = schema.validate(config, { abortEarly: false })
 
 if (error) {
-  throw new Error(`The message queue config is invalid. ${error.message}`)
+  throw new Error(`The api config is invalid. ${error.message}`)
 }
 
 module.exports = value

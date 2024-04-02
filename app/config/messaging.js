@@ -9,13 +9,7 @@ const sharedConfigSchema = {
 }
 
 const schema = Joi.object({
-  generationSubscription: {
-    address: Joi.string(),
-    topic: Joi.string(),
-    type: Joi.string(),
-    ...sharedConfigSchema
-  },
-  responseProcessingQueue: {
+  generationTopic: {
     address: Joi.string(),
     type: Joi.string(),
     ...sharedConfigSchema
@@ -31,15 +25,9 @@ const sharedConfig = {
 }
 
 const config = {
-  generationSubscription: {
-    address: process.env.GENERATION_REQUEST_OAI_SUBSCRIPTION,
-    topic: process.env.GENERATION_REQUEST_TOPIC,
-    type: 'subscription',
-    ...sharedConfig
-  },
-  responseProcessingQueue: {
-    address: process.env.RESPONSE_PROCESSING_QUEUE_ADDRESS,
-    type: 'queue',
+  generationTopic: {
+    address: process.env.GENERATION_REQUEST_TOPIC,
+    type: 'topic',
     ...sharedConfig
   }
 }
