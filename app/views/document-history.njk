@@ -12,7 +12,7 @@
       },
       {
         text: "Document response",
-        href: "/document-response?documentId=" + documentId
+        href: "/document/" + document.documentId + "/response"
       },
       {
         text: "Document history",
@@ -42,7 +42,7 @@
       <hr class="divider">
       {% endfor %}
 
-      <a href="./document-response?documentId={{ documentId }}" class="govuk-back-link">Back</a>
+      <a href="/document/{{ documentId }}/response" class="govuk-back-link">Back</a>
     </div>
   </div>
 {% endblock %}
