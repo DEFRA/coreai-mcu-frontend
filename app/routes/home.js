@@ -1,12 +1,11 @@
-const DocumentsService = require('../services/documents')
+const { getDocumentsData } = require('../services/documents')
 
 module.exports = {
   method: 'GET',
   path: '/',
   options: {
     handler: async (request, h) => {
-      const documentsService = new DocumentsService()
-      const documents = await documentsService.getDocumentsData()
+      const documents = await getDocumentsData()
 
       return h.view('home', { documents }).code(201)
     }
