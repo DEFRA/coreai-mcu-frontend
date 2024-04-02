@@ -18,6 +18,10 @@ const formatResponse = (response) => {
 const getLatestResponse = async (documentId) => {
   const responses = await getResponses(documentId)
 
+  if (responses.length === 0) {
+    return []
+  }
+
   return formatResponse(responses[0])
 }
 
