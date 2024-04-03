@@ -10,9 +10,6 @@ module.exports = [{
       const documentId = request.params.id
 
       const document = await getDocumentData(documentId)
-
-      console.log(document)
-
       const response = await getLatestResponse(documentId)
 
       return h.view('document-response', { document, response })
