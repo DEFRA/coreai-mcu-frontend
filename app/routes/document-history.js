@@ -17,11 +17,8 @@ module.exports = {
         )
 
         const documentId = request.params.id
-
         return h.view('document-history', { responses, documentId })
-
-      } catch(error) {
-        console.log('ERROR:', error)
+      } catch (error) {
         return h.view('document-history', { error })
       }
     }
