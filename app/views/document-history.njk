@@ -32,16 +32,28 @@
       {% if not error %}
         <h2 class="govuk-heading-m">Original correspondence</h2>
 
-        <p class="govuk-body summary">{{ document.contents | replace("\n", "<br>") }}</p>
+        <p class="govuk-body summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis lacus, tristique eu convallis non, accumsan in arcu. Ut sodales ultrices orci. Phasellus a ipsum lectus. Fusce tincidunt rutrum est, quis iaculis eros lobortis sed. Duis pulvinar iaculis justo. Nulla nec mattis ligula, a auctor ipsum. Nunc semper est non tempus venenatis. Nunc at consequat arcu. Integer vitae neque faucibus, blandit neque non, pharetra augue. Aenean eu tincidunt risus. Praesent quis egestas nibh. Nunc pellentesque pulvinar interdum. Fusce dignissim ultrices ante, maximus molestie purus rhoncus vel. Maecenas molestie semper sodales.</p>
 
         {% for response in responses %}
+
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
-            <p class="govuk-grid-column-one-quarter govuk-body"><strong>{% if response.modelResponse %}Agent{% else %}User{% endif %}</strong></p>
-            <p class="govuk-grid-column-three-quarters govuk-body">{% if response.modelResponse %}{{ response.modelResponse | replace("\n", "<br>") | safe }}{% else %}{{ response.userResponse | replace("\n", "<br>") | safe }}{% endif %}</p>
+            <p class="govuk-grid-column-one-quarter govuk-body"><strong>Agent</strong></p>
+            <p class="govuk-grid-column-three-quarters govuk-body">{{ response.response | replace("\n", "<br>") | safe }}</p>
+          </div>
+        </div>
+
+        {% if response.user_prompt | length > 0 %}
+        <hr class="divider">
+         <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <p class="govuk-grid-column-one-quarter govuk-body"><strong>User</strong></p>
+            <p class="govuk-grid-column-three-quarters govuk-body">{{ response.user_prompt | replace("\n", "<br>") | safe }}</p>
           </div>
         </div>
         <hr class="divider">
+        {% endif %}
+
         {% endfor %}
 
         <a href="/document/{{ documentId }}/response" class="govuk-back-link">Back</a>
