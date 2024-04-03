@@ -11,6 +11,10 @@ const getDocumentById = async (id) => {
   return get(`${baseUrl}/documents/${id}`, false)
 }
 
+const getDocumentContents = async (id) => {
+  return get(`${baseUrl}/documents/${id}/contents`)
+}
+
 const getDocumentMetadata = async (id) => {
   return get(`${baseUrl}/documents/${id}/metadata`)
 }
@@ -30,6 +34,7 @@ const updateDocumentMetadata = async (id, metadata) => {
 module.exports = {
   getDocuments,
   getDocumentById,
+  getDocumentContents,
   getDocumentMetadata,
   uploadDocument,
   updateDocumentMetadata
