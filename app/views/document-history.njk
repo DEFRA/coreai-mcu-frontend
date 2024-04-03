@@ -13,7 +13,7 @@
       },
       {
         text: "Document response",
-        href: "/document/" + document.documentId + "/response"
+        href: "/document/" + documentId + "/response"
       },
       {
         text: "Document history",
@@ -26,58 +26,33 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-
       <h1 class="govuk-heading-xl">Document history</h1>
+      
+      <h2 class="govuk-heading-m">Original correspondence</h2>
 
-      {% if not error %}
-        <h2 class="govuk-heading-m">Original correspondence</h2>
+      <p class="govuk-body summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis lacus, tristique eu convallis non, accumsan in arcu. Ut sodales ultrices orci. Phasellus a ipsum lectus. Fusce tincidunt rutrum est, quis iaculis eros lobortis sed. Duis pulvinar iaculis justo. Nulla nec mattis ligula, a auctor ipsum. Nunc semper est non tempus venenatis. Nunc at consequat arcu. Integer vitae neque faucibus, blandit neque non, pharetra augue. Aenean eu tincidunt risus. Praesent quis egestas nibh. Nunc pellentesque pulvinar interdum. Fusce dignissim ultrices ante, maximus molestie purus rhoncus vel. Maecenas molestie semper sodales.</p>
 
-        <p class="govuk-body summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis lacus, tristique eu convallis non, accumsan in arcu. Ut sodales ultrices orci. Phasellus a ipsum lectus. Fusce tincidunt rutrum est, quis iaculis eros lobortis sed. Duis pulvinar iaculis justo. Nulla nec mattis ligula, a auctor ipsum. Nunc semper est non tempus venenatis. Nunc at consequat arcu. Integer vitae neque faucibus, blandit neque non, pharetra augue. Aenean eu tincidunt risus. Praesent quis egestas nibh. Nunc pellentesque pulvinar interdum. Fusce dignissim ultrices ante, maximus molestie purus rhoncus vel. Maecenas molestie semper sodales.</p>
-
-        {% for response in responses %}
-
+      {% for response in responses %}
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
             <p class="govuk-grid-column-one-quarter govuk-body"><strong>Agent</strong></p>
             <p class="govuk-grid-column-three-quarters govuk-body">{{ response.response | replace("\n", "<br>") | safe }}</p>
           </div>
         </div>
-
-        {% if response.user_prompt | length > 0 %}
         <hr class="divider">
-         <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
-            <p class="govuk-grid-column-one-quarter govuk-body"><strong>User</strong></p>
-            <p class="govuk-grid-column-three-quarters govuk-body">{{ response.user_prompt | replace("\n", "<br>") | safe }}</p>
-          </div>
-        </div>
-        <hr class="divider">
-        {% endif %}
 
-        {% endfor %}
-
-        <a href="/document/{{ documentId }}/response" class="govuk-back-link">Back</a>
-      {% else %}
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-            <div role="alert">
-              <h2 class="govuk-error-summary__title">
-                There is a problem
-              </h2>
-              <div class="govuk-error-summary__body">
-                <ul class="govuk-list govuk-error-summary__list">
-                  <li>
-                    {{ error }}
-                  </li>
-                  <li>
-                </ul>
-              </div>
+        {% if response.userPrompt %}
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <p class="govuk-grid-column-one-quarter govuk-body"><strong>User</strong></p>
+              <p class="govuk-grid-column-three-quarters govuk-body">{{ response.userPrompt | replace("\n", "<br>") | safe }}</p>
             </div>
           </div>
-          </div>
-        </div>
-      {% endif %}
+          <hr class="divider">
+        {% endif %}
+      {% endfor %}
+
+      <a href="/document/{{ documentId }}/response" class="govuk-back-link">Back</a>
     </div>
   </div>
 {% endblock %}
