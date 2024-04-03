@@ -2,6 +2,7 @@
 {% extends '_layout.njk' %}
 
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block beforeContent %}
   {{ govukBreadcrumbs({
@@ -28,21 +29,43 @@
 
       <h1 class="govuk-heading-xl">Document history</h1>
 
-      <h2 class="govuk-heading-m">Original correspondence</h2>
+      {% if not error %}
+        <h2 class="govuk-heading-m">Original correspondence</h2>
 
-      <p class="govuk-body summary">{{ document.contents | replace("\n", "<br>") }}</p>
+        <p class="govuk-body summary">{{ document.contents | replace("\n", "<br>") }}</p>
 
-      {% for response in responses %}
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-          <p class="govuk-grid-column-one-quarter govuk-body"><strong>{% if response.modelResponse %}Agent{% else %}User{% endif %}</strong></p>
-          <p class="govuk-grid-column-three-quarters govuk-body">{% if response.modelResponse %}{{ response.modelResponse | replace("\n", "<br>") | safe }}{% else %}{{ response.userResponse | replace("\n", "<br>") | safe }}{% endif %}</p>
+        {% for response in responses %}
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <p class="govuk-grid-column-one-quarter govuk-body"><strong>{% if response.modelResponse %}Agent{% else %}User{% endif %}</strong></p>
+            <p class="govuk-grid-column-three-quarters govuk-body">{% if response.modelResponse %}{{ response.modelResponse | replace("\n", "<br>") | safe }}{% else %}{{ response.userResponse | replace("\n", "<br>") | safe }}{% endif %}</p>
+          </div>
         </div>
-      </div>
-      <hr class="divider">
-      {% endfor %}
+        <hr class="divider">
+        {% endfor %}
 
-      <a href="/document/{{ documentId }}/response" class="govuk-back-link">Back</a>
+        <a href="/document/{{ documentId }}/response" class="govuk-back-link">Back</a>
+      {% else %}
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-full">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+            <div role="alert">
+              <h2 class="govuk-error-summary__title">
+                There is a problem
+              </h2>
+              <div class="govuk-error-summary__body">
+                <ul class="govuk-list govuk-error-summary__list">
+                  <li>
+                    {{ error }}
+                  </li>
+                  <li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      {% endif %}
     </div>
   </div>
 {% endblock %}
