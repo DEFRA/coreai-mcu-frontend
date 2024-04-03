@@ -26,12 +26,12 @@ const getLatestResponse = async (documentId) => {
 }
 
 const getDocumentResponsesHistoryData = async (id) => {
-  try {
-      const responses = await getResponses(
-        id
-      )
+    try {
+        const responses = await getResponses(
+          id
+        )
 
-      return JSON.parse(responses)
+        return JSON.parse(responses)
 
   } catch (error) {
       console.error('There was a problem getting documents history responses data', error)
@@ -41,5 +41,5 @@ const getDocumentResponsesHistoryData = async (id) => {
 
 module.exports = {
   getLatestResponse,
-    getDocumentResponsesHistoryData
+  getDocumentResponsesHistoryData
 }
