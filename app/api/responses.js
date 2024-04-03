@@ -4,7 +4,7 @@ const { responsesApi: config } = require('../config/api')
 const baseUrl = config.baseUrl
 
 const getResponses = async (docId) => {
-  return get(`${baseUrl}/responses/${docId}`, true)
+  return get(`${baseUrl}/responses/${docId}`)
 }
 
 module.exports = {

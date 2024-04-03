@@ -38,13 +38,13 @@
 
       <div class="govuk-grid-row govuk-body">
         <div class="govuk-grid-column-one-quarter">
-          {{ document.sourceName }}
+          {{ document.metadata.fileName }}
         </div>
         <div class="govuk-grid-column-one-quarter">
-          {{ document.uploadedDate }}
+          {{ document.properties.createdOn }}
         </div>
         <div class="govuk-grid-column-one-quarter">
-          {{ document.suggestedCategory }}
+          {{ document.metadata.suggestedCategory }}
         </div>
         <div class="govuk-grid-column-one-quarter govuk-!-text-align-right">
           <button type="button" class="govuk-button" data-module="govuk-button" onclick="document.getElementById('Correspondence').style.display = 'block'">
@@ -52,7 +52,7 @@
           </button>
         </div>
       </div>
-      <p id="Correspondence" class="govuk-body" style="display: none;">{{ document.contents | replace("\n", "<br>") | safe }}</p>
+      <p id="Correspondence" class="govuk-body" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu</p>
 
       <form action="/document-response" method="get">
         <div class="govuk-grid-row govuk-body">
@@ -81,7 +81,7 @@
 
         <h2 class="govuk-heading-m">Response</h2>
 
-        <p class="govuk-body summary">{{ response.response | replace("\n", "<br>") | safe }}</p>
+        <p class="govuk-body summary">{{ response.response }}</p>
 
         <button type="submit" class="govuk-button" data-module="govuk-button">
           Send this response
