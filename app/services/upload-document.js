@@ -7,7 +7,7 @@ const getBuffer = (payload) => {
   let ext
 
   if (payload.uploadtype === 'file') {
-    buffer = payload.document.hapi._data
+    buffer = payload.document._data
     ext = getExtension(payload.document.hapi.filename)
   } else {
     buffer = Buffer.from(payload.usertext)
