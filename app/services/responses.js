@@ -25,6 +25,21 @@ const getLatestResponse = async (documentId) => {
   return formatResponse(responses[0])
 }
 
+const getDocumentResponsesHistoryData = async (id) => {
+  try {
+      const responses = await getResponses(
+        id
+      )
+
+      return JSON.parse(responses)
+
+  } catch (error) {
+      console.error('There was a problem getting documents history responses data', error)
+      throw error
+  }
+}
+
 module.exports = {
-  getLatestResponse
+  getLatestResponse,
+    getDocumentResponsesHistoryData
 }
