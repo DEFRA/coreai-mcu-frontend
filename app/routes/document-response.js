@@ -1,6 +1,6 @@
 const { sendGenerationRequest } = require('../messaging/outbound/generation-request')
 const { getLatestResponse } = require('../services/responses')
-const { getDocumentData } = require('../services/documents')
+const { getDocumentData, getDocumentContent } = require('../services/documents')
 
 module.exports = [{
   method: 'GET',
@@ -10,9 +10,10 @@ module.exports = [{
       const documentId = request.params.id
 
       const document = await getDocumentData(documentId)
+      const contents = await getDocumentContent(documentId)
       const response = await getLatestResponse(documentId)
 
-      return h.view('document-response', { document, response })
+      return h.view('document-response', { document, contents, response })
     }
   }
 },

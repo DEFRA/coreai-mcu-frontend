@@ -30,7 +30,9 @@
       
       <h2 class="govuk-heading-m">Original correspondence</h2>
 
-      <p class="govuk-body summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras felis lacus, tristique eu convallis non, accumsan in arcu. Ut sodales ultrices orci. Phasellus a ipsum lectus. Fusce tincidunt rutrum est, quis iaculis eros lobortis sed. Duis pulvinar iaculis justo. Nulla nec mattis ligula, a auctor ipsum. Nunc semper est non tempus venenatis. Nunc at consequat arcu. Integer vitae neque faucibus, blandit neque non, pharetra augue. Aenean eu tincidunt risus. Praesent quis egestas nibh. Nunc pellentesque pulvinar interdum. Fusce dignissim ultrices ante, maximus molestie purus rhoncus vel. Maecenas molestie semper sodales.</p>
+      <p class="govuk-body summary">
+        {{ contents | replace("\n", "<br>") | safe }}
+      </p>
 
       {% for response in responses %}
         <div class="govuk-grid-row">
