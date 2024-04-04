@@ -80,7 +80,7 @@
         </summary>
         <div class="govuk-details__text">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+            {{ document.contents | replace("\n", "<br>") | safe }}
           </p>
           <a href="/document/{{ document.name }}/configure" type="submit" class="govuk-button" data-module="govuk-button">
             Proceed

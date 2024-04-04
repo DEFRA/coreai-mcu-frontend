@@ -1,5 +1,5 @@
 const { format, parseISO } = require('date-fns')
-const { getDocuments, getDocumentMetadata } = require('../api/documents')
+const { getDocuments, getDocumentContents, getDocumentMetadata } = require('../api/documents')
 
 const formatDocument = (document) => {
   const date = parseISO(document.properties.createdOn)
@@ -30,6 +30,17 @@ const getDocumentsData = async () => {
   }
 }
 
+const getDocumentContent = async (id) => {
+  try {
+    const document = await getDocumentContents(id)
+
+    return document.toString()
+  } catch (error) {
+    console.error('There was a problem getting document contents', error)
+    throw error
+  }
+}
+
 const getDocumentData = async (id) => {
   try {
     const document = await getDocumentMetadata(id)
@@ -39,10 +50,10 @@ const getDocumentData = async (id) => {
     console.error('There was a problem getting document data', error)
     throw error
   }
-
 }
 
 module.exports = {
   getDocumentsData,
+  getDocumentContent,
   getDocumentData
 }
