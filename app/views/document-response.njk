@@ -57,7 +57,7 @@
       {% if response.response %}
         <form action="/document-response" method="get">
           <div class="govuk-grid-row govuk-body">
-            {# <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter">
               <strong>Persona</strong>
             </div>
             <div class="govuk-grid-column-one-quarter">
@@ -70,15 +70,15 @@
 
           <div class="govuk-grid-row govuk-body">
             <div class="govuk-grid-column-one-quarter">
-              {{ response.PersonaTitle }}
+              Government official
             </div>
             <div class="govuk-grid-column-one-quarter">
-              {{ response.PromptTitle }}
+              Government official
             </div>
             <div class="govuk-grid-column-one-quarter">
-              {{ response.LLMModel }}
+              GPT3.5
             </div>
-          </div> #}
+          </div>
 
           <h2 class="govuk-heading-m">Response</h2>
 
