@@ -1,13 +1,21 @@
-const { document, responses } = require('../models/constants')
+const Joi = require('joi')
+const { getAllResponses } = require('../services/responses')
 
 module.exports = {
   method: 'GET',
   path: '/document/{id}/response/history',
   options: {
-    handler: (request, h) => {
+    validate: {
+      params: Joi.object({
+        id: Joi.string().uuid().required()
+      })
+    },
+    handler: async (request, h) => {
       const documentId = request.params.id
 
-      return h.view('document-history', { documentId, document, responses })
+      const responses = await getAllResponses(documentId)
+
+      return h.view('document-history', { responses, documentId })
     }
   }
 }

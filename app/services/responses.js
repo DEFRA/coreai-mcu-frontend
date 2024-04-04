@@ -9,7 +9,7 @@ const formatResponse = (response) => {
     response: response.response,
     documentId: response.document_id,
     llm: response.llm,
-    userPrompt: response.userPrompt,
+    userPrompt: response.user_prompt,
     citations: [],
     generatedOn
   }
@@ -25,6 +25,13 @@ const getLatestResponse = async (documentId) => {
   return formatResponse(responses[0])
 }
 
+const getAllResponses = async (id) => {
+  const responses = await getResponses(id)
+
+  return responses.map(formatResponse)
+}
+
 module.exports = {
-  getLatestResponse
+  getLatestResponse,
+  getAllResponses
 }

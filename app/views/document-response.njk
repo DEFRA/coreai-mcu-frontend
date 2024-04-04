@@ -54,40 +54,43 @@
       </div>
       <p id="Correspondence" class="govuk-body" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu</p>
 
-      <form action="/document-response" method="get">
-        <div class="govuk-grid-row govuk-body">
-          <div class="govuk-grid-column-one-quarter">
-            <strong>Persona</strong>
+      {% if response.response %}
+        <form action="/document-response" method="get">
+          <div class="govuk-grid-row govuk-body">
+            <div class="govuk-grid-column-one-quarter">
+              <strong>Persona</strong>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+              <strong>Prompt</strong>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+              <strong>Model</strong>
+            </div>
           </div>
-          <div class="govuk-grid-column-one-quarter">
-            <strong>Prompt</strong>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <strong>Model</strong>
-          </div>
-        </div>
 
-        <div class="govuk-grid-row govuk-body">
-          <div class="govuk-grid-column-one-quarter">
-            {{ response.PersonaTitle }}
+          <div class="govuk-grid-row govuk-body">
+            <div class="govuk-grid-column-one-quarter">
+              Government official
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+              Government official
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+              GPT3.5
+            </div>
           </div>
-          <div class="govuk-grid-column-one-quarter">
-            {{ response.PromptTitle }}
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            {{ response.LLMModel }}
-          </div>
-        </div>
 
-        <h2 class="govuk-heading-m">Response</h2>
+          <h2 class="govuk-heading-m">Response</h2>
 
-        <p class="govuk-body summary">{{ response.response }}</p>
+          <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
 
-        <button type="submit" class="govuk-button" data-module="govuk-button">
-          Send this response
-        </button>
-        <p class="govuk-body">This will get {% if document.sourceType == 'email' %}emailed{% endif %}{% if document.sourceType == 'letter' %}posted{% endif %} to {{ document.sourceAddress }}
-      </form>
+          {# <button type="submit" class="govuk-button" data-module="govuk-button">
+            Send this response
+          </button>
+          <p class="govuk-body">This will get {% if document.sourceType == 'email' %}emailed{% endif %}{% if document.sourceType == 'letter' %}posted{% endif %} to {{ document.sourceAddress }} #}
+        </form>
+      {% endif %}
+
 
       <form action="/document/response" method="post">
         <h2 class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
