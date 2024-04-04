@@ -94,8 +94,8 @@
       {% endif %}
 
 
-      <form action="/document/response" method="post">
-        <h2 class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
+      <form id="response_form" action="/document/response" method="post">
+        <h2 id="customise_input" class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
 
         <textarea class="govuk-textarea" id="more-detail" name="usertext" rows="5" aria-describedby="more-detail-hint">{{ usertext }}</textarea>
         <details class="govuk-details govuk-details-no-border">
@@ -130,4 +130,56 @@
       </form>
     </div>
   </div>
+{% endblock %}
+
+{% block bodyEnd %}
+  <script>
+    const form = document.querySelector('#response_form')
+
+    const documentId = form.querySelector('input[name="documentId"]').value
+
+    const formAttributes = form.attributes
+
+    const es = new EventSource(`/document/${documentId}/response/events`)
+
+    es.addEventListener('error', (event) => {
+      console.error(event)
+    })
+
+    form.onsubmit = async (event) => {
+      event.preventDefault()
+
+      const documentId = form.querySelector('input[name="documentId"]').value
+
+      const data = {
+        documentId: form.querySelector('input[name="documentId"]').value,
+        usertext: form.querySelector('textarea[name="usertext"]').value,
+        action: event.submitter.attributes['value'].value
+      }
+
+      console.log(data)
+
+      try {
+        const res = await fetch(formAttributes['action'].value, {
+          method: formAttributes['method'].value,
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+
+        console.log(res)
+      } catch (error) {
+        console.error(error)
+      }
+
+      es.addEventListener('message', (event) => {
+        const data = JSON.parse(event.data)
+        
+        if (data.event === 'response') {
+          location.reload()
+        }
+      })
+    }
+  </script>
 {% endblock %}
