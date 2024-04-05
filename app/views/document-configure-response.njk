@@ -103,16 +103,16 @@
           </div>
         </div>
 
-        {% for k in knowledge %}
+        {% for article in knowledge %}
         <div class="govuk-grid-row govuk-body">
           <div class="govuk-grid-column-one-third">
-            {{ k.fileName }}
+            {{ article.fileName }}
           </div>
           <div class="govuk-grid-column-one-third">
-            {{ k.lastModified }}
+            {{ article.lastModified }}
           </div>
           <div class="govuk-grid-column-one-third">
-            {{ k.category }}
+            {{ article.category }}
           </div>
         </div>
         {% endfor %}

@@ -12,7 +12,7 @@ const formatKnowledge = (knowledge) => {
   }
 }
 
-const getAllKnowledge = async (category) => {
+const getAllKnowledge = async (category = '') => {
   const responses = await listKnowledge(category)
 
   return responses.map(formatKnowledge)

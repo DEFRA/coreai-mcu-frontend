@@ -9,7 +9,7 @@ module.exports = [{
     handler: async (request, h) => {
       const documentId = request.params.id
       const contents = await getDocumentContent(documentId)
-      const knowledge = await getAllKnowledge('')
+      const knowledge = await getAllKnowledge()
 
       return h.view('document-configure-response', { documentId, contents, categories, document, personas, prompts, models, knowledge })
     }
