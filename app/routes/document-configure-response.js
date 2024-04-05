@@ -7,7 +7,7 @@ module.exports = [{
   options: {
     handler: async (request, h) => {
       const documentId = request.params.id
-      let contents = await getDocumentContent(documentId)
+      const contents = await getDocumentContent(documentId)
 
       return h.view('document-configure-response', { documentId, contents, categories, document, personas, prompts, models })
     }
