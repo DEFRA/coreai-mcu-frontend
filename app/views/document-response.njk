@@ -87,6 +87,15 @@
               </span>
             </summary>
             <div class="govuk-details__text">
+              {% if not response.citations | length %}
+                <div class="govuk-warning-text">
+                  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                  <strong class="govuk-warning-text__text">
+                    <span class="govuk-visually-hidden">Warning</span>
+                    No sources found.
+                  </strong>
+                </div>
+              {% endif %}
               {% for citation in response.citations %}
                 <div class="govuk-summary-card">
                   <div class="govuk-summary-card__title-wrapper">
