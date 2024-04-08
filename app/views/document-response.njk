@@ -1,8 +1,6 @@
 {# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
 {% extends '_layout.njk' %}
-
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-
 {% block beforeContent %}
   {{ govukBreadcrumbs({
     items: [
@@ -17,13 +15,10 @@
     ]
   }) }}
 {% endblock %}
-
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-
       <h1 class="govuk-heading-xl">Document response</h1>
-
       <div class="govuk-grid-row govuk-body">
         <div class="govuk-grid-column-one-quarter">
           <strong>Name</strong>
@@ -35,7 +30,6 @@
           <strong>Category</strong>
         </div>
       </div>
-
       <div class="govuk-grid-row govuk-body">
         <div class="govuk-grid-column-one-quarter">
           {{ document.metadata.fileName }}
@@ -47,7 +41,11 @@
           {{ document.metadata.suggestedCategory }}
         </div>
         <div class="govuk-grid-column-one-quarter govuk-!-text-align-right">
-          <button type="button" class="govuk-button" data-module="govuk-button" onclick="document.getElementById('Correspondence').style.display = 'block'">
+          <button
+            type="button"
+            class="govuk-button"
+            data-module="govuk-button"
+            onclick="document.getElementById('Correspondence').style.display = 'block'">
             View
           </button>
         </div>
@@ -69,7 +67,6 @@
               <strong>Model</strong>
             </div>
           </div>
-
           <div class="govuk-grid-row govuk-body">
             <div class="govuk-grid-column-one-quarter">
               Government official
@@ -81,22 +78,69 @@
               GPT3.5
             </div>
           </div>
-
           <h2 class="govuk-heading-m">Response</h2>
-
           <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
-
-          {# <button type="submit" class="govuk-button" data-module="govuk-button">
-            Send this response
-          </button>
-          <p class="govuk-body">This will get {% if document.sourceType == 'email' %}emailed{% endif %}{% if document.sourceType == 'letter' %}posted{% endif %} to {{ document.sourceAddress }} #}
+          <details class="govuk-details govuk-details-no-border">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Sources
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              {% if not response.citations | length %}
+                <div class="govuk-warning-text">
+                  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                  <strong class="govuk-warning-text__text">
+                    <span class="govuk-visually-hidden">Warning</span>
+                    No sources found.
+                  </strong>
+                </div>
+              {% endif %}
+              {% for citation in response.citations %}
+                <div class="govuk-summary-card">
+                  <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title">
+                      Source {{ loop.index }}: {{ citation.title }}
+                    </h2>
+                  </div>
+                  <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Source
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ citation.source }}
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Category
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ citation.category }}
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Lines
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {% for line in citation.locations.lines %}
+                            {{ line.from }}-{{ line.to }}{% if not loop.last %}, {% endif %}
+                          {% endfor %}
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </details>
         </form>
       {% endif %}
-
-
       <form action="/document/response" method="post">
         <h2 class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
-
         <textarea class="govuk-textarea" id="more-detail" name="usertext" rows="5" aria-describedby="more-detail-hint">{{ usertext }}</textarea>
         <details class="govuk-details govuk-details-no-border">
           <summary class="govuk-details__summary">
@@ -111,23 +155,34 @@
             </ul>
           </div>
         </details>
-
         <div class="govuk-button-group govuk-!-margin-top-8">
-          <button type="submit" name="action" value="generate" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
+          <button
+            type="submit"
+            name="action"
+            value="generate"
+            data-prevent-double-click="true"
+            class="govuk-button"
+            data-module="govuk-button">
             Generate response
           </button>
-
-          <a href="/document/{{ document.documentId }}/response/history" data-prevent-double-click="true" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+          <a
+            href="/document/{{ document.documentId }}/response/history"
+            data-prevent-double-click="true"
+            class="govuk-button govuk-button--secondary"
+            data-module="govuk-button">
             Response history
           </a>
-
-          <button type="submit" name="action" value="start_over" data-prevent-double-click="true" class="govuk-button govuk-button--warning" data-module="govuk-button">
+          <button
+            type="submit"
+            name="action"
+            value="start_over"
+            data-prevent-double-click="true"
+            class="govuk-button govuk-button--warning"
+            data-module="govuk-button">
             Start over
           </button>
         </div>
-
-        <input type="hidden" name="documentId" value="{{ document.documentId }}">
-      </form>
+        <input type="hidden" name="documentId" value="{{ document.documentId }}"></form>
+      </div>
     </div>
-  </div>
-{% endblock %}
+  {% endblock %}
