@@ -89,10 +89,40 @@
           </select>
         </P>
 
-        <button type="submit" class="govuk-button" data-module="govuk-button">
-          Next
-        </button>
-        <input type="hidden" name="documentId" value="{{ documentId }}">
+        <h3 class="govuk-heading-s">Knowledge</h3>
+
+        <div class="govuk-grid-row govuk-body">
+          <div class="govuk-grid-column-one-third">
+            <strong>File</strong>
+          </div>
+          <div class="govuk-grid-column-one-third">
+            <strong>Date</strong>
+          </div>
+          <div class="govuk-grid-column-one-third">
+            <strong>Category</strong>
+          </div>
+        </div>
+
+        {% for article in knowledge %}
+        <div class="govuk-grid-row govuk-body">
+          <div class="govuk-grid-column-one-third">
+            {{ article.fileName }}
+          </div>
+          <div class="govuk-grid-column-one-third">
+            {{ article.lastModified }}
+          </div>
+          <div class="govuk-grid-column-one-third">
+            {{ article.category }}
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="govuk-!-margin-top-8">
+          <button type="submit" class="govuk-button" data-module="govuk-button">
+            Next
+          </button>
+          <input type="hidden" name="documentId" value="{{ documentId }}">
+        </div>
       </form>
     </div>
   </div>
