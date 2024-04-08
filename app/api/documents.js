@@ -4,6 +4,7 @@ const { documentsApi: config } = require('../config/api')
 const baseUrl = config.baseUrl
 
 const getDocuments = async () => {
+  console.log(`${baseUrl}/documents`)
   return get(`${baseUrl}/documents`)
 }
 

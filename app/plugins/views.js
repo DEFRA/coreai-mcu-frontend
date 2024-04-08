@@ -32,8 +32,8 @@ module.exports = {
       appVersion: pkg.version,
       assetPath: '/static',
       govukAssetPath: '/assets',
-      serviceName: 'coreai-mcu-frontend',
-      pageTitle: 'coreai-mcu-frontend - GOV.UK'
+      serviceName: 'Ministerial Correspondence',
+      pageTitle: 'Ministerial Correspondence - GOV.UK'
     }
   }
 }
