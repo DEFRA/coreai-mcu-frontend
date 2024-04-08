@@ -1,7 +1,7 @@
 const { getExtension } = require('../lib/file')
 const { categories } = require('../models/constants')
 const schema = require('../schema/upload-knowledge')
-const { upload } = require('../services/upload-knowledge')
+const { upload, saveUri } = require('../services/upload-knowledge')
 
 module.exports = [{
   method: 'GET',
@@ -40,7 +40,11 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      await upload(request.payload)
+      if (request.payload.uploadtype === 'file') {
+        await upload(request.payload)
+      } else {
+        //
+      }
 
       return h.redirect('/')
     }
