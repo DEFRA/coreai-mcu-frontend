@@ -16,7 +16,6 @@ const uploadKnowledge = async (knowledge, contentType) => {
 }
 
 const updateKnowledgeMetadata = async (id, metadata) => {
-  console.log('updateKnowledgeMetadata', `${baseUrl}/knowledge/${id}`)
   return put(`${baseUrl}/knowledge/${id}`, metadata)
 }
 

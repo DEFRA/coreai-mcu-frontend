@@ -43,7 +43,7 @@ module.exports = [{
       if (request.payload.uploadtype === 'file') {
         await upload(request.payload)
       } else {
-        //
+        await saveUri(request.payload)
       }
 
       return h.redirect('/')

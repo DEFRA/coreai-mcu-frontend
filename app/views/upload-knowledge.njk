@@ -43,7 +43,7 @@
           <fieldset class="govuk-fieldset" aria-describedby="upload-type-hint">
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="upload-type" name="uploadtype" type="radio" value="file" data-aria-controls="conditional-upload-type"{% if uploadtype != 'text' %} checked{% endif %}>
+                <input class="govuk-radios__input" id="upload-type" name="uploadtype" type="radio" value="file" data-aria-controls="conditional-upload-type"{% if uploadtype != 'uri' %} checked{% endif %}>
                 <label class="govuk-label govuk-radios__label" for="upload-type">
                   Upload a file
                 </label>
@@ -71,16 +71,16 @@
                 </div>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="upload-type-2" name="uploadtype" type="radio" value="uri" data-aria-controls="conditional-upload-type-2"{% if uploadtype == 'text' %} checked{% endif %}>
+                <input class="govuk-radios__input" id="upload-type-2" name="uploadtype" type="radio" value="uri" data-aria-controls="conditional-upload-type-2"{% if uploadtype == 'uri' %} checked{% endif %}>
                 <label class="govuk-label govuk-radios__label" for="upload-type-2">
                   Web address
                 </label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-upload-type-2">
                 <div class="govuk-form-group">
-                  {% if err and uploadtype == 'text' and uri == '' %}
+                  {% if err and uploadtype == 'uri' and uri == '' %}
                   <p class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span> Enter a valid url
+                    <span class="govuk-visually-hidden">Error:</span> Enter a valid url{{err}}
                   </p>
                   {% endif %}
                   <div id="more-detail-hint" class="govuk-hint">

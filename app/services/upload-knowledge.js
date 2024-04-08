@@ -42,6 +42,11 @@ const upload = async (payload) => {
   await updateKnowledgeMetadata(id, metadataPayload)
 }
 
+const saveUri = async (payload) => {
+  //
+}
+
 module.exports = {
-  upload
+  upload,
+  saveUri
 }
