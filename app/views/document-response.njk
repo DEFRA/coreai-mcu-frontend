@@ -70,6 +70,67 @@
             </tbody>
           </table>
 
+          <h2 class="govuk-heading-m">Document Summary</h2>
+
+          <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Author
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ response.documentSummary.author }}
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Title
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ response.documentSummary.title }}
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Sentiment
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ response.documentSummary.sentiment }}
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Summary
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ response.documentSummary.summary | replace('\n', '<br>') | safe }}
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Key points
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <ul class="govuk-list govuk-list--bullet">
+                  {% for point in response.documentSummary.keyPoints %}
+                    <li>{{ point }}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Key facts
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <ul class="govuk-list govuk-list--bullet">
+                  {% for fact in response.documentSummary.keyPoints %}
+                    <li>{{ fact }}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+            </div>
+          </dl>
+
           <h2 class="govuk-heading-m">Response</h2>
           <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
           
