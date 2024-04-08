@@ -4,6 +4,7 @@ const routes = [].concat(
   require('../routes/document-configure-response'),
   require('../routes/document-response'),
   require('../routes/document-history'),
+  require('../routes/upload-knowledge'),
   require('../routes/healthy'),
   require('../routes/healthz'),
   require('../routes/static')

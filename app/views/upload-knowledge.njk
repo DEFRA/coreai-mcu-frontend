@@ -1,0 +1,125 @@
+{# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
+{% extends '_layout.njk' %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Upload new knowledge",
+        href: "#"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full govuk-body">
+
+      <h1 class="govuk-heading-xl">Upload knowledge</h1>
+
+      <form method="post" novalidate="novalidate" enctype="multipart/form-data">
+        <div class="govuk-form-group{% if err and title == '' %} govuk-form-group--error{% endif %}">
+          <div class="govuk-!-margin-top-7">
+            <label class="govuk-label" for="title">
+              Title
+            </label>
+            {% if err and title == '' %}
+            <p class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Enter a title
+            </p>
+            {% endif %}
+            <input class="govuk-input" id="title" name="title" type="text" value="{{ title }}">
+          </div>
+        </div>
+
+        <div class="govuk-form-group{% if err and filetype not in ['pdf', 'doc', 'docx'] %} govuk-form-group--error{% endif %}">
+          <fieldset class="govuk-fieldset" aria-describedby="upload-type-hint">
+            <div class="govuk-radios" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="upload-type" name="uploadtype" type="radio" value="file" data-aria-controls="conditional-upload-type"{% if uploadtype != 'text' %} checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="upload-type">
+                  Upload a file
+                </label>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-upload-type">
+                <div class="govuk-form-group">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="file-upload-1">
+                      Choose a file to upload
+                    </label>
+                    {% if err and uploadtype == 'file' and filetype not in ['pdf', 'doc', 'docx'] %}
+                    <p class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span> Upload a valid file
+                    </p>
+                    {% endif %}
+                    <input class="govuk-file-upload" id="file-upload-1" name="document" type="file">
+                  </div>
+                  <div id="location-upload-hint">
+                    <p>The file should:</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                      <li>Have an extension of .pdf, .doc or .docx</li>
+                      <li>Be no larger than 50 MB</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="upload-type-2" name="uploadtype" type="radio" value="uri" data-aria-controls="conditional-upload-type-2"{% if uploadtype == 'text' %} checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="upload-type-2">
+                  Web address
+                </label>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-upload-type-2">
+                <div class="govuk-form-group">
+                  {% if err and uploadtype == 'text' and uri == '' %}
+                  <p class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span> Enter a valid url
+                  </p>
+                  {% endif %}
+                  <div id="more-detail-hint" class="govuk-hint">
+                    Enter a valid URL
+                  </div>
+                  <textarea class="govuk-textarea" id="more-detail" name="uri" rows="1" aria-describedby="more-detail-hint">{{ uri }}</textarea>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="govuk-form-group{% if err and category == '' %} govuk-form-group--error{% endif %}">
+          <div class="govuk-!-margin-top-7">
+            <label class="govuk-label" for="category">
+              Category
+            </label>
+            {% if err and category == '' %}
+            <p class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Choose a category
+            </p>
+            {% endif %}
+            <select class="govuk-select" id="category" name="category">
+              <option></option>
+              {% for c in categories %}
+              <option value="{{ c }}"{% if c == category %} selected{% endif %}>{{ c }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="govuk-form-group">
+          <div class="govuk-!-margin-top-7">
+            <button type="submit" class="govuk-button" data-module="govuk-button">
+              Upload knowledge
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
