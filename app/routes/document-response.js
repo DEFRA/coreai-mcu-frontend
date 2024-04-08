@@ -11,17 +11,7 @@ module.exports = [{
 
       const document = await getDocumentData(documentId)
       const response = await getLatestResponse(documentId)
-
-      for (const citation of response.citations) {
-        const locations = citation.content.reduce((acc, content) => {
-          const location = content.loc
-          acc.push({ ...location })
-          return acc
-        }, [])
-        citation.locations = locations.sort((a, b) => a.lines.from - b.lines.from)
-      }
-      console.dir(response, { depth: null })
-      
+     
       return h.view('document-response', { document, response })
     }
   }

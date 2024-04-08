@@ -100,18 +100,34 @@
                 <div class="govuk-summary-card">
                   <div class="govuk-summary-card__title-wrapper">
                     <h2 class="govuk-summary-card__title">
-                      {{ citation.title }}
+                      Source {{ loop.index }}: {{ citation.title }}
                     </h2>
                   </div>
                   <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list">
                       <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key">
+                          Source
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ citation.source }}
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Category
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ citation.category }}
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
                           Lines
                         </dt>
                         <dd class="govuk-summary-list__value">
-                          {% for location in citation.locations %}
-                            {{ location.lines.from }}-{{ location.lines.to }}
+                          {% for line in citation.locations.lines %}
+                            {{ line.from }}-{{ line.to }}{% if not loop.last %}, {% endif %}
                           {% endfor %}
                         </dd>
                       </div>
