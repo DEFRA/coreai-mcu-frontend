@@ -1,0 +1,45 @@
+{# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
+{% extends '_layout.njk' %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Document Response",
+        href: "/document/" + docId + "/response"
+      },
+      {
+        text: "Document citations",
+        href: "#"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl">Document citations</h1>
+      {% for citation in citations %}
+        <h2 class="govuk-heading-m">
+          Source {{ loop.index }}: {{ citation.title }}
+        </h2>
+        <br>
+        {% for content in citation.content %}
+          <h3 class="govuk-heading-s">From line {{ content.loc.lines.from }} to line {{ content.loc.lines.to }} in {{citation.fileName}}</h3>
+          <p class="govuk-body summary">
+            {{ content.pageContent | replace("\n", "<br>") | safe }}
+          </p>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

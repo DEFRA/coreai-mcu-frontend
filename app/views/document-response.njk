@@ -127,12 +127,13 @@
                         </div>
                         <div class="govuk-summary-list__row">
                           <dt class="govuk-summary-list__key">
-                            Lines
                           </dt>
                           <dd class="govuk-summary-list__value">
-                            {% for line in citation.locations.lines %}
-                              {{ line.from }}-{{ line.to }}{% if not loop.last %}, {% endif %}
-                            {% endfor %}
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a href="/document/{{ document.documentId }}/response/citations" class="govuk-link" data-module="govuk-link">
+                              View Citations
+                            </a>
                           </dd>
                         </div>
                       </dl>
