@@ -1,6 +1,7 @@
 const { sendGenerationRequest } = require('../messaging/outbound/generation-request')
 const { getLatestResponse } = require('../services/responses')
 const { getDocumentData, getDocumentContent } = require('../services/documents')
+const { registerClient } = require('../sse')
 
 module.exports = [{
   method: 'GET',
@@ -14,6 +15,19 @@ module.exports = [{
       const response = await getLatestResponse(documentId)
 
       return h.view('document-response', { document, contents, response })
+    }
+  }
+},
+{
+  method: 'GET',
+  path: '/document/{id}/response/events',
+  options: {
+    handler: async (request, h) => {
+      const res = h.event({ data: 'open' })
+
+      registerClient(request.params.id, h)
+
+      return res
     }
   }
 },

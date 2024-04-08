@@ -67,6 +67,7 @@
               <strong>Model</strong>
             </div>
           </div>
+          
           <div class="govuk-grid-row govuk-body">
             <div class="govuk-grid-column-one-quarter">
               Government official
@@ -78,69 +79,76 @@
               GPT3.5
             </div>
           </div>
+
           <h2 class="govuk-heading-m">Response</h2>
           <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
-          <details class="govuk-details govuk-details-no-border">
-            <summary class="govuk-details__summary">
-              <span class="govuk-details__summary-text">
-                Sources
-              </span>
-            </summary>
-            <div class="govuk-details__text">
-              {% if not response.citations | length %}
-                <div class="govuk-warning-text">
-                  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                  <strong class="govuk-warning-text__text">
-                    <span class="govuk-visually-hidden">Warning</span>
-                    No sources found.
-                  </strong>
-                </div>
-              {% endif %}
-              {% for citation in response.citations %}
-                <div class="govuk-summary-card">
-                  <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title">
-                      Source {{ loop.index }}: {{ citation.title }}
-                    </h2>
-                  </div>
-                  <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list">
-                      <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key">
-                          Source
-                        </dt>
-                        <dd class="govuk-summary-list__value">
-                          {{ citation.source }}
-                        </dd>
-                      </div>
-                      <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key">
-                          Category
-                        </dt>
-                        <dd class="govuk-summary-list__value">
-                          {{ citation.category }}
-                        </dd>
-                      </div>
-                      <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key">
-                          Lines
-                        </dt>
-                        <dd class="govuk-summary-list__value">
-                          {% for line in citation.locations.lines %}
-                            {{ line.from }}-{{ line.to }}{% if not loop.last %}, {% endif %}
-                          {% endfor %}
-                        </dd>
-                      </div>
-                    </dl>
-                  </div>
-                </div>
-              {% endfor %}
+          
+          {% if not response.citations | length %}
+            <div class="govuk-warning-text">
+              <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+              <strong class="govuk-warning-text__text">
+                <span class="govuk-visually-hidden">Warning</span>
+                No sources found.
+              </strong>
             </div>
-          </details>
+          {% endif %}
+          {% if response.citations | length %}
+            <details class="govuk-details govuk-details-no-border">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  Sources
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                {% for citation in response.citations %}
+                  <div class="govuk-summary-card">
+                    <div class="govuk-summary-card__title-wrapper">
+                      <h2 class="govuk-summary-card__title">
+                        Source {{ loop.index }}: {{ citation.title }}
+                      </h2>
+                    </div>
+                    <div class="govuk-summary-card__content">
+                      <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Source
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ citation.source }}
+                          </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Category
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {{ citation.category }}
+                          </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                          <dt class="govuk-summary-list__key">
+                            Lines
+                          </dt>
+                          <dd class="govuk-summary-list__value">
+                            {% for line in citation.locations.lines %}
+                              {{ line.from }}-{{ line.to }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                          </dd>
+                        </div>
+                      </dl>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </details>
+          {% endif %}
         </form>
       {% endif %}
-      <form action="/document/response" method="post">
-        <h2 class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
+
+
+      <form id="response_form" action="/document/response" method="post">
+        <h2 id="customise_input" class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
+
         <textarea class="govuk-textarea" id="more-detail" name="usertext" rows="5" aria-describedby="more-detail-hint">{{ usertext }}</textarea>
         <details class="govuk-details govuk-details-no-border">
           <summary class="govuk-details__summary">
@@ -156,14 +164,8 @@
           </div>
         </details>
         <div class="govuk-button-group govuk-!-margin-top-8">
-          <button
-            type="submit"
-            name="action"
-            value="generate"
-            data-prevent-double-click="true"
-            class="govuk-button"
-            data-module="govuk-button">
-            Generate response
+          <button type="submit" name="action" value="generate" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
+            <span>Generate response</span>
           </button>
           <a
             href="/document/{{ document.documentId }}/response/history"
@@ -185,4 +187,63 @@
         <input type="hidden" name="documentId" value="{{ document.documentId }}"></form>
       </div>
     </div>
-  {% endblock %}
+  </div>
+{% endblock %}
+
+{% block bodyEnd %}
+  <script>
+    const form = document.querySelector('#response_form')
+
+    const documentId = form.querySelector('input[name="documentId"]').value
+
+    const formAttributes = form.attributes
+
+    const es = new EventSource(`/document/${documentId}/response/events`)
+
+    es.addEventListener('error', (event) => {
+      console.error(event)
+    })
+
+    form.onsubmit = async (event) => {
+      event.preventDefault()
+
+      const documentId = form.querySelector('input[name="documentId"]').value
+
+      const data = {
+        documentId: form.querySelector('input[name="documentId"]').value,
+        usertext: form.querySelector('textarea[name="usertext"]').value,
+        action: event.submitter.attributes['value'].value
+      }
+
+      if (data.action === 'generate') {
+        const button = form.querySelector('button[type="submit"][name="action"][value="generate"]')
+
+        button.classList.add('govuk-button--disabled')
+        button.classList.add('button--loading')
+        button.querySelector('span').classList.add('button-text--loading')
+      }
+
+      try {
+        const res = await fetch(formAttributes['action'].value, {
+          method: formAttributes['method'].value,
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+
+      } catch (error) {
+        console.error(error)
+        location.reload()
+      }
+
+      es.addEventListener('message', (event) => {
+        const data = JSON.parse(event.data)
+
+        if (data.event === 'response') {
+          location.reload()
+        }
+      })
+    }
+  </script>
+{% endblock %}
