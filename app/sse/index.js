@@ -10,7 +10,7 @@ const registerClient = (documentId, h) => {
   }
 }
 
-const sendEvent = (documentId, event) => {
+const sendSseEvent = (documentId, event) => {
   const clientArray = clients.get(documentId)
 
   if (clientArray) {
@@ -19,9 +19,11 @@ const sendEvent = (documentId, event) => {
       client.event({ data: { ...event } })
     })
   }
+
+  clients.delete(documentId)
 }
 
 module.exports = {
   registerClient,
-  sendEvent
+  sendSseEvent
 }

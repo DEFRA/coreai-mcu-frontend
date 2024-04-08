@@ -114,7 +114,7 @@
 
         <div class="govuk-button-group govuk-!-margin-top-8">
           <button type="submit" name="action" value="generate" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
-            Generate response
+            <span>Generate response</span>
           </button>
 
           <a href="/document/{{ document.documentId }}/response/history" data-prevent-double-click="true" class="govuk-button govuk-button--secondary" data-module="govuk-button">
@@ -157,7 +157,13 @@
         action: event.submitter.attributes['value'].value
       }
 
-      console.log(data)
+      if (data.action === 'generate') {
+        const button = form.querySelector('button[type="submit"][name="action"][value="generate"]')
+
+        button.classList.add('govuk-button--disabled')
+        button.classList.add('button--loading')
+        button.querySelector('span').classList.add('button-text--loading')
+      }
 
       try {
         const res = await fetch(formAttributes['action'].value, {
@@ -168,14 +174,14 @@
           }
         })
 
-        console.log(res)
       } catch (error) {
         console.error(error)
+        location.reload()
       }
 
       es.addEventListener('message', (event) => {
         const data = JSON.parse(event.data)
-        
+
         if (data.event === 'response') {
           location.reload()
         }
