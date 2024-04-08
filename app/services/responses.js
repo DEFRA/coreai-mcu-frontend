@@ -10,7 +10,7 @@ const formatResponse = (response) => {
     documentId: response.document_id,
     llm: response.llm,
     userPrompt: response.user_prompt,
-    citations: [],
+    citations: response.citations,
     generatedOn
   }
 }
