@@ -52,53 +52,30 @@
           </form>
         </div>
       </div>
-      <div class="govuk-grid-row header govuk-body">
-        <div class="govuk-grid-column-one-quarter">
-          <strong>Name</strong>
-        </div>
-        <div class="govuk-grid-column-one-quarter">
-          <strong>Date</strong>
-        </div>
-        <div class="ggovuk-grid-column-one-quarter">
-          <strong>Category</strong>
-        </div>
-        <div class="govuk-grid-column-one-quarter">
-          <strong></strong>
-        </div>
-      </div>
-
-      {% for document in documents %}
-      <details class="govuk-details">
-        <summary class="govuk-details__summary">
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-quarter col1">
-              <span class="govuk-details__summary-text">
-                {{ document.metadata.fileName }}
-              </span>
-            </div>
-            <div class="govuk-grid-column-one-quarter col2">
-              {{ document.properties.createdOn }}
-            </div>
-            <div class="govuk-grid-column-one-quarter col3">
-              {{ document.metadata.suggestedCategory }}
-            </div>
-            <div class="govuk-grid-column-one-quarter col4">
-              <a style="top:-10px;" href="/document/{{ document.name }}/configure" type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header">Date</th>
+            <th scope="col" class="govuk-table__header">Category</th>
+            <th scope="col" class="govuk-table__header"></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          {% for document in documents %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-table__cell--align-middle">{{ document.metadata.fileName }}</td>
+            <td class="govuk-table__cell govuk-table__cell--align-middle">{{ document.properties.createdOn }}</td>
+            <td class="govuk-table__cell govuk-table__cell--align-middle">{{ document.metadata.suggestedCategory }}</td>
+            <td class="govuk-table__cell">
+              <a href="/document/{{ document.name }}/configure" type="submit" class="govuk-button govuk-button--secondary govuk-button--no-margin" data-module="govuk-button">
                 Proceed
               </a>
-            </div>
-          </div>
-        </summary>
-        <div class="govuk-details__text">
-          <p>
-            {{ document.contents | replace("\n", "<br>") | safe }}
-          </p>
-          <a href="/document/{{ document.name }}/configure" type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-            Proceed
-          </a>
-        </div>
-      </details>
-      {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 {% endblock %}

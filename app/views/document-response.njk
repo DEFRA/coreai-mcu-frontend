@@ -37,42 +37,12 @@
             <td class="govuk-table__cell govuk no-border">{{ document.metadata.fileName }}</td>
             <td class="govuk-table__cell govuk no-border">{{ document.properties.createdOn }}</td>
             <td class="govuk-table__cell govuk no-border">{{ document.metadata.suggestedCategory }}</td>
-            <td class="govuk-table__cell govuk no-border govuk-!-text-align-right">
-              <button
-                type="button"
-                class="govuk-button"
-                data-module="govuk-button"
-                onclick="document.getElementById('Correspondence').style.display = 'block'">
-                View
-              </button>
-            </td>
           </tr>
         </tbody>
       </table>
 
-      <p id="Correspondence" class="govuk-body" style="display: none;">
-        {{ contents | replace("\n", "<br>") | safe }}
-      </p>
-
       {% if response.response %}
         <form action="/document-response" method="get">
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header no-border">Persona</th>
-                <th scope="col" class="govuk-table__header no-border">Prompt</th>
-                <th scope="col" class="govuk-table__header no-border">Model</th>
-              </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell no-border">Government official</td>
-                <td class="govuk-table__cell no-border">Government official</td>
-                <td class="govuk-table__cell no-border">GPT3.5</td>
-              </tr>
-            </tbody>
-          </table>
-
           <h2 class="govuk-heading-m">Document Summary</h2>
 
           <dl class="govuk-summary-list">
@@ -82,14 +52,6 @@
               </dt>
               <dd class="govuk-summary-list__value">
                 {{ response.documentSummary.author }}
-              </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Title
-              </dt>
-              <dd class="govuk-summary-list__value">
-                {{ response.documentSummary.title }}
               </dd>
             </div>
             <div class="govuk-summary-list__row">
