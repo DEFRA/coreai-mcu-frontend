@@ -40,6 +40,8 @@ const upload = async (payload) => {
   const metadataPayload = buildMetadataPayload(payload)
 
   await updateKnowledgeMetadata(id, metadataPayload)
+
+  return id
 }
 
 module.exports = {

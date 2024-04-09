@@ -2,6 +2,7 @@ const { getExtension } = require('../lib/file')
 const { categories } = require('../models/constants')
 const schema = require('../schema/upload-knowledge')
 const { upload } = require('../services/upload-knowledge')
+const { sendKnowledgeRequest } = require('../messaging/outbound/knowledge-request')
 
 module.exports = [{
   method: 'GET',
@@ -40,7 +41,11 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      await upload(request.payload)
+      const documentId = await upload(request.payload)
+
+      await sendKnowledgeRequest({
+        documentId
+      })
 
       return h.redirect('/')
     }
