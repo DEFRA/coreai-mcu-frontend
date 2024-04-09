@@ -132,6 +132,7 @@
           </dl>
 
           <h2 class="govuk-heading-m">Response</h2>
+          <p class="govuk-body">Generated: {{ response.generatedOn }}</p>
           <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
           
           {% if not response.citations | length %}
