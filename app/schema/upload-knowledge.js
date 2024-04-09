@@ -1,7 +1,7 @@
 const Joi = require('joi')
 
 const schema = Joi.object({
-  uploadtype: Joi.string().valid('file', 'text'),
+  uploadtype: Joi.string().valid('file', 'uri'),
   title: Joi.string().required(),
   document: Joi.when('uploadtype', {
     is: 'file',

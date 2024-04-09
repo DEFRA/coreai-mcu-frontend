@@ -80,13 +80,13 @@
                 <div class="govuk-form-group">
                   {% if err and uploadtype == 'uri' and uri == '' %}
                   <p class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span> Enter a valid url{{err}}
+                    <span class="govuk-visually-hidden">Error:</span> Enter a valid url
                   </p>
                   {% endif %}
-                  <div id="more-detail-hint" class="govuk-hint">
+                  <div id="uri-hint" class="govuk-hint">
                     Enter a valid URL
                   </div>
-                  <textarea class="govuk-textarea" id="more-detail" name="uri" rows="1" aria-describedby="more-detail-hint">{{ uri }}</textarea>
+                  <textarea class="govuk-textarea" id="uri" name="uri" rows="1" aria-describedby="uri-hint">{{ uri }}</textarea>
                 </div>
               </div>
             </div>
