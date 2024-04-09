@@ -11,6 +11,7 @@ const formatResponse = (response) => {
     llm: response.llm,
     userPrompt: response.user_prompt,
     citations: response.citations,
+    documentSummary: response.document_summary,
     generatedOn
   }
 }

@@ -19,66 +19,117 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl">Document response</h1>
-      <div class="govuk-grid-row govuk-body">
-        <div class="govuk-grid-column-one-quarter">
-          <strong>Name</strong>
-        </div>
-        <div class="govuk-grid-column-one-quarter">
-          <strong>Date</strong>
-        </div>
-        <div class="govuk-grid-column-one-quarter">
-          <strong>Category</strong>
-        </div>
-      </div>
-      <div class="govuk-grid-row govuk-body">
-        <div class="govuk-grid-column-one-quarter">
-          {{ document.metadata.fileName }}
-        </div>
-        <div class="govuk-grid-column-one-quarter">
-          {{ document.properties.createdOn }}
-        </div>
-        <div class="govuk-grid-column-one-quarter">
-          {{ document.metadata.suggestedCategory }}
-        </div>
-        <div class="govuk-grid-column-one-quarter govuk-!-text-align-right">
-          <button
-            type="button"
-            class="govuk-button"
-            data-module="govuk-button"
-            onclick="document.getElementById('Correspondence').style.display = 'block'">
-            View
-          </button>
-        </div>
-      </div>
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header no-border">Name</th>
+            <th scope="col" class="govuk-table__header no-border">Date</th>
+            <th scope="col" class="govuk-table__header no-border">Category</th>
+            <th scope="col" class="govuk-table__header no-border govuk-!-text-align-right"></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk no-border">{{ document.metadata.fileName }}</td>
+            <td class="govuk-table__cell govuk no-border">{{ document.properties.createdOn }}</td>
+            <td class="govuk-table__cell govuk no-border">{{ document.metadata.suggestedCategory }}</td>
+            <td class="govuk-table__cell govuk no-border govuk-!-text-align-right">
+              <button
+                type="button"
+                class="govuk-button"
+                data-module="govuk-button"
+                onclick="document.getElementById('Correspondence').style.display = 'block'">
+                View
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
       <p id="Correspondence" class="govuk-body" style="display: none;">
         {{ contents | replace("\n", "<br>") | safe }}
       </p>
 
       {% if response.response %}
         <form action="/document-response" method="get">
-          <div class="govuk-grid-row govuk-body">
-            <div class="govuk-grid-column-one-quarter">
-              <strong>Persona</strong>
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header no-border">Persona</th>
+                <th scope="col" class="govuk-table__header no-border">Prompt</th>
+                <th scope="col" class="govuk-table__header no-border">Model</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell no-border">Government official</td>
+                <td class="govuk-table__cell no-border">Government official</td>
+                <td class="govuk-table__cell no-border">GPT3.5</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2 class="govuk-heading-m">Document Summary</h2>
+
+          <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Author
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ response.documentSummary.author }}
+              </dd>
             </div>
-            <div class="govuk-grid-column-one-quarter">
-              <strong>Prompt</strong>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Title
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ response.documentSummary.title }}
+              </dd>
             </div>
-            <div class="govuk-grid-column-one-quarter">
-              <strong>Model</strong>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Sentiment
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ response.documentSummary.sentiment }}
+              </dd>
             </div>
-          </div>
-          
-          <div class="govuk-grid-row govuk-body">
-            <div class="govuk-grid-column-one-quarter">
-              Government official
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Summary
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ response.documentSummary.summary | replace('\n', '<br>') | safe }}
+              </dd>
             </div>
-            <div class="govuk-grid-column-one-quarter">
-              Government official
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Key points
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <ul class="govuk-list govuk-list--bullet">
+                  {% for point in response.documentSummary.keyPoints %}
+                    <li>{{ point }}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
             </div>
-            <div class="govuk-grid-column-one-quarter">
-              GPT3.5
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Key facts
+              </dt>
+              <dd class="govuk-summary-list__value">
+                <ul class="govuk-list govuk-list--bullet">
+                  {% for fact in response.documentSummary.keyFacts %}
+                    <li>{{ fact }}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
             </div>
-          </div>
+          </dl>
 
           <h2 class="govuk-heading-m">Response</h2>
           <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
@@ -127,12 +178,13 @@
                         </div>
                         <div class="govuk-summary-list__row">
                           <dt class="govuk-summary-list__key">
-                            Lines
                           </dt>
                           <dd class="govuk-summary-list__value">
-                            {% for line in citation.locations.lines %}
-                              {{ line.from }}-{{ line.to }}{% if not loop.last %}, {% endif %}
-                            {% endfor %}
+                          </dd>
+                          <dd class="govuk-summary-list__actions">
+                            <a href="/document/{{ document.documentId }}/response/citations" class="govuk-link" data-module="govuk-link">
+                              View Citations
+                            </a>
                           </dd>
                         </div>
                       </dl>

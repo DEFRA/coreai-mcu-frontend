@@ -107,7 +107,7 @@ details.govuk-details div.govuk-details__text p {
 }
 
 summary.govuk-details__summary:before{
-  top:-45px;
+  top: -45px;
 }
 
 summary.govuk-details__summary {
@@ -303,4 +303,7 @@ hr.divider {
         width: 100%;
     }
   }
+
+.no-border {
+  border: none;
 }
