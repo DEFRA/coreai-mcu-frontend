@@ -1,9 +1,11 @@
-const { format, parseISO } = require('date-fns')
+const { parseISO } = require('date-fns')
+const { formatInTimeZone } = require('date-fns-tz')
 const { getResponses } = require('../api/responses')
+const { LONDON } = require('../constants/time-zones')
 
 const formatResponse = (response) => {
   const date = parseISO(response.timestamp)
-  const generatedOn = format(date, 'dd/MM/yyyy HH:mm')
+  const generatedOn = formatInTimeZone(date, LONDON, 'dd/MM/yyyy HH:mm')
 
   return {
     response: response.response,

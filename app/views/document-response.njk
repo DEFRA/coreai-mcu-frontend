@@ -37,42 +37,12 @@
             <td class="govuk-table__cell govuk no-border">{{ document.metadata.fileName }}</td>
             <td class="govuk-table__cell govuk no-border">{{ document.properties.createdOn }}</td>
             <td class="govuk-table__cell govuk no-border">{{ document.metadata.suggestedCategory }}</td>
-            <td class="govuk-table__cell govuk no-border govuk-!-text-align-right">
-              <button
-                type="button"
-                class="govuk-button"
-                data-module="govuk-button"
-                onclick="document.getElementById('Correspondence').style.display = 'block'">
-                View
-              </button>
-            </td>
           </tr>
         </tbody>
       </table>
 
-      <p id="Correspondence" class="govuk-body" style="display: none;">
-        {{ contents | replace("\n", "<br>") | safe }}
-      </p>
-
       {% if response.response %}
         <form action="/document-response" method="get">
-          <table class="govuk-table">
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header no-border">Persona</th>
-                <th scope="col" class="govuk-table__header no-border">Prompt</th>
-                <th scope="col" class="govuk-table__header no-border">Model</th>
-              </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell no-border">Government official</td>
-                <td class="govuk-table__cell no-border">Government official</td>
-                <td class="govuk-table__cell no-border">GPT3.5</td>
-              </tr>
-            </tbody>
-          </table>
-
           <h2 class="govuk-heading-m">Document Summary</h2>
 
           <dl class="govuk-summary-list">
@@ -82,14 +52,6 @@
               </dt>
               <dd class="govuk-summary-list__value">
                 {{ response.documentSummary.author }}
-              </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Title
-              </dt>
-              <dd class="govuk-summary-list__value">
-                {{ response.documentSummary.title }}
               </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -135,6 +97,7 @@
           </dl>
 
           <h2 class="govuk-heading-m">Response</h2>
+          <p class="govuk-body">Generated: {{ response.generatedOn }}</p>
           <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
 
           {% if not response.citations | length %}
@@ -201,22 +164,24 @@
       {% endif %}
 
       <form id="response_form" action="/document/response" method="post">
-        <h2 id="customise_input" class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
+        {% if response.response %}
+          <h2 id="customise_input" class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
 
-        <textarea class="govuk-textarea" id="more-detail" name="usertext" rows="5" aria-describedby="more-detail-hint">{{ usertext }}</textarea>
-        <details class="govuk-details govuk-details-no-border">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              Show examples
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <ul>
-              <li>Remove the first paragraph</li>
-              <li>Add a section explaining the boundary grants that are available</li>
-            </ul>
-          </div>
-        </details>
+          <textarea class="govuk-textarea" id="more-detail" name="usertext" rows="5" aria-describedby="more-detail-hint">{{ usertext }}</textarea>
+          <details class="govuk-details govuk-details-no-border">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Show examples
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ul>
+                <li>Remove the first paragraph</li>
+                <li>Add a section explaining the boundary grants that are available</li>
+              </ul>
+            </div>
+          </details>
+        {% endif %}
         <div class="govuk-button-group govuk-!-margin-top-8">
           <button type="submit" name="action" value="generate" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
             <span>Generate response</span>
@@ -265,7 +230,7 @@
 
       const data = {
         documentId: form.querySelector('input[name="documentId"]').value,
-        usertext: form.querySelector('textarea[name="usertext"]').value,
+        usertext: form.querySelector('textarea[name="usertext"]')?.value ?? '',
         action: event.submitter.attributes['value'].value
       }
 

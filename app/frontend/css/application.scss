@@ -106,14 +106,6 @@ details.govuk-details div.govuk-details__text p {
   color: dimgrey;
 }
 
-summary.govuk-details__summary:before{
-  top: -45px;
-}
-
-summary.govuk-details__summary {
-  width: 100%;
-}
-
 summary.govuk-details__summary div.col2, summary.govuk-details__summary div.col3 {
   color: black;
   cursor: pointer;
@@ -307,4 +299,12 @@ hr.divider {
 
 .no-border {
   border: none;
+}
+
+.govuk-button--no-margin {
+  margin-bottom: 0px;
+}
+
+.govuk-table__cell--align-middle {
+  vertical-align: middle;
 }
