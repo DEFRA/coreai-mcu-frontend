@@ -41,7 +41,7 @@ module.exports = [{
     handler: async (request, h) => {
       await upload(request.payload)
 
-      return h.redirect('/document/queue')
+      return h.redirect('/documents/queue')
     }
   }
 }]

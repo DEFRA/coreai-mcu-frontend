@@ -200,22 +200,24 @@
 
 
       <form id="response_form" action="/document/response" method="post">
-        <h2 id="customise_input" class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
+        {% if response.response %}
+          <h2 id="customise_input" class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
 
-        <textarea class="govuk-textarea" id="more-detail" name="usertext" rows="5" aria-describedby="more-detail-hint">{{ usertext }}</textarea>
-        <details class="govuk-details govuk-details-no-border">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">
-              Show examples
-            </span>
-          </summary>
-          <div class="govuk-details__text">
-            <ul>
-              <li>Remove the first paragraph</li>
-              <li>Add a section explaining the boundary grants that are available</li>
-            </ul>
-          </div>
-        </details>
+          <textarea class="govuk-textarea" id="more-detail" name="usertext" rows="5" aria-describedby="more-detail-hint">{{ usertext }}</textarea>
+          <details class="govuk-details govuk-details-no-border">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Show examples
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <ul>
+                <li>Remove the first paragraph</li>
+                <li>Add a section explaining the boundary grants that are available</li>
+              </ul>
+            </div>
+          </details>
+        {% endif %}
         <div class="govuk-button-group govuk-!-margin-top-8">
           <button type="submit" name="action" value="generate" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
             <span>Generate response</span>
@@ -264,7 +266,7 @@
 
       const data = {
         documentId: form.querySelector('input[name="documentId"]').value,
-        usertext: form.querySelector('textarea[name="usertext"]').value,
+        usertext: form.querySelector('textarea[name="usertext"]')?.value ?? '',
         action: event.submitter.attributes['value'].value
       }
 
