@@ -106,7 +106,7 @@ details.govuk-details div.govuk-details__text p {
   color: dimgrey;
 }
 
-summary.govuk-details__summary:before{
+summary.govuk-details__summary:before {
   top: -45px;
 }
 
@@ -307,4 +307,36 @@ hr.divider {
 
 .no-border {
   border: none;
+}
+
+div.documents {
+  div.govuk-grid-row.header div:nth-child(2) {
+    padding-left: 32px;
+  }
+
+  div.govuk-grid-row.header div:nth-child(3) {
+    padding-left: 22px;
+  }
+
+  summary.govuk-details__summary {
+    width: calc(100% - 25px);
+  }
+
+  summary.govuk-details__summary:before {
+    top: 0;
+  }
+
+  div.col1, div.col2, div.col3 {
+    width: calc((100% - 125px) / 3);
+    padding-top: 7px;
+  }
+
+  div.col4 {
+    width: 100px;
+    text-align: right;
+
+    a.govuk-button--secondary {
+      margin-bottom: 0;
+    }
+  }
 }
