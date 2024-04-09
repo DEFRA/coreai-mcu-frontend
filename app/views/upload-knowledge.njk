@@ -11,7 +11,7 @@
         href: "/"
       },
       {
-        text: "Upload a new document",
+        text: "Upload new knowledge",
         href: "#"
       }
     ]
@@ -22,14 +22,28 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full govuk-body">
 
-      <h1 class="govuk-heading-xl">Upload a document</h1>
+      <h1 class="govuk-heading-xl">Upload knowledge</h1>
 
       <form method="post" novalidate="novalidate" enctype="multipart/form-data">
+        <div class="govuk-form-group{% if err and title == '' %} govuk-form-group--error{% endif %}">
+          <div class="govuk-!-margin-top-7">
+            <label class="govuk-label" for="title">
+              Title
+            </label>
+            {% if err and title == '' %}
+            <p class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Enter a title
+            </p>
+            {% endif %}
+            <input class="govuk-input" id="title" name="title" type="text" value="{{ title }}">
+          </div>
+        </div>
+
         <div class="govuk-form-group{% if err and filetype not in ['pdf', 'doc', 'docx'] %} govuk-form-group--error{% endif %}">
           <fieldset class="govuk-fieldset" aria-describedby="upload-type-hint">
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="upload-type" name="uploadtype" type="radio" value="file" data-aria-controls="conditional-upload-type"{% if uploadtype != 'text' %} checked{% endif %}>
+                <input class="govuk-radios__input" id="upload-type" name="uploadtype" type="radio" value="file" data-aria-controls="conditional-upload-type"{% if uploadtype != 'uri' %} checked{% endif %}>
                 <label class="govuk-label govuk-radios__label" for="upload-type">
                   Upload a file
                 </label>
@@ -57,22 +71,22 @@
                 </div>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="upload-type-2" name="uploadtype" type="radio" value="text" data-aria-controls="conditional-upload-type-2"{% if uploadtype == 'text' %} checked{% endif %}>
+                <input class="govuk-radios__input" id="upload-type-2" name="uploadtype" type="radio" value="uri" data-aria-controls="conditional-upload-type-2"{% if uploadtype == 'uri' %} checked{% endif %}>
                 <label class="govuk-label govuk-radios__label" for="upload-type-2">
-                  Text entry
+                  Web address
                 </label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-upload-type-2">
                 <div class="govuk-form-group">
-                  {% if err and uploadtype == 'text' and usertext == '' %}
+                  {% if err and uploadtype == 'uri' and uri == '' %}
                   <p class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span> Enter some text
+                    <span class="govuk-visually-hidden">Error:</span> Enter a valid url
                   </p>
                   {% endif %}
-                  <div id="usertext-hint" class="govuk-hint">
-                    Do not include personal or financial information, like your National Insurance number or credit card details.
+                  <div id="uri-hint" class="govuk-hint">
+                    Enter a valid URL
                   </div>
-                  <textarea class="govuk-textarea" id="usertext" name="usertext" rows="5" aria-describedby="usertext-hint">{{ usertext }}</textarea>
+                  <textarea class="govuk-textarea" id="uri" name="uri" rows="1" aria-describedby="uri-hint">{{ uri }}</textarea>
                 </div>
               </div>
             </div>
@@ -81,7 +95,7 @@
 
         <div class="govuk-form-group{% if err and category == '' %} govuk-form-group--error{% endif %}">
           <div class="govuk-!-margin-top-7">
-            <label class="govuk-label" for="sort">
+            <label class="govuk-label" for="category">
               Category
             </label>
             {% if err and category == '' %}
@@ -101,7 +115,7 @@
         <div class="govuk-form-group">
           <div class="govuk-!-margin-top-7">
             <button type="submit" class="govuk-button" data-module="govuk-button">
-              Upload document
+              Upload knowledge
             </button>
           </div>
         </div>
