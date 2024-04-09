@@ -1,0 +1,104 @@
+{# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
+{% extends '_layout.njk' %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Document queue",
+        href: "#"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <h1 class="govuk-heading-xl">Document queue</h1>
+
+      <div class="govuk-grid-row header govuk-body">
+        <div class="govuk-grid-column-one-third">
+          <div class="search" data-module="search" data-path-to-site-root="/" data-search-module-started="true">
+            <form action="#" method="post" role="search">
+              <label class="govuk-label search__label" for="search" aria-hidden="true">Search</label>
+              <input type="text" id="search" name="q" class="govuk-input govuk-!-margin-bottom-0 search__input" aria-controls="search-results" placeholder="Search">
+              <button class="search__button" type="submit" enterkeyhint="search">
+                <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                  <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                  <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          &nbsp;
+        </div>
+        <div class="govuk-grid-column-one-third govuk-!-text-align-right">
+          <form action="/upload-document" method="get" role="upload">
+            <button type="submit" class="govuk-button" data-module="govuk-button">
+              Upload a new document
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="govuk-grid-row header govuk-body">
+        <div class="govuk-grid-column-one-quarter">
+          <strong>Name</strong>
+        </div>
+        <div class="govuk-grid-column-one-quarter">
+          <strong>Date</strong>
+        </div>
+        <div class="ggovuk-grid-column-one-quarter">
+          <strong>Category</strong>
+        </div>
+        <div class="govuk-grid-column-one-quarter">
+          <strong></strong>
+        </div>
+      </div>
+
+      {% for document in documents %}
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-quarter col1">
+              <span class="govuk-details__summary-text">
+                {{ document.metadata.fileName }}
+              </span>
+            </div>
+            <div class="govuk-grid-column-one-quarter col2">
+              {{ document.properties.createdOn }}
+            </div>
+            <div class="govuk-grid-column-one-quarter col3">
+              {{ document.metadata.suggestedCategory }}
+            </div>
+            <div class="govuk-grid-column-one-quarter col4">
+              <a style="top:-10px;" href="/document/{{ document.name }}/configure" type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                Proceed
+              </a>
+            </div>
+          </div>
+        </summary>
+        <div class="govuk-details__text">
+          <p>
+            {{ document.contents | replace("\n", "<br>") | safe }}
+          </p>
+          <a href="/document/{{ document.name }}/configure" type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+            Proceed
+          </a>
+        </div>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
