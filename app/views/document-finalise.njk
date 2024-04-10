@@ -1,0 +1,54 @@
+{# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
+{% extends '_layout.njk' %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Document response",
+        href: "/document/" + documentId + "/response"
+      },
+      {
+        text: "Document finalisation",
+        href: "#"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">Document Finalisation</h1>
+      <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
+      <form id="response_form" action="/document/finalise" method="post">
+        <input type="hidden" name="documentId" value="{{ documentId }}">
+        <button
+            type="submit"
+            name="action"
+            value="Save"
+            data-prevent-double-click="true"
+            class="govuk-button govuk-button"
+            data-module="govuk-button">
+            Save
+          </button>
+          <button
+            type="submit"
+            name="action"
+            value="save_send"
+            data-prevent-double-click="true"
+            class="govuk-button govuk-button"
+            data-module="govuk-button">
+            Save & Send
+          </button>
+      </form>
+  </div>
+{% endblock %}

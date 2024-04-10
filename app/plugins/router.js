@@ -7,6 +7,8 @@ const routes = [].concat(
   require('../routes/upload-knowledge'),
   require('../routes/document-queue'),
   require('../routes/document-citations'),
+  require('../routes/document-finalise'),
+  require('../routes/document-notify'),
   require('../routes/healthy'),
   require('../routes/healthz'),
   require('../routes/static')

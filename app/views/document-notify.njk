@@ -1,0 +1,63 @@
+{# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
+{% extends '_layout.njk' %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Document response",
+        href: "/document/" + documentId + "/response"
+      },
+      {
+        text: "Document finalisation",
+        href: "/document/" + documentId + "/finalise"
+      },
+      {
+        text: "Document email",
+        href: "#"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">Document Email</h1>
+      <form id="response_form" action="/document/notify" method="post">
+        <input type="hidden" name="documentId" value="{{ documentId }}">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="emailAdress">
+            Enter the email address to send the correspondence?
+          </label>
+          <input class="govuk-input" id="emailAddress" name="emailAddress" type="text">
+        </div>
+        <div class="govuk-form-group">
+          <h1 class="govuk-label-wrapper">
+            <label class="govuk-label" for="emailMessage">
+              Enter the email body for the email
+            </label>
+          </h1>
+          <textarea class="govuk-textarea" id="emailMessage" name="emailMessage" rows="5" aria-describedby="more-detail-hint">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </textarea>
+        </div>
+        <button
+          type="submit"
+          name="Send"
+          value="send"
+          data-prevent-double-click="true"
+          class="govuk-button govuk-button"
+          data-module="govuk-button">
+          Send Email
+        </button>
+      </form>
+  </div>
+{% endblock %}
