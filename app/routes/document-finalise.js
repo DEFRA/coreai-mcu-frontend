@@ -1,9 +1,11 @@
+const { admin } = require('../auth/permissions')
 const { getLatestResponse } = require('../services/responses')
 
 module.exports = [{
   method: 'GET',
   path: '/document/{id}/finalise',
   options: {
+    auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.params.id
       const response = await getLatestResponse(documentId)
@@ -15,6 +17,7 @@ module.exports = [{
   method: 'POST',
   path: '/document/finalise',
   options: {
+    auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.payload.documentId
       console.log(request.payload)

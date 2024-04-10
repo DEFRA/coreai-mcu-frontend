@@ -1,9 +1,11 @@
+const { admin } = require('../auth/permissions')
 const { getResponses } = require('../api/responses')
 
 module.exports = {
   method: 'GET',
   path: '/document/{docId}/response/citations',
   options: {
+    auth: { scope: [admin] },
     handler: async (request, h) => {
       const docId = request.params.docId
       const responses = await getResponses(docId)

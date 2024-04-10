@@ -1,3 +1,4 @@
+const { admin } = require('../auth/permissions')
 const { getExtension } = require('../lib/file')
 const { categories } = require('../models/constants')
 const schema = require('../schema/upload-document')
@@ -7,6 +8,7 @@ module.exports = [{
   method: 'GET',
   path: '/upload-document',
   options: {
+    auth: { scope: [admin] },
     handler: (request, h) => {
       return h.view('upload-document', { categories })
     }
@@ -16,6 +18,7 @@ module.exports = [{
   method: 'POST',
   path: '/upload-document',
   options: {
+    auth: { scope: [admin] },
     payload: {
       maxBytes: (50 * 1024 * 1024) + 250,
       multipart: true,
