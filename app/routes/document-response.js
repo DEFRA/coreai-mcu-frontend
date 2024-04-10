@@ -1,3 +1,4 @@
+const { admin } = require('../auth/permissions')
 const { sendGenerationRequest } = require('../messaging/outbound/generation-request')
 const { getLatestResponse } = require('../services/responses')
 const { getDocumentData, getDocumentContent } = require('../services/documents')
@@ -7,6 +8,7 @@ module.exports = [{
   method: 'GET',
   path: '/document/{id}/response',
   options: {
+    auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.params.id
 
@@ -22,6 +24,7 @@ module.exports = [{
   method: 'GET',
   path: '/document/{id}/response/events',
   options: {
+    auth: { scope: [admin] },
     handler: async (request, h) => {
       const res = h.event({ data: 'open' })
 
@@ -35,6 +38,7 @@ module.exports = [{
   method: 'POST',
   path: '/document/response',
   options: {
+    auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.payload.documentId
 

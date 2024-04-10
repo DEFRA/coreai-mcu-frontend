@@ -1,5 +1,9 @@
 const routes = [].concat(
   require('../routes/home'),
+  require('../routes/authenticate'),
+  require('../routes/login'),
+  require('../routes/logout'),
+  require('../routes/dev-auth'),
   require('../routes/upload-document'),
   require('../routes/document-configure-response'),
   require('../routes/document-response'),

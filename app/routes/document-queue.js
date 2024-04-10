@@ -1,9 +1,12 @@
+
+const { admin } = require('../auth/permissions')
 const { getDocumentsData, getDocumentContent } = require('../services/documents')
 
 module.exports = {
   method: 'GET',
   path: '/documents/queue',
   options: {
+    auth: { scope: [admin] },
     handler: async (request, h) => {
       const documents = await getDocumentsData()
 
