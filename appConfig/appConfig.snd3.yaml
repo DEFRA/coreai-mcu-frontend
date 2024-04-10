@@ -1,3 +1,22 @@
 - key: APPINSIGHTS_CONNECTIONSTRING
   value: "{{servicename}}-APPINSIGHTS-CONNECTIONSTRING"
   type: "keyvault"
+- key: KNOWLEDGE_INGESTION_TOPIC
+  value: "coreai-mcu-knowledge-ingestion"
+- key: GENERATION_REQUEST_TOPIC
+  value: "coreai-mcu-generation-request"
+- key: EVENT_SUBSCRIPTION
+  value: "{{servicename}}"
+- key: EVENTS_TOPIC_ADDRESS
+  value: "coreai-mcu-events"
+- key: DOCUMENTS_API_BASE_URL
+  value: "https://coreai-mcu-documents.coreai-mcu"
+- key: KNOWLEDGE_API_BASE_URL
+  value: "https://coreai-mcu-knowledge-pgv.coreai-mcu"
+- key: RESPONSES_API_BASE_URL
+  value: "https://coreai-mcu-responses.coreai-mcu"
+- key: NOTIFY_API_KEY
+  value: "{{servicename}}-NOTIFY-API-KEY"
+  type: "keyvault"
+- key: NOTIFY_TEMPLATE_ID_CORRESPONDENCE
+  value: "37b554a1-eb2d-4f34-8170-927ec5fc3dd6"
