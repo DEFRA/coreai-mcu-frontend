@@ -2,6 +2,7 @@ const { admin } = require('../auth/permissions')
 const { categories, document, personas, prompts, models } = require('../models/constants')
 const { getDocumentContent } = require('../services/documents')
 const { getAllKnowledge } = require('../services/knowledge')
+const { setInSession } = require('../session')
 
 module.exports = [{
   method: 'GET',
@@ -24,6 +25,8 @@ module.exports = [{
     auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.payload.documentId
+      setInSession(request, 'knowledge', request.payload.knowledge || [])
+
       return h.redirect(`/document/${documentId}/response`)
     }
   }
