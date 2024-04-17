@@ -19,6 +19,11 @@ const schema = Joi.object({
     type: Joi.string().required(),
     ...sharedConfigSchema
   },
+  triageTopic: {
+    address: Joi.string().required(),
+    type: Joi.string().required(),
+    ...sharedConfigSchema
+  },
   eventsSubscription: {
     address: Joi.string().required(),
     topic: Joi.string().required(),
@@ -43,6 +48,11 @@ const config = {
   },
   knowledgeTopic: {
     address: process.env.KNOWLEDGE_INGESTION_TOPIC,
+    type: 'topic',
+    ...sharedConfig
+  },
+  triageTopic: {
+    address: process.env.TRIAGE_REQUEST_TOPIC,
     type: 'topic',
     ...sharedConfig
   },
