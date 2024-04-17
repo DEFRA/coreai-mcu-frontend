@@ -91,31 +91,46 @@
 
         <h3 class="govuk-heading-s">Knowledge</h3>
 
-        <div class="govuk-grid-row govuk-body">
-          <div class="govuk-grid-column-one-third">
-            <strong>File</strong>
-          </div>
-          <div class="govuk-grid-column-one-third">
-            <strong>Date</strong>
-          </div>
-          <div class="govuk-grid-column-one-third">
-            <strong>Category</strong>
-          </div>
-        </div>
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="knowledge-articles">
+            <div id="knowledge-articles" class="govuk-hint">
+              Select all of the knowledge articles to reference
+            </div>
 
-        {% for article in knowledge %}
-        <div class="govuk-grid-row govuk-body">
-          <div class="govuk-grid-column-one-third">
-            {{ article.fileName }}
-          </div>
-          <div class="govuk-grid-column-one-third">
-            {{ article.lastModified }}
-          </div>
-          <div class="govuk-grid-column-one-third">
-            {{ article.category }}
-          </div>
+            <div class="govuk-grid-row govuk-body">
+              <div class="govuk-grid-column-one-third">
+                <strong>File</strong>
+              </div>
+              <div class="govuk-grid-column-one-third">
+                <strong>Date</strong>
+              </div>
+              <div class="govuk-grid-column-one-third">
+                <strong>Category</strong>
+              </div>
+            </div>
+
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              {% for article in knowledge %}
+              <div class="govuk-grid-row govuk-body">
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="knowledge-{{loop.index}}" name="knowledge" type="checkbox" value="{{ article.documentId }}" checked>
+                    <label class="govuk-label govuk-checkboxes__label" for="knowledge-{{loop.index}}">
+                    {{ article.fileName }}
+                    </label>
+                  </div>
+                </div>
+                <div class="govuk-grid-column-one-third">
+                  {{ article.lastModified }}
+                </div>
+                <div class="govuk-grid-column-one-third">
+                  {{ article.category }}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </fieldset>
         </div>
-        {% endfor %}
 
         <div class="govuk-!-margin-top-8">
           <button type="submit" class="govuk-button" data-module="govuk-button">
