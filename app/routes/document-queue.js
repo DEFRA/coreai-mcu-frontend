@@ -1,4 +1,3 @@
-
 const { admin } = require('../auth/permissions')
 const { getDocumentsData, getDocumentContent } = require('../services/documents')
 

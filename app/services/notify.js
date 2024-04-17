@@ -12,7 +12,7 @@ const sendEmail = async (email, personalisation, reference, templateId, carbonEm
     }
   } catch (e) {
     success = false
-    console.error(`Error occurred during sending email:`, e)
+    console.error('Error occurred during sending email:', e)
   }
   return success
 }
@@ -37,7 +37,7 @@ const sendCarbonCopy = async (templateId, personalisation) => {
 
 const sendCorrespondenceEmail = async (email, message, contents) => {
   const personalisation = { message, link_to_file: notifyClient.prepareUpload(contents.response, true) }
-  return sendEmail(email, personalisation, message, config.templateIdCorrespondence , true)
+  return sendEmail(email, personalisation, message, config.templateIdCorrespondence, true)
 }
 
 module.exports = {
