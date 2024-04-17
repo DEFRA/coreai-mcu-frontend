@@ -20,7 +20,7 @@ module.exports = [{
     auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.payload.documentId
-      console.log(request.payload)
+
       if (request.payload.action === 'save_send') {
         return h.redirect(`/document/${documentId}/notify`)
       }

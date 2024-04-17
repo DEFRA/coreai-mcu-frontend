@@ -3,6 +3,7 @@ const { sendGenerationRequest } = require('../messaging/outbound/generation-requ
 const { getLatestResponse } = require('../services/responses')
 const { getDocumentData, getDocumentContent } = require('../services/documents')
 const { registerClient } = require('../sse')
+const { getKnowledge } = require('../session/mcu/knowledge')
 
 module.exports = [{
   method: 'GET',
@@ -11,6 +12,7 @@ module.exports = [{
     auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.params.id
+      const knowledge = getKnowledge(request, 'knowledge')
 
       const document = await getDocumentData(documentId)
       const contents = await getDocumentContent(documentId)
@@ -46,10 +48,12 @@ module.exports = [{
         return h.redirect(`/document/${documentId}/configure`)
       }
 
+      const knowledge = getKnowledge(request)
+
       await sendGenerationRequest({
         documentId,
         userPrompt: request.payload.usertext,
-        knowledge: []
+        knowledge
       })
 
       return h.redirect(`/document/${documentId}/response`)
