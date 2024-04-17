@@ -1,6 +1,6 @@
 {
   "name": "coreai-mcu-frontend",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "",
   "homepage": "github.com?owner=defra&repo=coreai-mcu-frontend&organization=defra",
   "main": "app/index.js",
@@ -24,9 +24,9 @@
   "dependencies": {
     "@azure/identity": "2.0.5",
     "@azure/msal-node": "1.14.6",
-    "@hapi/hapi": "21.3.2",
     "@hapi/catbox-redis": "6.0.2",
-    "@hapi/cookie": "11.0.2",
+    "@hapi/cookie": "^11.0.2",
+    "@hapi/hapi": "21.3.2",
     "@hapi/hoek": "9.1.1",
     "@hapi/inert": "7.1.0",
     "@hapi/vision": "7.0.3",

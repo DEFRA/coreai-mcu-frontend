@@ -2,7 +2,7 @@ const { admin } = require('../auth/permissions')
 const { categories, document, personas, prompts, models } = require('../models/constants')
 const { getDocumentContent } = require('../services/documents')
 const { getAllKnowledge } = require('../services/knowledge')
-const { setKnowledge } = require('../session/cdo/knowledge')
+const { setKnowledge } = require('../session/mcu/knowledge')
 
 module.exports = [{
   method: 'GET',

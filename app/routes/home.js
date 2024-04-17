@@ -1,5 +1,5 @@
 const { admin } = require('../auth/permissions')
-const { clearCdo } = require('../session/cdo')
+const { clearCdo } = require('../session/mcu')
 
 module.exports = {
   method: 'GET',

@@ -3,7 +3,7 @@ const { sendGenerationRequest } = require('../messaging/outbound/generation-requ
 const { getLatestResponse } = require('../services/responses')
 const { getDocumentData, getDocumentContent } = require('../services/documents')
 const { registerClient } = require('../sse')
-const { getKnowledge } = require('../session/cdo/knowledge')
+const { getKnowledge } = require('../session/mcu/knowledge')
 
 module.exports = [{
   method: 'GET',
