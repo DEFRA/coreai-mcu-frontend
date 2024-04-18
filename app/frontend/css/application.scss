@@ -162,6 +162,9 @@ div.summary, p.summary {
   border: 1px solid #b1b4b6;
 }
 
+tr.summary--hidden {
+  display: none;
+}
 
 details.govuk-details form button {
   margin-bottom: 0;
