@@ -51,7 +51,7 @@
                 Author
               </dt>
               <dd class="govuk-summary-list__value">
-                {{ response.documentSummary.author }}
+                {{ document.metadata.author }}
               </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -59,7 +59,7 @@
                 Sentiment
               </dt>
               <dd class="govuk-summary-list__value">
-                {{ response.documentSummary.sentiment }}
+                {{ document.metadata.sentiment }}
               </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -67,7 +67,7 @@
                 Summary
               </dt>
               <dd class="govuk-summary-list__value">
-                {{ response.documentSummary.summary | replace('\n', '<br>') | safe }}
+                {{ document.metadata.summary | replace('\n', '<br>') | safe }}
               </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -76,7 +76,7 @@
               </dt>
               <dd class="govuk-summary-list__value">
                 <ul class="govuk-list govuk-list--bullet">
-                  {% for point in response.documentSummary.keyPoints %}
+                  {% for point in document.metadata.keyPoints %}
                     <li>{{ point }}</li>
                   {% endfor %}
                 </ul>
@@ -88,7 +88,7 @@
               </dt>
               <dd class="govuk-summary-list__value">
                 <ul class="govuk-list govuk-list--bullet">
-                  {% for fact in response.documentSummary.keyFacts %}
+                  {% for fact in document.metadata.keyFacts %}
                     <li>{{ fact }}</li>
                   {% endfor %}
                 </ul>
