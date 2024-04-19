@@ -9,6 +9,7 @@ module.exports = [{
     auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.params.documentId
+
       return h.view('document-notify', { documentId }).code(200)
     }
   }
@@ -24,7 +25,11 @@ module.exports = [{
       const emailMessage = request.payload.emailMessage
       const content = await getLatestResponse(documentId)
 
-      await sendCorrespondenceEmail(emailAddress, emailMessage, content)
+      await sendCorrespondenceEmail(
+        emailAddress,
+        emailMessage,
+        content
+      )
 
       return h.redirect(`/document/${documentId}/notify`)
     }

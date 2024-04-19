@@ -1,6 +1,6 @@
 const { parseISO } = require('date-fns')
 const { formatInTimeZone } = require('date-fns-tz')
-const { getResponses } = require('../api/responses')
+const { getResponses, uploadResponse } = require('../api/responses')
 const { LONDON } = require('../constants/time-zones')
 
 const formatResponse = (response) => {
@@ -34,7 +34,14 @@ const getAllResponses = async (id) => {
   return responses.map(formatResponse)
 }
 
+const saveResponse = async (document) => {
+  const datacontenttype = 'application/json'
+
+  await uploadResponse(document, datacontenttype)
+}
+
 module.exports = {
   getLatestResponse,
-  getAllResponses
+  getAllResponses,
+  saveResponse
 }

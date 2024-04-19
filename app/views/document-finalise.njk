@@ -28,10 +28,13 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-l">Document Finalisation</h1>
-      <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
       <form id="response_form" action="/document/finalise" method="post">
+        <textarea class="govuk-textarea" name="usertext" rows="30">{{ response.response }}</textarea>
+
         <input type="hidden" name="documentId" value="{{ documentId }}">
-        <button
+
+        <div class="govuk-button-group govuk-!-margin-top-8">
+          <button
             type="submit"
             name="action"
             value="Save"
@@ -47,8 +50,9 @@
             data-prevent-double-click="true"
             class="govuk-button govuk-button"
             data-module="govuk-button">
-            Save & Send
+            Save &amp; Send
           </button>
+        </div>
       </form>
   </div>
 {% endblock %}
