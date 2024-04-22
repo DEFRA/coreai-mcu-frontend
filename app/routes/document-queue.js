@@ -1,5 +1,6 @@
 const { admin } = require('../auth/permissions')
 const { getDocumentsData, getDocumentContent } = require('../services/documents')
+const { getMessage, setMessage } = require('../session/mcu/message')
 
 module.exports = {
   method: 'GET',
@@ -13,7 +14,12 @@ module.exports = {
         documents[i].contents = await getDocumentContent(documents[i].documentId)
       }
 
-      return h.view('document-queue', { documents }).code(201)
+      const message = getMessage(request)
+      if (message && message !== '') {
+        setMessage(request, null)
+      }
+
+      return h.view('document-queue', { documents, message }).code(201)
     }
   }
 }

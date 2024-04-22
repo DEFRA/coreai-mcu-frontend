@@ -1,6 +1,8 @@
 const { admin } = require('../auth/permissions')
+const { getDocumentData } = require('../services/documents')
 const { getLatestResponse } = require('../services/responses')
 const { sendCorrespondenceEmail } = require('../services/notify')
+const { setMessage } = require('../session/mcu/message')
 
 module.exports = [{
   method: 'GET',
@@ -31,7 +33,10 @@ module.exports = [{
         content
       )
 
-      return h.redirect(`/document/${documentId}/notify`)
+      const document = await getDocumentData(documentId)
+      setMessage(request, `Document ${document.metadata.fileName} has been completed.`)
+
+      return h.redirect(`/documents/queue`)
     }
   }
 }]
