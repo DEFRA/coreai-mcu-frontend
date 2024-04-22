@@ -1,4 +1,4 @@
-const { get, post, put } = require('./base')
+const { get, post, put, del } = require('./base')
 const { responsesApi: config } = require('../config/api')
 
 const baseUrl = config.baseUrl
@@ -27,9 +27,14 @@ const updateFinalResponse = async (projectName, documentId) => {
   return put(`${baseUrl}/responses/finalise/${projectName}/${documentId}`, {})
 }
 
+const deleteResponses = async (docId) => {
+  return del(`${baseUrl}/responses/${docId}`)
+}
+
 module.exports = {
   getResponses,
   uploadResponse,
   finaliseResponse,
-  updateFinalResponse
+  updateFinalResponse,
+  deleteResponses
 }

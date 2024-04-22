@@ -1,9 +1,10 @@
 const { admin } = require('../auth/permissions')
 const { sendGenerationRequest } = require('../messaging/outbound/generation-request')
-const { getLatestResponse } = require('../services/responses')
+const { getLatestResponse, deleteAllResponses } = require('../services/responses')
 const { getDocumentData, getDocumentContent } = require('../services/documents')
 const { registerClient } = require('../sse')
 const { getKnowledge } = require('../session/mcu/knowledge')
+const { clearCdo } = require('../session/mcu')
 
 module.exports = [{
   method: 'GET',
@@ -45,6 +46,9 @@ module.exports = [{
       const documentId = request.payload.documentId
 
       if (request.payload.action === 'start_over') {
+        await deleteAllResponses(documentId)
+        clearCdo(request)
+
         return h.redirect(`/document/${documentId}/configure`)
       }
 

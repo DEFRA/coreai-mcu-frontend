@@ -40,8 +40,20 @@ const put = async (url, data) => {
   return payload
 }
 
+const del = async (url, json = true) => {
+  const options = {
+    ...getOptions(),
+    json
+  }
+
+  const { payload } = await Wreck.delete(url, options)
+
+  return payload
+}
+
 module.exports = {
   get,
   post,
-  put
+  put,
+  del
 }
