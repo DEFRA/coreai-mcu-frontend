@@ -1,5 +1,6 @@
 const { keys } = require('../../constants/cdo')
 const { setKnowledge } = require('./knowledge')
+const { setMessage } = require('./message')
 
 const get = (request, entryKey, key) => {
   return key ? request.yar?.get(entryKey)?.[key] : request.yar?.get(entryKey)
@@ -15,6 +16,7 @@ const setCreatedCdo = (request, cdo) => {
 
 const clearCdo = (request) => {
   setKnowledge(request, null)
+  setMessage(request, null)
 }
 
 module.exports = {

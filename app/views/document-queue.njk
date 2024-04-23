@@ -24,6 +24,17 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
+      {% if message != '' %}
+        <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-8">
+          <h2 class="govuk-panel__title">
+            Document complete
+          </h2>
+          <div class="govuk-panel__body">
+            {{ message }}
+          </div>
+        </div>
+      {% endif %}
+
       <h1 class="govuk-heading-xl">Document queue</h1>
 
       <div class="govuk-grid-row header govuk-body">
