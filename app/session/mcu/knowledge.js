@@ -1,7 +1,7 @@
-const { keys } = require('../../constants/cdo/knowledge')
+const { keys } = require('../../constants/session/knowledge')
 
 const set = (request, entryKey, key, value) => {
-  const entryValue = request.yar?.get(entryKey) || []
+  const entryValue = request.yar?.get(entryKey) || {}
   entryValue[key] = typeof (value) === 'string' ? value.trim() : value
   request.yar.set(entryKey, entryValue)
 }
@@ -11,11 +11,11 @@ const get = (request, entryKey, key) => {
 }
 
 const getKnowledge = (request) => {
-  return get(request, keys.entry) || []
+  return get(request, keys.entry, keys.documentKnowledge) || []
 }
 
 const setKnowledge = (request, value) => {
-  set(request, keys.entry, value)
+  set(request, keys.entry, keys.documentKnowledge, value)
 }
 
 const addKnowledge = (request, value) => {

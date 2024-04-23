@@ -4,7 +4,7 @@ const { getLatestResponse, deleteAllResponses } = require('../services/responses
 const { getDocumentData, getDocumentContent } = require('../services/documents')
 const { registerClient } = require('../sse')
 const { getKnowledge } = require('../session/mcu/knowledge')
-const { clearCdo } = require('../session/mcu')
+const { clearSession } = require('../session/mcu')
 
 module.exports = [{
   method: 'GET',
@@ -13,7 +13,6 @@ module.exports = [{
     auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.params.id
-      const knowledge = getKnowledge(request, 'knowledge')
 
       const document = await getDocumentData(documentId)
       const contents = await getDocumentContent(documentId)
@@ -47,7 +46,7 @@ module.exports = [{
 
       if (request.payload.action === 'start_over') {
         await deleteAllResponses(documentId)
-        clearCdo(request)
+        clearSession(request)
 
         return h.redirect(`/document/${documentId}/configure`)
       }
