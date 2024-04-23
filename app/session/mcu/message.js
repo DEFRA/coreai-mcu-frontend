@@ -1,4 +1,4 @@
-const { keys } = require('../../constants/cdo/message')
+const { keys } = require('../../constants/session/message')
 
 const set = (request, entryKey, key, value) => {
   const entryValue = request.yar?.get(entryKey) || {}

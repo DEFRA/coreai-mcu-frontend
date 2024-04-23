@@ -25,7 +25,12 @@ module.exports = [{
     auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.payload.documentId
-      setKnowledge(request, request.payload.knowledge)
+      let knowledge = request.payload.knowledge
+      if (!Array.isArray(knowledge)) {
+        knowledge = [knowledge]
+      }
+
+      setKnowledge(request, knowledge)
 
       return h.redirect(`/document/${documentId}/response`)
     }
