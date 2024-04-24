@@ -30,7 +30,7 @@
     html: 'This is a new service – <a class="govuk-link" href="#">give feedback</a> to help us to improve it.'
   }) }}
   {% if auth.isAuthenticated %}
-    <p class="govuk-body">Signed in as {{user.username}} | <a href="/logout" class="govuk-body govuk-link">Sign out</a></p> 
+    <p class="govuk-body govuk-!-margin-top-2">Signed in as {{user.username}} | <a href="/logout" class="govuk-body govuk-link">Sign out</a></p> 
   {% endif %}
 {% endblock %}
 
