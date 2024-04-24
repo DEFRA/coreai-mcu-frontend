@@ -1,24 +1,15 @@
 const { keys } = require('../../constants/session/knowledge')
+const { set, get } = require('./base')
 
-const set = (request, entryKey, key, value) => {
-  const entryValue = request.yar?.get(entryKey) || {}
-  entryValue[key] = typeof (value) === 'string' ? value.trim() : value
-  request.yar.set(entryKey, entryValue)
-}
-
-const get = (request, entryKey, key) => {
-  return key ? request.yar?.get(entryKey)?.[key] : request.yar?.get(entryKey)
-}
-
-const getKnowledge = (request) => {
+const getKnowledgeSession = (request) => {
   return get(request, keys.entry, keys.documentKnowledge) || []
 }
 
-const setKnowledge = (request, value) => {
+const setKnowledgeSession = (request, value) => {
   set(request, keys.entry, keys.documentKnowledge, value)
 }
 
-const addKnowledge = (request, value) => {
+const addKnowledgeSession = (request, value) => {
   const entryValue = get(request)
 
   entryValue.push(value)
@@ -26,7 +17,7 @@ const addKnowledge = (request, value) => {
   request.yar.set(keys.entry, entryValue)
 }
 
-const removeKnowledge = (request, value) => {
+const removeKnowledgeSession = (request, value) => {
   const entryValue = get(request)
 
   if (entryValue.indexOf(value) !== -1) {
@@ -36,14 +27,14 @@ const removeKnowledge = (request, value) => {
   }
 }
 
-const clearAllKnowledge = (request) => {
+const clearAllKnowledgeSession = (request) => {
   request.yar.set(keys.entry, null)
 }
 
 module.exports = {
-  getKnowledge,
-  setKnowledge,
-  addKnowledge,
-  removeKnowledge,
-  clearAllKnowledge
+  getKnowledgeSession,
+  setKnowledgeSession,
+  addKnowledgeSession,
+  removeKnowledgeSession,
+  clearAllKnowledgeSession
 }

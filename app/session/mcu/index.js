@@ -1,10 +1,7 @@
 const { keys } = require('../../constants/session')
-const { setKnowledge } = require('./knowledge')
-const { setMessage } = require('./message')
-
-const get = (request, entryKey, key) => {
-  return key ? request.yar?.get(entryKey)?.[key] : request.yar?.get(entryKey)
-}
+const { get } = require('./base')
+const { setKnowledgeSession } = require('./knowledge')
+const { setMessageSession } = require('./message')
 
 const getCreatedSession = (request) => {
   return get(request, keys.createdSession)
@@ -15,8 +12,8 @@ const setCreatedSession = (request, session) => {
 }
 
 const clearSession = (request) => {
-  setKnowledge(request, null)
-  setMessage(request, null)
+  setKnowledgeSession(request, null)
+  setMessageSession(request, null)
 }
 
 module.exports = {

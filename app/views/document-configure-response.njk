@@ -45,8 +45,8 @@
         </div>
         <div class="govuk-grid-column-one-third">
           <select class="govuk-select" id="category" name="category">
-            {% for c in categories %}
-            <option value="{{ c }}"{% if c == document.suggestedCategory %} selected{% endif %}>{{ c }}</option>
+            {% for category in categories %}
+              <option value="{{ category }}"{% if category == document.suggestedCategory %} selected{% endif %}>{{ category }}</option>
             {% endfor %}
           </select>
         </div>
@@ -57,10 +57,23 @@
 
       <form action="/document/configure" method="post">
         <p class="govuk-body govuk-!-margin-top-6">
+          Model<br>
+          <select class="govuk-select" id="model" name="model">
+            {% for vendor in models %}
+              <optgroup label="{{ vendor.vendor }}">
+              {% for  model in vendor.models %}
+                <option value="{{ model.modelId }}">{{ model.model }}</option>
+              {% endfor %}
+              </optgroup>
+            {% endfor %}
+          </select>
+        </P>
+
+        <p class="govuk-body govuk-!-margin-top-6">
           Persona<br>
           <select class="govuk-select" id="persona" name="persona">
-            {% for p in personas %}
-            <option value="{{ p.personaId }}">{{ p.title }}</option>
+            {% for persona in personas %}
+              <option value="{{ persona.personaId }}">{{ persona.title }}</option>
             {% endfor %}
           </select>
         </P>
@@ -71,23 +84,14 @@
         <p class="govuk-body govuk-!-margin-top-6">
           Prompt<br>
           <select class="govuk-select" id="prompt" name="prompt">
-            {% for p in prompts %}
-            <option value="{{ p.promptId }}">{{ p.title }}</option>
+            {% for prompt in prompts %}
+              <option value="{{ prompt.promptId }}">{{ prompt.title }}</option>
             {% endfor %}
           </select>
         </P>
         <p>
           <a href="#" class="govuk-link">View prompt</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#" class="govuk-link">Manage prompts</a>
         </p>
-
-        <p class="govuk-body govuk-!-margin-top-6">
-          Model<br>
-          <select class="govuk-select" id="model" name="model">
-            {% for m in models %}
-            <option value="{{ m.model }}">{{ m.model }}</option>
-            {% endfor %}
-          </select>
-        </P>
 
         <h3 class="govuk-heading-s">Knowledge</h3>
 
@@ -116,7 +120,7 @@
                   <div class="govuk-checkboxes__item">
                     <input class="govuk-checkboxes__input" id="knowledge-{{loop.index}}" name="knowledge" type="checkbox" value="{{ article.documentId }}" checked>
                     <label class="govuk-label govuk-checkboxes__label" for="knowledge-{{loop.index}}">
-                    {{ article.fileName }}
+                      {{ article.fileName }}
                     </label>
                   </div>
                 </div>
@@ -141,4 +145,10 @@
       </form>
     </div>
   </div>
+{% endblock %}
+
+{% block bodyEnd %}
+  <script>
+    const models = {{ models | dump | safe }}
+  </script>
 {% endblock %}
