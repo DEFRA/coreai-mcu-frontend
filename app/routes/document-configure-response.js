@@ -52,6 +52,7 @@ module.exports = [{
         if (!Array.isArray(selectedKnowledge)) {
           selectedKnowledge = [ selectedKnowledge ]
         }
+        setKnowledgeSession(request, selectedKnowledge)
 
         return h.redirect(`/document/${documentId}/response`)
       }

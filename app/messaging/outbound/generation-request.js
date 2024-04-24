@@ -5,6 +5,8 @@ const { GENERATION_REQUEST } = require('../../constants/events')
 const createMessage = (data) => ({
   body: {
     document_id: data.documentId,
+    model_id: data.model,
+    prompt_id: data.prompt,
     user_prompt: data.userPrompt,
     knowledge: data.knowledge
   },

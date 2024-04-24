@@ -3,6 +3,8 @@ const { sendGenerationRequest } = require('../messaging/outbound/generation-requ
 const { getLatestResponse, deleteAllResponses } = require('../services/responses')
 const { getDocumentData, getDocumentContent } = require('../services/documents')
 const { registerClient } = require('../sse')
+const { getModelSession } = require('../session/mcu/models')
+const { getPromptSession } = require('../session/mcu/prompts')
 const { getKnowledgeSession } = require('../session/mcu/knowledge')
 const { clearSession } = require('../session/mcu')
 
@@ -51,10 +53,14 @@ module.exports = [{
         return h.redirect(`/document/${documentId}/configure`)
       }
 
+      const model = getModelSession(request)
+      const prompt = getPromptSession(request)
       const knowledge = getKnowledgeSession(request)
 
       await sendGenerationRequest({
         documentId,
+        model,
+        prompt,
         userPrompt: request.payload.usertext,
         knowledge
       })
