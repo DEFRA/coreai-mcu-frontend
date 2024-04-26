@@ -1,4 +1,4 @@
-const { listVendorModels, listModels } = require('../api/models')
+const { listModels, listVendorModels } = require('../api/models')
 const { setModelsSession, getModelsSession } = require('../session/mcu/models')
 
 const getModels = async (request) => {
