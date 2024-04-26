@@ -1,17 +1,11 @@
-const { listModels, listAllModels } = require('../api/models')
+const { listVendorModels, listModels } = require('../api/models')
 const { setModelsSession, getModelsSession } = require('../session/mcu/models')
 
-const getModels = async (vendor = '') => {
-  const responses = await listModels(vendor)
-
-  return responses
-}
-
-const getAllModels = async (request) => {
+const getModels = async (request) => {
   let responses = getModelsSession(request)
 
   if (responses.length === 0) {
-    responses = await listAllModels()
+    responses = await listModels()
 
     setModelsSession(request, responses)
   }
@@ -19,7 +13,13 @@ const getAllModels = async (request) => {
   return responses
 }
 
+const getVendorModels = async (vendor = '') => {
+  const responses = await listVendorModels(vendor)
+
+  return responses
+}
+
 module.exports = {
-    getModels,
-    getAllModels
+  getModels,
+  getVendorModels
 }

@@ -3,15 +3,15 @@ const { promptsApi: config } = require('../config/api')
 
 const baseUrl = config.baseUrl
 
-const listModels = async (vendor = '') => {
-  return get(`${baseUrl}/models?deploymentVendor=${vendor}`)
+const listModels = async () => {
+  return get(`${baseUrl}/models`)
 }
 
-const listAllModels = async () => {
-  return get(`${baseUrl}/allmodels`)
+const listVendorModels = async (vendor = '') => {
+  return get(`${baseUrl}/vendormodels?deploymentVendor=${vendor}`)
 }
 
 module.exports = {
   listModels,
-  listAllModels
+  listVendorModels
 }

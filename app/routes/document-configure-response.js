@@ -1,11 +1,11 @@
 const { admin } = require('../auth/permissions')
 const { categories } = require('../models/constants')
 const { getDocumentData, getDocumentContent } = require('../services/documents')
-const { getAllModels } = require('../services/models')
+const { getModels } = require('../services/models')
 const { getPrompts } = require('../services/prompts')
 const { getAllKnowledge } = require('../services/knowledge')
 const { getModelSession, setModelSession } = require('../session/mcu/models')
-const { getPromptSession, setPromptSession } = require('../session/mcu/prompts')
+const { setPromptSession } = require('../session/mcu/prompts')
 const { setKnowledgeSession } = require('../session/mcu/knowledge')
 
 module.exports = [{
@@ -18,7 +18,7 @@ module.exports = [{
       const document = await getDocumentData(documentId)
       const contents = await getDocumentContent(documentId)
       const selectedModel = getModelSession(request)
-      const models = await getAllModels(request)
+      const models = await getModels(request)
 
       let prompts = []
       if (selectedModel && selectedModel !== '') {
