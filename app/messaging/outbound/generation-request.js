@@ -6,8 +6,9 @@ const createMessage = (data) => ({
   body: {
     document_id: data.documentId,
     knowledge: data.knowledge,
-    model_id: data.model,
-    prompt_id: data.prompt,
+    model_id: data.modelId,
+    prompt_id: data.promptId,
+    persona_id: data.personaId,
     user_prompt: data.userPrompt,
     project_name: 'mcu',
     type: 'briefing'

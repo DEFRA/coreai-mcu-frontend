@@ -53,16 +53,18 @@ module.exports = [{
         return h.redirect(`/document/${documentId}/configure`)
       }
 
-      const model = getModelSession(request)
-      const prompt = getPromptSession(request)
       const knowledge = getKnowledgeSession(request)
+      const modelId = getModelSession(request)
+      const promptId = getPromptSession(request)
+      const personaId = ''
 
       await sendGenerationRequest({
         documentId,
-        model,
-        prompt,
-        userPrompt: request.payload.usertext,
-        knowledge
+        knowledge,
+        modelId,
+        promptId,
+        personaId,
+        userPrompt: request.payload.usertext
       })
 
       return h.redirect(`/document/${documentId}/response`)
