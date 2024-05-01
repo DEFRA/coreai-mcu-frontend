@@ -29,15 +29,23 @@
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-l">Document Finalisation</h1>
       <form id="response_form" action="/document/finalise" method="post">
-        <textarea class="govuk-textarea" name="usertext" rows="30">{{ response.response }}</textarea>
+        <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
 
         <input type="hidden" name="documentId" value="{{ documentId }}">
+        <input type="hidden" name="usertext" value="{{ response.response }}">
 
         <div class="govuk-button-group govuk-!-margin-top-8">
+          <a
+            href="/document/{{ documentId }}/response/edit"
+            data-prevent-double-click="true"
+            class="govuk-button govuk-button--secondary"
+            data-module="govuk-button">
+            Edit
+          </a>
           <button
             type="submit"
             name="action"
-            value="Save"
+            value="save"
             data-prevent-double-click="true"
             class="govuk-button govuk-button"
             data-module="govuk-button">
