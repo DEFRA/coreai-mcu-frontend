@@ -38,7 +38,6 @@ module.exports = [{
     handler: async (request, h) => {
       const documentId = request.params.id
       const response = await getLatestResponse(documentId)
-      console.log(response)
 
       return h.view('document-edit',  { documentId, response }).code(200)
     }
