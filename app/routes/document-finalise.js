@@ -24,7 +24,7 @@ module.exports = [{
     auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.payload.documentId
-      
+
       const documentMetadata = {
         document_id: documentId,
         llm: 'user',
