@@ -39,7 +39,7 @@ module.exports = [{
       const documentId = request.params.id
       const response = await getLatestResponse(documentId)
 
-      return h.view('document-edit',  { documentId, response }).code(200)
+      return h.view('document-edit', { documentId, response }).code(200)
     }
   }
 },

@@ -38,7 +38,7 @@ module.exports = [{
       const document = await getDocumentData(documentId)
       setMessageSession(request, `Document ${document.metadata.fileName} has been completed and the response sent.`)
 
-      return h.redirect(`/documents/queue`)
+      return h.redirect('/documents/queue')
     }
   }
 }]
