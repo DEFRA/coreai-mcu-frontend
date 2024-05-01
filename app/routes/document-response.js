@@ -1,3 +1,4 @@
+const Joi = require('joi')
 const { admin } = require('../auth/permissions')
 const { sendGenerationRequest } = require('../messaging/outbound/generation-request')
 const { getLatestResponse, deleteAllResponses } = require('../services/responses')
@@ -21,6 +22,25 @@ module.exports = [{
       const response = await getLatestResponse(documentId)
 
       return h.view('document-response', { document, contents, response })
+    }
+  }
+},
+{
+  method: 'GET',
+  path: '/document/{id}/response/edit',
+  options: {
+    auth: { scope: [admin] },
+    validate: {
+      params: Joi.object({
+        id: Joi.string().uuid().required()
+      })
+    },
+    handler: async (request, h) => {
+      const documentId = request.params.id
+      const response = await getLatestResponse(documentId)
+      console.log(response)
+
+      return h.view('document-edit',  { documentId, response }).code(200)
     }
   }
 },
