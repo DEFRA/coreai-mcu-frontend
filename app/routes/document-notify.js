@@ -1,6 +1,6 @@
 const { admin } = require('../auth/permissions')
 const { getDocumentData } = require('../services/documents')
-const { getLatestResponse } = require('../services/responses')
+const { getLatestResponse, updateFinalisedResponse } = require('../services/responses')
 const { sendCorrespondenceEmail } = require('../services/notify')
 const { setMessageSession } = require('../session/mcu/message')
 
@@ -32,6 +32,8 @@ module.exports = [{
         emailMessage,
         content
       )
+
+      await updateFinalisedResponse('mcu', documentId)
 
       const document = await getDocumentData(documentId)
       setMessageSession(request, `Document ${document.metadata.fileName} has been completed and the response sent.`)
