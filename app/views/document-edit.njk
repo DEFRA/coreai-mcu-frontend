@@ -1,0 +1,56 @@
+{# Backstage scaffolder to render the file as is and to skip this content to interpret as template   #}
+{% extends '_layout.njk' %}
+
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Document response",
+        href: "/document/" + documentId + "/response"
+      },
+      {
+        text: "Document finalisation",
+        href: "#"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">Edit response</h1>
+      <form id="response_form" action="/document/finalise" method="post">
+        <textarea class="govuk-textarea" name="usertext" rows="30">{{ response.response }}</textarea>
+
+        <input type="hidden" name="documentId" value="{{ documentId }}">
+
+        <div class="govuk-button-group govuk-!-margin-top-8">
+          <button
+            type="submit"
+            name="action"
+            value="save_edited_response"
+            data-prevent-double-click="true"
+            class="govuk-button govuk-button"
+            data-module="govuk-button">
+            Save
+          </button>
+          <a
+            href="/document/{{ documentId }}/finalise"
+            data-prevent-double-click="true"
+            class="govuk-button govuk-button--secondary"
+            data-module="govuk-button">
+            Cancel
+          </a>
+        </div>
+      </form>
+  </div>
+{% endblock %}
