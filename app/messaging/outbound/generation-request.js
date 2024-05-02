@@ -11,7 +11,7 @@ const createMessage = (data) => ({
     persona_id: data.personaId,
     user_prompt: data.userPrompt,
     project_name: 'mcu',
-    type: 'briefing'
+    type: 'correspondence'
   },
   type: GENERATION_REQUEST,
   source: 'coreai-mcu-frontend'
