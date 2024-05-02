@@ -1,7 +1,7 @@
 const { admin } = require('../auth/permissions')
 const { getDocumentData } = require('../services/documents')
 const { getLatestResponse, saveResponse, saveFinalResponse, updateFinalisedResponse } = require('../services/responses')
-const { setMessage } = require('../session/mcu/message')
+const { setMessageSession } = require('../session/mcu/message')
 
 module.exports = [{
   method: 'GET',
@@ -50,7 +50,7 @@ module.exports = [{
       }
 
       const document = await getDocumentData(documentId)
-      setMessage(request, `Document ${document.metadata.fileName} has been completed.`)
+      setMessageSession(request, `Document ${document.metadata.fileName} has been completed.`)
 
       return h.redirect(`/documents/queue`)
     }

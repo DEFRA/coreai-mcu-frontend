@@ -191,6 +191,7 @@
             data-module="govuk-button">
             <span>Generate response</span>
           </button>
+          {% if response.response %}
           <a
             href="/document/{{ document.documentId }}/response/history"
             data-prevent-double-click="true"
@@ -214,6 +215,7 @@
             data-module="govuk-button">
             Start over
           </button>
+          {% endif %}
         </div>
         <input type="hidden" name="documentId" value="{{ document.documentId }}">
       </form>

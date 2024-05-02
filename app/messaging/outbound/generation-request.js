@@ -5,8 +5,13 @@ const { GENERATION_REQUEST } = require('../../constants/events')
 const createMessage = (data) => ({
   body: {
     document_id: data.documentId,
+    knowledge: data.knowledge,
+    model_id: data.modelId,
+    prompt_id: data.promptId,
+    persona_id: data.personaId,
     user_prompt: data.userPrompt,
-    knowledge: data.knowledge
+    project_name: 'mcu',
+    type: 'correspondence'
   },
   type: GENERATION_REQUEST,
   source: 'coreai-mcu-frontend'
