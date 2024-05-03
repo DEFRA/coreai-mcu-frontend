@@ -22,7 +22,7 @@ module.exports = [{
 
       let prompts = []
       if (selectedModel && selectedModel !== '') {
-        prompts = await getPrompts(request, 'mcu', selectedModel, 'correspondence')  // 'briefing'
+        prompts = await getPrompts(request, 'mcu', selectedModel, 'correspondence') // 'briefing'
       }
       const personas = []
       const knowledge = await getAllKnowledge()
@@ -50,7 +50,7 @@ module.exports = [{
 
       if (request.payload.action === 'next') {
         if (!Array.isArray(selectedKnowledge)) {
-          selectedKnowledge = [ selectedKnowledge ]
+          selectedKnowledge = [selectedKnowledge]
         }
         setKnowledgeSession(request, selectedKnowledge)
 
