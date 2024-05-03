@@ -2,7 +2,10 @@ const { admin } = require('../auth/permissions')
 const { getDocumentData } = require('../services/documents')
 const { getLatestResponse, saveResponse, saveFinalResponse } = require('../services/responses')
 const { setMessageSession } = require('../session/mcu/message')
+<<<<<<< HEAD
 
+=======
+>>>>>>> ba0bb06 (Update session message imports in document-finalise.js and document-notify.js)
 
 module.exports = [{
   method: 'GET',
