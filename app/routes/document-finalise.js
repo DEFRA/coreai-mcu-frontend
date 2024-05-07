@@ -1,7 +1,8 @@
 const { admin } = require('../auth/permissions')
 const { getDocumentData } = require('../services/documents')
-const { getLatestResponse, saveResponse, saveFinalResponse, updateFinalisedResponse } = require('../services/responses')
+const { getLatestResponse, saveResponse, saveFinalResponse } = require('../services/responses')
 const { setMessageSession } = require('../session/mcu/message')
+
 
 module.exports = [{
   method: 'GET',
@@ -23,7 +24,7 @@ module.exports = [{
     auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.payload.documentId
-
+      
       const documentMetadata = {
         document_id: documentId,
         llm: 'user',
@@ -43,10 +44,12 @@ module.exports = [{
 
       await saveFinalResponse(finaliseDocument)
 
-      await updateFinalisedResponse('mcu', documentId)
-
       if (request.payload.action === 'save_send') {
         return h.redirect(`/document/${documentId}/notify`)
+      }
+
+      if(request.payload.action === 'save_edited_response') {
+        return h.redirect(`/document/${documentId}/finalise`)
       }
 
       const document = await getDocumentData(documentId)
