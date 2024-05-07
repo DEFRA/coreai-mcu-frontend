@@ -1,5 +1,4 @@
 const { admin } = require('../auth/permissions')
-const { getDocumentData } = require('../services/documents')
 const { getLatestResponse, updateFinalisedResponse } = require('../services/responses')
 const { sendCorrespondenceEmail } = require('../services/notify')
 const { setMessageSession } = require('../session/mcu/message')
