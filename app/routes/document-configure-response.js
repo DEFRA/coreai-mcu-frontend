@@ -22,7 +22,7 @@ module.exports = [{
 
       let prompts = []
       if (selectedModel && selectedModel !== '') {
-        prompts = await getPrompts(request, 'mcu', selectedModel, 'correspondence') // 'briefing'
+        prompts = await getPrompts(request, 'mcu', selectedModel, 'correspondence')
       }
       const personas = []
       const knowledge = await getAllKnowledge()
