@@ -1,6 +1,7 @@
 const constants = {
   keys: {
-    entry: 'knowledge'
+    entry: 'message',
+    sessionMessage: 'sessionMessage'
   }
 }
 

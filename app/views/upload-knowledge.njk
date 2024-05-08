@@ -105,8 +105,8 @@
             {% endif %}
             <select class="govuk-select" id="category" name="category">
               <option></option>
-              {% for c in categories %}
-              <option value="{{ c }}"{% if c == category %} selected{% endif %}>{{ c }}</option>
+              {% for category in categories %}
+                <option value="{{ category }}"{% if c == category %} selected{% endif %}>{{ category }}</option>
               {% endfor %}
             </select>
           </div>

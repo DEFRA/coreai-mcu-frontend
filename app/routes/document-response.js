@@ -1,10 +1,13 @@
+const Joi = require('joi')
 const { admin } = require('../auth/permissions')
 const { sendGenerationRequest } = require('../messaging/outbound/generation-request')
 const { getLatestResponse, deleteAllResponses } = require('../services/responses')
 const { getDocumentData, getDocumentContent } = require('../services/documents')
 const { registerClient } = require('../sse')
-const { getKnowledge } = require('../session/mcu/knowledge')
-const { clearCdo } = require('../session/mcu')
+const { getModelSession } = require('../session/mcu/models')
+const { getPromptSession } = require('../session/mcu/prompts')
+const { getKnowledgeSession } = require('../session/mcu/knowledge')
+const { clearSession } = require('../session/mcu')
 
 module.exports = [{
   method: 'GET',
@@ -13,13 +16,30 @@ module.exports = [{
     auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.params.id
-      const knowledge = getKnowledge(request, 'knowledge')
 
       const document = await getDocumentData(documentId)
       const contents = await getDocumentContent(documentId)
       const response = await getLatestResponse(documentId)
 
       return h.view('document-response', { document, contents, response })
+    }
+  }
+},
+{
+  method: 'GET',
+  path: '/document/{id}/response/edit',
+  options: {
+    auth: { scope: [admin] },
+    validate: {
+      params: Joi.object({
+        id: Joi.string().uuid().required()
+      })
+    },
+    handler: async (request, h) => {
+      const documentId = request.params.id
+      const response = await getLatestResponse(documentId)
+
+      return h.view('document-edit', { documentId, response }).code(200)
     }
   }
 },
@@ -47,17 +67,23 @@ module.exports = [{
 
       if (request.payload.action === 'start_over') {
         await deleteAllResponses(documentId)
-        clearCdo(request)
+        clearSession(request)
 
         return h.redirect(`/document/${documentId}/configure`)
       }
 
-      const knowledge = getKnowledge(request)
+      const knowledge = getKnowledgeSession(request)
+      const modelId = getModelSession(request)
+      const promptId = getPromptSession(request)
+      const personaId = ''
 
       await sendGenerationRequest({
         documentId,
-        userPrompt: request.payload.usertext,
-        knowledge
+        knowledge,
+        modelId,
+        promptId,
+        personaId,
+        userPrompt: request.payload.usertext
       })
 
       return h.redirect(`/document/${documentId}/response`)

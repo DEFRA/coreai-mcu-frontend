@@ -1,24 +1,23 @@
-const { keys } = require('../../constants/cdo')
-const { setKnowledge } = require('./knowledge')
+const { keys } = require('../../constants/session')
+const { get } = require('./base')
+const { setKnowledgeSession } = require('./knowledge')
+const { setMessageSession } = require('./message')
 
-const get = (request, entryKey, key) => {
-  return key ? request.yar?.get(entryKey)?.[key] : request.yar?.get(entryKey)
+const getCreatedSession = (request) => {
+  return get(request, keys.createdSession)
 }
 
-const getCreatedCdo = (request) => {
-  return get(request, keys.createdCdo)
+const setCreatedSession = (request, session) => {
+  request.yar.set(keys.createdSession, session)
 }
 
-const setCreatedCdo = (request, cdo) => {
-  request.yar.set(keys.createdCdo, cdo)
-}
-
-const clearCdo = (request) => {
-  setKnowledge(request, null)
+const clearSession = (request) => {
+  setKnowledgeSession(request, null)
+  setMessageSession(request, null)
 }
 
 module.exports = {
-  getCreatedCdo,
-  setCreatedCdo,
-  clearCdo
+  getCreatedSession,
+  setCreatedSession,
+  clearSession
 }
