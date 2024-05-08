@@ -1,9 +1,8 @@
 const constants = {
-    keys: {
-      entry: 'message',
-      sessionMessage: 'sessionMessage'
-    }
+  keys: {
+    entry: 'message',
+    sessionMessage: 'sessionMessage'
   }
-  
-  module.exports = constants
-  
+}
+
+module.exports = constants

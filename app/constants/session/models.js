@@ -1,10 +1,9 @@
 const constants = {
-    keys: {
-      entry: 'models',
-      selectedModel: 'selectedModel',
-      vendorModels: 'vendorModels'
-    }
+  keys: {
+    entry: 'models',
+    selectedModel: 'selectedModel',
+    vendorModels: 'vendorModels'
   }
-  
-  module.exports = constants
-  
+}
+
+module.exports = constants
