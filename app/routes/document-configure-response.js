@@ -23,11 +23,11 @@ module.exports = [{
 
       let prompts = []
       if (selectedModel && selectedModel !== '') {
-        prompts = await getPrompts(request, 'mcu', selectedModel, 'correspondence')
+        prompts = await getPrompts(request, 'mcu', selectedModel, 'correspondence') // corresondence or briefing
       }
 
       const personas = await getPersonas(request, 'mcu', 'correspondence')
-      console.log('personas >>>>>>>>>>>>>>>>>>>>>>>>>>>>>', personas)
+
       const knowledge = await getAllKnowledge()
 
       return h.view('document-configure-response', { documentId, contents, categories, document, models, selectedModel, personas, prompts, knowledge })
