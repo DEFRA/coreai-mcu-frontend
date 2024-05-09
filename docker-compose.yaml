@@ -13,9 +13,9 @@ services:
       AZUREID_CLIENT_ID: ${AZUREID_CLIENT_ID}
       AZUREID_TENANT_ID: ${AZUREID_TENANT_ID}
       COOKIE_PASSWORD: who-likes-cookies-i-like-cookies-everybody-likes-cookies
-      KNOWLEDGE_INGESTION_TOPIC: ${KNOWLEDGE_INGESTION_TOPIC:-coreai-mcu-knowledge-ingestion}
-      GENERATION_REQUEST_TOPIC: ${GENERATION_REQUEST_TOPIC:-coreai-mcu-generation-request}
-      TRIAGE_REQUEST_TOPIC: ${TRIAGE_REQUEST_TOPIC:-coreai-mcu-summary-request}
+      KNOWLEDGE_INGESTION_TOPIC: ${KNOWLEDGE_INGESTION_TOPIC:-coreai-mcu-knowledge-ingest}
+      GENERATION_REQUEST_TOPIC: ${GENERATION_REQUEST_TOPIC:-coreai-mcu-generate}
+      TRIAGE_REQUEST_TOPIC: ${TRIAGE_REQUEST_TOPIC:-coreai-mcu-triage}
       EVENTS_SUBSCRIPTION: ${EVENTS_SUBSCRIPTION_TOPIC:-coreai-mcu-frontend}
       EVENTS_TOPIC_ADDRESS: ${EVENTS_TOPIC_ADDRESS:-coreai-mcu-events}
       DOCUMENTS_API_BASE_URL: ${DOCUMENTS_API_BASE_URL:-coreai-mcu-documents}
