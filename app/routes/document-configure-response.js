@@ -8,6 +8,7 @@ const { getAllKnowledge } = require('../services/knowledge')
 const { getModelSession, setModelSession } = require('../session/mcu/models')
 const { setPromptSession } = require('../session/mcu/prompts')
 const { setKnowledgeSession } = require('../session/mcu/knowledge')
+const { setPersonaSession } = require('../session/mcu/personas')
 
 module.exports = [{
   method: 'GET',
@@ -44,6 +45,9 @@ module.exports = [{
 
       const selectedModel = request.payload.model
       setModelSession(request, selectedModel)
+
+      const selectedPersona = request.payload.persona
+      setPersonaSession(request, selectedPersona) // need to confirm this is being added to the HAPI session
 
       const selectedPrompt = request.payload.prompt
       setPromptSession(request, selectedPrompt)
