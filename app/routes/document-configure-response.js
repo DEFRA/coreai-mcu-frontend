@@ -2,6 +2,7 @@ const { admin } = require('../auth/permissions')
 const { categories } = require('../models/constants')
 const { getDocumentData, getDocumentContent } = require('../services/documents')
 const { getModels } = require('../services/models')
+const { getPersonas } = require('../services/personas')
 const { getPrompts } = require('../services/prompts')
 const { getAllKnowledge } = require('../services/knowledge')
 const { getModelSession, setModelSession } = require('../session/mcu/models')
@@ -24,7 +25,9 @@ module.exports = [{
       if (selectedModel && selectedModel !== '') {
         prompts = await getPrompts(request, 'mcu', selectedModel, 'correspondence')
       }
-      const personas = []
+
+      const personas = await getPersonas(request, 'mcu', 'correspondence')
+      console.log('personas >>>>>>>>>>>>>>>>>>>>>>>>>>>>>', personas)
       const knowledge = await getAllKnowledge()
 
       return h.view('document-configure-response', { documentId, contents, categories, document, models, selectedModel, personas, prompts, knowledge })
