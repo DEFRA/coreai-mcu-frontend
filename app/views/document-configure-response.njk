@@ -76,7 +76,7 @@
           <select class="govuk-select" id="persona" name="persona">
             <option>Select a persona</option>
             {% for persona in personas %}
-              <option value="{{ persona.name }}">{{ persona.name }}</option>
+              <option value="{{ persona.rowKey }}">{{ persona.name }}</option>
             {% endfor %}
           </select>
         </P>
