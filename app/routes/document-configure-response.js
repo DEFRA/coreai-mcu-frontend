@@ -47,7 +47,7 @@ module.exports = [{
       setModelSession(request, selectedModel)
 
       const selectedPersona = request.payload.persona
-      setPersonaSession(request, selectedPersona) // need to confirm this is being added to the HAPI session
+      setPersonaSession(request, selectedPersona)
 
       const selectedPrompt = request.payload.prompt
       setPromptSession(request, selectedPrompt)

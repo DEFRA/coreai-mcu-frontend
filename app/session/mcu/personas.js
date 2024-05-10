@@ -9,14 +9,6 @@ const setPersonaSession = (request, value, key = keys.selectedPersona) => {
   set(request, keys.entry, key, value)
 }
 
-const getPersonasSession = (request, key = keys.personas) => {
-  return get(request, keys.entry, key) || []
-}
-
-const setPersonasSession = (request, value, key = keys.personas) => {
-  set(request, keys.entry, key, value)
-}
-
 const clearAllPersonasSession = (request) => {
   request.yar.set(keys.entry, null)
 }
@@ -24,7 +16,5 @@ const clearAllPersonasSession = (request) => {
 module.exports = {
   getPersonaSession,
   setPersonaSession,
-  getPersonasSession,
-  setPersonasSession,
   clearAllPersonasSession
 }
