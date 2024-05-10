@@ -1,9 +1,11 @@
-const { format, parseISO } = require('date-fns')
+const { parseISO } = require('date-fns')
+const { formatInTimeZone } = require('date-fns-tz')
+const { LONDON } = require('../constants/time-zones')
 const { getDocuments, getDocumentContents, getDocumentMetadata } = require('../api/documents')
 
 const formatDocument = (document) => {
   const date = parseISO(document.properties.createdOn)
-  const formattedDate = format(date, 'dd/MM/yyyy')
+  const formattedDate = formatInTimeZone(date, LONDON, 'dd/MM/yyyy HH:mm')
 
   return {
     ...document,
