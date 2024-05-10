@@ -20,11 +20,11 @@ module.exports = [{
       const document = await getDocumentData(documentId)
       const contents = await getDocumentContent(documentId)
       const selectedModel = getModelSession(request)
-      const models = await getModels(request)
+      const models = await getModels()
 
       let prompts = []
       if (selectedModel && selectedModel !== '') {
-        prompts = await getPrompts(request, 'mcu', selectedModel, 'correspondence')
+        prompts = await getPrompts('mcu', selectedModel, 'correspondence')
       }
 
       const personas = await getPersonas(request, 'mcu', 'correspondence')
