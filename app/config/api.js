@@ -15,7 +15,7 @@ const schema = Joi.object({
   }),
   personasApi: Joi.object({
     baseUrl: Joi.string().required()
-  }),
+  })
 })
 
 const config = {
@@ -33,7 +33,7 @@ const config = {
   },
   personasApi: {
     baseUrl: process.env.PERSONAS_API_BASE_URL
-  },
+  }
 }
 
 const { error, value } = schema.validate(config, { abortEarly: false })
