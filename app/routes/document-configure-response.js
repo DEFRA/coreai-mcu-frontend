@@ -24,7 +24,7 @@ module.exports = [{
 
       let prompts = []
       if (selectedModel && selectedModel !== '') {
-        prompts = await getPrompts(request, 'mcu', selectedModel, 'correspondence') // corresondence or briefing
+        prompts = await getPrompts(request, 'mcu', selectedModel, 'correspondence')
       }
 
       const personas = await getPersonas(request, 'mcu', 'correspondence')
