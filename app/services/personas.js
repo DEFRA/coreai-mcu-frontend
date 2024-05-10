@@ -5,7 +5,6 @@ const getPersonas = async (request, project = 'mcu', type) => {
   return responses
 }
 
-
 const getPersona = async (project = 'mcu', type, name) => {
   const responses = await listPersona(project, type, name)
 
