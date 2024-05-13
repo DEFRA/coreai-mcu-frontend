@@ -1,14 +1,14 @@
 const { listPersonas, listPersona } = require('../api/personas')
 
 const getPersonas = async (request, project = 'mcu', type) => {
-  const responses = await listPersonas(project, type)
-  return responses
+  const personas = await listPersonas(project, type)
+  return personas
 }
 
 const getPersona = async (project = 'mcu', type, name) => {
-  const responses = await listPersona(project, type, name)
+  const persona = await listPersona(project, type, name)
 
-  return responses
+  return persona
 }
 
 module.exports = {
