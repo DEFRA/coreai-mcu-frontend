@@ -1,17 +1,37 @@
-const { categories, document, personas, prompts, models } = require('../models/constants')
-const { getDocumentContent } = require('../services/documents')
+const { admin } = require('../auth/permissions')
+const { categories } = require('../models/constants')
+const { getDocumentData, getDocumentContent } = require('../services/documents')
+const { getModels } = require('../services/models')
+const { getPersonas } = require('../services/personas')
+const { getPrompts } = require('../services/prompts')
 const { getAllKnowledge } = require('../services/knowledge')
+const { getModelSession, setModelSession } = require('../session/mcu/models')
+const { setPromptSession } = require('../session/mcu/prompts')
+const { setKnowledgeSession } = require('../session/mcu/knowledge')
+const { setPersonaSession } = require('../session/mcu/personas')
 
 module.exports = [{
   method: 'GET',
   path: '/document/{id}/configure',
   options: {
+    auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.params.id
+      const document = await getDocumentData(documentId)
       const contents = await getDocumentContent(documentId)
+      const selectedModel = getModelSession(request)
+      const models = await getModels()
+
+      let prompts = []
+      if (selectedModel && selectedModel !== '') {
+        prompts = await getPrompts('mcu', selectedModel, 'correspondence')
+      }
+
+      const personas = await getPersonas(request, 'mcu', 'correspondence')
+
       const knowledge = await getAllKnowledge()
 
-      return h.view('document-configure-response', { documentId, contents, categories, document, personas, prompts, models, knowledge })
+      return h.view('document-configure-response', { documentId, contents, categories, document, models, selectedModel, personas, prompts, knowledge })
     }
   }
 },
@@ -19,9 +39,32 @@ module.exports = [{
   method: 'POST',
   path: '/document/configure',
   options: {
+    auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.payload.documentId
-      return h.redirect(`/document/${documentId}/response`)
+
+      const selectedModel = request.payload.model
+      setModelSession(request, selectedModel)
+
+      const selectedPersona = request.payload.persona
+      setPersonaSession(request, selectedPersona)
+
+      const selectedPrompt = request.payload.prompt
+      setPromptSession(request, selectedPrompt)
+
+      let selectedKnowledge = request.payload.knowledge
+      setKnowledgeSession(request, selectedKnowledge)
+
+      if (request.payload.action === 'next') {
+        if (!Array.isArray(selectedKnowledge)) {
+          selectedKnowledge = [selectedKnowledge]
+        }
+        setKnowledgeSession(request, selectedKnowledge)
+
+        return h.redirect(`/document/${documentId}/response`)
+      }
+
+      return h.redirect(`/document/${documentId}/configure`)
     }
   }
 }]

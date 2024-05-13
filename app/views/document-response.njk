@@ -29,7 +29,6 @@
             <th scope="col" class="govuk-table__header no-border">Name</th>
             <th scope="col" class="govuk-table__header no-border">Date</th>
             <th scope="col" class="govuk-table__header no-border">Category</th>
-            <th scope="col" class="govuk-table__header no-border govuk-!-text-align-right"></th>
           </tr>
         </thead>
         <tbody class="govuk-table__body">
@@ -51,7 +50,7 @@
                 Author
               </dt>
               <dd class="govuk-summary-list__value">
-                {{ response.documentSummary.author }}
+                {{ document.metadata.author }}
               </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -59,7 +58,7 @@
                 Sentiment
               </dt>
               <dd class="govuk-summary-list__value">
-                {{ response.documentSummary.sentiment }}
+                {{ document.metadata.sentiment }}
               </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -67,7 +66,7 @@
                 Summary
               </dt>
               <dd class="govuk-summary-list__value">
-                {{ response.documentSummary.summary | replace('\n', '<br>') | safe }}
+                {{ document.metadata.summary | replace('\n', '<br>') | safe }}
               </dd>
             </div>
             <div class="govuk-summary-list__row">
@@ -76,7 +75,7 @@
               </dt>
               <dd class="govuk-summary-list__value">
                 <ul class="govuk-list govuk-list--bullet">
-                  {% for point in response.documentSummary.keyPoints %}
+                  {% for point in document.metadata.keyPoints %}
                     <li>{{ point }}</li>
                   {% endfor %}
                 </ul>
@@ -88,7 +87,7 @@
               </dt>
               <dd class="govuk-summary-list__value">
                 <ul class="govuk-list govuk-list--bullet">
-                  {% for fact in response.documentSummary.keyFacts %}
+                  {% for fact in document.metadata.keyFacts %}
                     <li>{{ fact }}</li>
                   {% endfor %}
                 </ul>
@@ -168,7 +167,7 @@
           <h2 id="customise_input" class="govuk-heading-m govuk-!-margin-top-8">Customise this response</h2>
 
           <textarea class="govuk-textarea" id="more-detail" name="usertext" rows="5" aria-describedby="more-detail-hint">{{ usertext }}</textarea>
-          <details class="govuk-details govuk-details-no-border">
+          <details id="more-detail-hint" class="govuk-details govuk-details-no-border">
             <summary class="govuk-details__summary">
               <span class="govuk-details__summary-text">
                 Show examples
@@ -183,9 +182,16 @@
           </details>
         {% endif %}
         <div class="govuk-button-group govuk-!-margin-top-8">
-          <button type="submit" name="action" value="generate" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">
+          <button
+            type="submit"
+            name="action"
+            value="generate"
+            data-prevent-double-click="true"
+            class="govuk-button"
+            data-module="govuk-button">
             <span>Generate response</span>
           </button>
+          {% if response.response %}
           <a
             href="/document/{{ document.documentId }}/response/history"
             data-prevent-double-click="true"
@@ -193,13 +199,15 @@
             data-module="govuk-button">
             Response history
           </a>
-          <a
-            href="/document/{{ document.documentId }}/finalise"
+          <button
+            type="submit"
+            name="action"
+            value="finalise"
             data-prevent-double-click="true"
             class="govuk-button govuk-button--secondary"
             data-module="govuk-button">
             Finalise
-          </a>
+          </button>
           <button
             type="submit"
             name="action"
@@ -209,9 +217,10 @@
             data-module="govuk-button">
             Start over
           </button>
+          {% endif %}
         </div>
-        <input type="hidden" name="documentId" value="{{ document.documentId }}"></form>
-      </div>
+        <input type="hidden" name="documentId" value="{{ document.documentId }}">
+      </form>
     </div>
   </div>
 {% endblock %}
@@ -219,11 +228,8 @@
 {% block bodyEnd %}
   <script>
     const form = document.querySelector('#response_form')
-
     const documentId = form.querySelector('input[name="documentId"]').value
-
     const formAttributes = form.attributes
-
     const es = new EventSource(`/document/${documentId}/response/events`)
 
     es.addEventListener('error', (event) => {
@@ -231,8 +237,6 @@
     })
 
     form.onsubmit = async (event) => {
-      event.preventDefault()
-
       const documentId = form.querySelector('input[name="documentId"]').value
 
       const data = {
@@ -242,34 +246,35 @@
       }
 
       if (data.action === 'generate') {
+        event.preventDefault()
+
         const button = form.querySelector('button[type="submit"][name="action"][value="generate"]')
 
         button.classList.add('govuk-button--disabled')
         button.classList.add('button--loading')
         button.querySelector('span').classList.add('button-text--loading')
-      }
 
-      try {
-        const res = await fetch(formAttributes['action'].value, {
-          method: formAttributes['method'].value,
-          body: JSON.stringify(data),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-
-      } catch (error) {
-        console.error(error)
-        location.reload()
-      }
-
-      es.addEventListener('message', (event) => {
-        const data = JSON.parse(event.data)
-
-        if (data.event === 'response') {
+        try {
+          const res = await fetch(formAttributes['action'].value, {
+            method: formAttributes['method'].value,
+            body: JSON.stringify(data),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+        } catch (error) {
+          console.error(error)
           location.reload()
         }
-      })
+
+        es.addEventListener('message', (event) => {
+          const data = JSON.parse(event.data)
+
+          if (data.event === 'response') {
+            location.reload()
+          }
+        })
+      }
     }
   </script>
 {% endblock %}

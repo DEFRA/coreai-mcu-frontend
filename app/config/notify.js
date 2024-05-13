@@ -11,7 +11,7 @@ const schema = Joi.object({
 const config = {
   apiKey: process.env.NOTIFY_API_KEY,
   carbonCopyEmailAddress: process.env.CARBON_COPY_EMAIL_ADDRESS,
-  templateIdCorrespondence: process.env.NOTIFY_TEMPLATE_ID_CORRESPONDENCE,
+  templateIdCorrespondence: process.env.NOTIFY_TEMPLATE_ID_CORRESPONDENCE
 }
 
 const { error, value } = schema.validate(config, { abortEarly: false })

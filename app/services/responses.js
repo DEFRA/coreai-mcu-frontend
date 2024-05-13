@@ -1,6 +1,6 @@
 const { parseISO } = require('date-fns')
 const { formatInTimeZone } = require('date-fns-tz')
-const { getResponses } = require('../api/responses')
+const { getResponses, finaliseResponse, updateFinalResponse, deleteResponses, getFinalisedResponse } = require('../api/responses')
 const { LONDON } = require('../constants/time-zones')
 
 const formatResponse = (response) => {
@@ -34,7 +34,33 @@ const getAllResponses = async (id) => {
   return responses.map(formatResponse)
 }
 
+const getFinalResponse = async (projectName, documentId) => {
+  const response = await getFinalisedResponse(projectName, documentId)
+
+  return response
+}
+
+const saveFinalResponse = async (document) => {
+  const datacontenttype = 'application/json'
+
+  const responses = await finaliseResponse(document, datacontenttype)
+
+  return responses
+}
+
+const updateFinalisedResponse = async (projectName, documentId, response) => {
+  return updateFinalResponse(projectName, documentId, response)
+}
+
+const deleteAllResponses = async (id) => {
+  await deleteResponses(id)
+}
+
 module.exports = {
   getLatestResponse,
-  getAllResponses
+  getAllResponses,
+  getFinalResponse,
+  saveFinalResponse,
+  updateFinalisedResponse,
+  deleteAllResponses
 }

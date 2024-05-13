@@ -1,6 +1,7 @@
 const { uploadDocument, updateDocumentMetadata } = require('../api/documents')
 const { mime } = require('../constants/document-types')
 const { getExtension } = require('../lib/file')
+const { sendTriageRequest } = require('../messaging/outbound/triage-request')
 
 const getBuffer = (payload) => {
   let buffer
@@ -30,7 +31,6 @@ const buildMetadataPayload = (payload) => {
     documentType: payload.uploadtype,
     source: 'frontend',
     sourceAddress: 'dummy',
-    suggestedCategory: payload.category,
     userCategory: payload.category,
     targetMinister: 'dummy'
   }
@@ -44,6 +44,8 @@ const upload = async (payload) => {
   const metadataPayload = buildMetadataPayload(payload)
 
   await updateDocumentMetadata(id, metadataPayload)
+
+  await sendTriageRequest({ documentId: id })
 }
 
 module.exports = {

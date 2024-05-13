@@ -38,29 +38,45 @@
 
       <div class="govuk-grid-row govuk-body">
         <div class="govuk-grid-column-one-third">
-          {{ document.sourceName }}
+          {{ document.metadata.fileName }}
         </div>
         <div class="govuk-grid-column-one-third">
-          {{ document.uploadedDate }}
+          {{ document.properties.createdOn }}
         </div>
         <div class="govuk-grid-column-one-third">
           <select class="govuk-select" id="category" name="category">
-            {% for c in categories %}
-            <option value="{{ c }}"{% if c == document.suggestedCategory %} selected{% endif %}>{{ c }}</option>
+            {% for category in categories %}
+              <option value="{{ category }}"{% if category == document.metadata.suggestedCategory %} selected{% endif %}>{{ category }}</option>
             {% endfor %}
           </select>
         </div>
       </div>
       <p class="govuk-body summary">{{ contents | replace("\n", "<br>") | safe }}</p>
 
+      <a name="configure_response"></a>
       <h2 class="govuk-heading-m">Response</h2>
 
-      <form action="/document/configure" method="post">
+      <form id="configure_form" action="/document/configure" method="post">
+        <p class="govuk-body govuk-!-margin-top-6">
+          Model<br>
+          <select class="govuk-select" id="model" name="model" onchange="document.querySelector('#configure_form').submit()">
+            <option>Select a language model</option>
+            {% for vendor in models %}
+              <optgroup label="{{ vendor.vendor }}">
+              {% for  model in vendor.models %}
+                <option value="{{ model.modelId }}"{% if selectedModel == model.modelId %} selected{% endif %}>{{ model.model }}</option>
+              {% endfor %}
+              </optgroup>
+            {% endfor %}
+          </select>
+        </P>
+
         <p class="govuk-body govuk-!-margin-top-6">
           Persona<br>
           <select class="govuk-select" id="persona" name="persona">
-            {% for p in personas %}
-            <option value="{{ p.personaId }}">{{ p.title }}</option>
+            <option>Select a persona</option>
+            {% for persona in personas %}
+              <option value="{{ persona.personaId }}">{{ persona.name }}</option>
             {% endfor %}
           </select>
         </P>
@@ -71,8 +87,8 @@
         <p class="govuk-body govuk-!-margin-top-6">
           Prompt<br>
           <select class="govuk-select" id="prompt" name="prompt">
-            {% for p in prompts %}
-            <option value="{{ p.promptId }}">{{ p.title }}</option>
+            {% for prompt in prompts %}
+              <option value="{{ prompt.name }}">{{ prompt.name }}</option>
             {% endfor %}
           </select>
         </P>
@@ -80,45 +96,57 @@
           <a href="#" class="govuk-link">View prompt</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#" class="govuk-link">Manage prompts</a>
         </p>
 
-        <p class="govuk-body govuk-!-margin-top-6">
-          Model<br>
-          <select class="govuk-select" id="model" name="model">
-            {% for m in models %}
-            <option value="{{ m.model }}">{{ m.model }}</option>
-            {% endfor %}
-          </select>
-        </P>
-
         <h3 class="govuk-heading-s">Knowledge</h3>
 
-        <div class="govuk-grid-row govuk-body">
-          <div class="govuk-grid-column-one-third">
-            <strong>File</strong>
-          </div>
-          <div class="govuk-grid-column-one-third">
-            <strong>Date</strong>
-          </div>
-          <div class="govuk-grid-column-one-third">
-            <strong>Category</strong>
-          </div>
-        </div>
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="knowledge-articles">
+            <div id="knowledge-articles" class="govuk-hint">
+              Select all of the knowledge articles to reference
+            </div>
 
-        {% for article in knowledge %}
-        <div class="govuk-grid-row govuk-body">
-          <div class="govuk-grid-column-one-third">
-            {{ article.fileName }}
-          </div>
-          <div class="govuk-grid-column-one-third">
-            {{ article.lastModified }}
-          </div>
-          <div class="govuk-grid-column-one-third">
-            {{ article.category }}
-          </div>
+            <div class="govuk-grid-row govuk-body">
+              <div class="govuk-grid-column-one-third">
+                <strong>File</strong>
+              </div>
+              <div class="govuk-grid-column-one-third">
+                <strong>Date</strong>
+              </div>
+              <div class="govuk-grid-column-one-third">
+                <strong>Category</strong>
+              </div>
+            </div>
+
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              {% for article in knowledge %}
+              <div class="govuk-grid-row govuk-body">
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="knowledge-{{loop.index}}" name="knowledge" type="checkbox" value="{{ article.documentId }}" checked>
+                    <label class="govuk-label govuk-checkboxes__label" for="knowledge-{{loop.index}}">
+                      {{ article.fileName }}
+                    </label>
+                  </div>
+                </div>
+                <div class="govuk-grid-column-one-third">
+                  {{ article.lastModified }}
+                </div>
+                <div class="govuk-grid-column-one-third">
+                  {{ article.category }}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </fieldset>
         </div>
-        {% endfor %}
 
         <div class="govuk-!-margin-top-8">
-          <button type="submit" class="govuk-button" data-module="govuk-button">
+          <button
+            type="submit"
+            name="action"
+            value="next"
+            data-prevent-double-click="true"
+            class="govuk-button"
+            data-module="govuk-button">
             Next
           </button>
           <input type="hidden" name="documentId" value="{{ documentId }}">

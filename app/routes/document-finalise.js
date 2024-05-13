@@ -1,12 +1,18 @@
-const { getLatestResponse } = require('../services/responses')
+const { admin } = require('../auth/permissions')
+const { getDocumentData } = require('../services/documents')
+const { getFinalResponse } = require('../services/responses')
+const { setMessageSession } = require('../session/mcu/message')
 
 module.exports = [{
   method: 'GET',
   path: '/document/{id}/finalise',
   options: {
+    auth: { scope: [admin] },
     handler: async (request, h) => {
       const documentId = request.params.id
-      const response = await getLatestResponse(documentId)
+
+      const response = await getFinalResponse('mcu', documentId)
+
       return h.view('document-finalise', { documentId, response }).code(200)
     }
   }
@@ -15,14 +21,18 @@ module.exports = [{
   method: 'POST',
   path: '/document/finalise',
   options: {
+    auth: { scope: [admin] },
     handler: async (request, h) => {
-      const documentId = request.payload.documentId
-      console.log(request.payload)
+      const { documentId } = request.payload
+
       if (request.payload.action === 'save_send') {
         return h.redirect(`/document/${documentId}/notify`)
       }
 
-      return h.redirect(`/document/${documentId}/finalise`)
+      const document = await getDocumentData(documentId)
+      setMessageSession(request, `Document ${document.metadata.fileName} has been completed.`)
+
+      return h.redirect('/documents/queue')
     }
   }
 }]
