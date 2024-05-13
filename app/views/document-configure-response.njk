@@ -74,8 +74,9 @@
         <p class="govuk-body govuk-!-margin-top-6">
           Persona<br>
           <select class="govuk-select" id="persona" name="persona">
+            <option>Select a persona</option>
             {% for persona in personas %}
-              <option value="{{ persona.personaId }}">{{ persona.title }}</option>
+              <option value="{{ persona.personaId }}">{{ persona.name }}</option>
             {% endfor %}
           </select>
         </P>
