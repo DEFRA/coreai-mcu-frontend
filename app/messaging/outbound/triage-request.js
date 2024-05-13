@@ -12,7 +12,6 @@ const createMessage = (data) => ({
 
 const sendTriageRequest = async (data) => {
   const sender = new MessageSender(triageTopic)
-  console.log(data)
   const message = createMessage(data)
 
   await sender.sendMessage(message)

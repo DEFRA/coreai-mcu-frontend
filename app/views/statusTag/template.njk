@@ -1,0 +1,15 @@
+{% if status == 'New' %}
+  <strong class="govuk-tag govuk-tag--blue">{{ status }}</strong>
+{% elif status == 'Triaging' %}
+  <strong class="govuk-tag govuk-tag--yellow">{{ status }}</strong>
+{% elif status == 'Not Started' %}
+  <strong class="govuk-tag govuk-tag--light-blue">{{ status }}</strong>
+{% elif status == 'In Progress' %}
+  <strong class="govuk-tag govuk-tag--turquoise">{{ status }}</strong>
+{% elif status == 'Generating' %}
+  <strong class="govuk-tag govuk-tag--yellow">{{ status }}</strong>
+{% elif status == 'Complete' %}
+  <strong class="govuk-tag govuk-tag--green">{{ status }}</strong>
+{% else %}
+  <strong class="govuk-tag govuk-tag--red govuk-!-font-size-16">Invalid status: {{ status }}</strong>
+{% endif %}
