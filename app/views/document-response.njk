@@ -199,13 +199,15 @@
             data-module="govuk-button">
             Response history
           </a>
-          <a
-            href="/document/{{ document.documentId }}/finalise"
+          <button
+            type="submit"
+            name="action"
+            value="finalise"
             data-prevent-double-click="true"
             class="govuk-button govuk-button--secondary"
             data-module="govuk-button">
             Finalise
-          </a>
+          </button>
           <button
             type="submit"
             name="action"
@@ -272,11 +274,6 @@
             location.reload()
           }
         })
-      } else if (data.action === 'start_over') {
-        const button = form.querySelector('button[type="submit"][name="action"][value="start_over"]')
-
-        button.classList.add('govuk-button--disabled')
-        button.classList.add('button--loading')
       }
     }
   </script>
