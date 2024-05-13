@@ -6,6 +6,7 @@ const { getDocumentData, getDocumentContent } = require('../services/documents')
 const { registerClient } = require('../sse')
 const { getModelSession } = require('../session/mcu/models')
 const { getPromptSession } = require('../session/mcu/prompts')
+const { getPersonaSession } = require('../session/mcu/personas')
 const { getKnowledgeSession } = require('../session/mcu/knowledge')
 const { clearSession } = require('../session/mcu')
 
@@ -70,7 +71,7 @@ module.exports = [{
       const knowledge = getKnowledgeSession(request)
       const modelId = getModelSession(request)
       const promptId = getPromptSession(request)
-      const personaId = ''
+      const personaId = getPersonaSession(request)
 
       await sendGenerationRequest({
         documentId,
