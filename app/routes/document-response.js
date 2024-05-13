@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { admin } = require('../auth/permissions')
 const { sendGenerationRequest } = require('../messaging/outbound/generation-request')
-const { getLatestResponse, deleteAllResponses } = require('../services/responses')
+const { getLatestResponse, deleteAllResponses, saveFinalResponse } = require('../services/responses')
 const { getDocumentData, getDocumentContent } = require('../services/documents')
 const { registerClient } = require('../sse')
 const { getModelSession } = require('../session/mcu/models')
@@ -27,24 +27,6 @@ module.exports = [{
 },
 {
   method: 'GET',
-  path: '/document/{id}/response/edit',
-  options: {
-    auth: { scope: [admin] },
-    validate: {
-      params: Joi.object({
-        id: Joi.string().uuid().required()
-      })
-    },
-    handler: async (request, h) => {
-      const documentId = request.params.id
-      const response = await getLatestResponse(documentId)
-
-      return h.view('document-edit', { documentId, response }).code(200)
-    }
-  }
-},
-{
-  method: 'GET',
   path: '/document/{id}/response/events',
   options: {
     auth: { scope: [admin] },
@@ -63,13 +45,26 @@ module.exports = [{
   options: {
     auth: { scope: [admin] },
     handler: async (request, h) => {
-      const documentId = request.payload.documentId
+      const { documentId } = request.payload
 
       if (request.payload.action === 'start_over') {
         await deleteAllResponses(documentId)
         clearSession(request)
 
         return h.redirect(`/document/${documentId}/configure`)
+      }
+
+      if (request.payload.action === 'finalise') {
+        const payload = {
+          projectName: 'mcu',
+          documentId
+        }
+
+        await saveFinalResponse(payload)
+
+        clearSession(request)
+
+        return h.redirect(`/document/${documentId}/finalise`)
       }
 
       const knowledge = getKnowledgeSession(request)
