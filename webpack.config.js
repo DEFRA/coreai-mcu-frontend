@@ -16,7 +16,11 @@ module.exports = {
       './app/frontend/images/apple-touch-icon.png',
       './app/frontend/images/defra-logo-black.png',
       './app/frontend/images/defra-logo-white.png',
-      './app/frontend/images/favicon.ico'
+      './app/frontend/images/favicon.ico',
+      './app/frontend/images/thumbs-down-black.svg',
+      './app/frontend/images/thumbs-down-grey.svg',
+      './app/frontend/images/thumbs-up-black.svg',
+      './app/frontend/images/thumbs-up-grey.svg'
     ]
   },
   mode: isDev ? 'development' : 'production',
