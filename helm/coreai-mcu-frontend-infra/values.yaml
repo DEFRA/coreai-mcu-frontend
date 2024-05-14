@@ -1,13 +1,15 @@
 namespaceTopics:
-  - name: coreai-mcu-generation-request
+  - name: generate
+    owner: 'no'
     roleAssignments:  
       - roleName: TopicSender
-  - name: coreai-mcu-knowledge-ingestion
+  - name: knowledge-ingest
+    owner: 'no'
     roleAssignments:  
       - roleName: TopicSender
-  - name: 
+  - name: events
       owner: 'no'
       roleAssignments:  
         - roleName: TopicReceiver
       topicSubscriptions:
-        - name: coreai-mcu-frontend
+        - name: frontend
