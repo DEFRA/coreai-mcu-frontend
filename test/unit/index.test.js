@@ -7,6 +7,7 @@ jest.mock('../../app/server', () =>
     }
   })
 )
+
 const createServer = require('../../app/server')
 
 describe('Server setup', () => {
