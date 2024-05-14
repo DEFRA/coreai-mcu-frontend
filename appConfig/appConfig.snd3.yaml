@@ -29,3 +29,6 @@
   type: "keyvault"
 - key: NOTIFY_TEMPLATE_ID_CORRESPONDENCE
   value: "37b554a1-eb2d-4f34-8170-927ec5fc3dd6"
+- key: AUTHENTICATION_ENABLED
+  value: "{{servicename}}-AUTHENTICATION-ENABLED"
+  type: "keyvault"
