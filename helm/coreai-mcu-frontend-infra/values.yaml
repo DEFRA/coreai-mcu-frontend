@@ -8,8 +8,8 @@ namespaceTopics:
     roleAssignments:  
       - roleName: TopicSender
   - name: events
-      owner: 'no'
-      roleAssignments:  
-        - roleName: TopicReceiver
-      topicSubscriptions:
-        - name: frontend
+    owner: 'no'
+    roleAssignments:  
+      - roleName: TopicReceiver
+    topicSubscriptions:
+      - name: frontend
