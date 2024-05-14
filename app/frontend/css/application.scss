@@ -308,3 +308,27 @@ hr.divider {
 .govuk-table__cell--align-middle {
   vertical-align: middle;
 }
+
+.thumbs {
+  height: 39px;
+  width: 44px;
+  border: none;
+}
+
+.thumbs--up {
+  background-image: url('../images/thumbs-up-black.svg');
+  background-color: transparent;
+  
+  &:hover, &:focus {
+    background-image: url('../images/thumbs-up-grey.svg');
+  }
+}
+
+.thumbs--down {
+  background-image: url('../images/thumbs-down-black.svg');
+  background-color: transparent;
+
+  &:hover, &:focus {
+    background-image: url('../images/thumbs-down-grey.svg');
+  }
+}

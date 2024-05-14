@@ -99,6 +99,23 @@
           <p class="govuk-body">Generated: {{ response.generatedOn }}</p>
           <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
 
+          <div class="govuk-!-margin-bottom-6">
+            <p class="govuk-body govuk-!-font-weight-bold">Was this response helpful?</p>
+            <button
+              class="govuk-link thumbs thumbs--up govuk-!-margin-right-2"
+              value="like"
+              type="button"
+              aria-label="like"
+            ></button>
+
+            <button
+              class="govuk-link thumbs thumbs--down"
+              value="dislike"
+              type="button"
+              aria-label="dislike"
+            ></button>
+          </div>
+
           {% if not response.citations | length %}
             <div class="govuk-warning-text">
               <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
