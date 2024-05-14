@@ -1,6 +1,9 @@
 - key: APPINSIGHTS_CONNECTIONSTRING
   value: "{{servicename}}-APPINSIGHTS-CONNECTIONSTRING"
   type: "keyvault"
+- key: MESSAGE_QUEUE_HOST
+  value: "{{servicename}}-MESSAGE-QUEUE-HOST"
+  type: "keyvault"
 - key: COOKIE_PASSWORD
   value: "{{servicename}}-COOKIE-PASSWORD"
   type: "keyvault"
