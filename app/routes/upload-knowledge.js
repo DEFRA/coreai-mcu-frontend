@@ -31,12 +31,13 @@ module.exports = [{
     validate: {
       payload: schema,
       failAction: (request, h, err) => {
+        console.log(err)
         return h.view('upload-knowledge', {
           categories,
           uploadtype: request.payload.uploadtype,
           filename: request.payload.document.hapi.filename,
           filetype: getExtension(request.payload.document.hapi.filename),
-          uri: request.payload.uri,
+          url: request.payload.url,
           title: request.payload.title,
           category: request.payload.category,
           err
@@ -47,7 +48,8 @@ module.exports = [{
       const documentId = await upload(request.payload)
 
       await sendKnowledgeRequest({
-        documentId
+        documentId,
+        type: request.payload.uploadtype
       })
 
       return h.redirect('/')

@@ -2,9 +2,10 @@ const { MessageSender } = require('ffc-messaging')
 const { knowledgeTopic } = require('../../config/messaging')
 const { KNOWLEDGE_INGESTION } = require('../../constants/events')
 
-const createMessage = (data) => ({
+const createIngestMessage = (data) => ({
   body: {
-    document_id: data.documentId
+    document_id: data.documentId,
+    type: data.type
   },
   type: KNOWLEDGE_INGESTION,
   source: 'coreai-mcu-frontend'
@@ -12,8 +13,14 @@ const createMessage = (data) => ({
 
 const sendKnowledgeRequest = async (data) => {
   const sender = new MessageSender(knowledgeTopic)
+  const type = data.type
+  let message
 
-  const message = createMessage(data)
+  if (type === 'document' || type === 'webpage') {
+    message = createIngestMessage(data)
+  } else {
+    throw new Error(`Unsupported upload type: ${type}`)
+  }
 
   await sender.sendMessage(message)
   await sender.closeConnection()

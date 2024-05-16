@@ -1,10 +1,10 @@
 const Joi = require('joi')
 
 const schema = Joi.object({
-  uploadtype: Joi.string().valid('file', 'uri'),
+  uploadtype: Joi.string().valid('document', 'webpage'),
   title: Joi.string().required(),
   document: Joi.when('uploadtype', {
-    is: 'file',
+    is: 'document',
     then: Joi.object({
       hapi: Joi.object({
         filename: Joi.string().regex(/^(.+)\.(pdf|doc|docx)$/).message('Incorrect document file type. Must be .pdf, .doc or .docx.')
@@ -12,9 +12,9 @@ const schema = Joi.object({
     }).required().unknown(true),
     otherwise: Joi.optional()
   }),
-  uri: Joi.when('uploadtype', {
-    is: 'uri',
-    then: Joi.string().uri().required(),
+  url: Joi.when('uploadtype', {
+    is: 'webpage',
+    then: Joi.string().required(),
     otherwise: Joi.optional()
   }),
   category: Joi.string().valid('Farming', 'Fishing', 'Environment').required()

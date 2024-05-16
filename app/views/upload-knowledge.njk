@@ -43,26 +43,26 @@
           <fieldset class="govuk-fieldset" aria-describedby="upload-type-hint">
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="upload-type" name="uploadtype" type="radio" value="file" data-aria-controls="conditional-upload-type"{% if uploadtype != 'uri' %} checked{% endif %}>
+                <input class="govuk-radios__input" id="upload-type" name="uploadtype" type="radio" value="document" data-aria-controls="conditional-upload-type"{% if uploadtype != 'webpage' %} checked{% endif %}>
                 <label class="govuk-label govuk-radios__label" for="upload-type">
-                  Upload a file
+                  Upload a document
                 </label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-upload-type">
                 <div class="govuk-form-group">
                   <div class="govuk-form-group">
-                    <label class="govuk-label" for="file-upload-1">
-                      Choose a file to upload
+                    <label class="govuk-label" for="document-upload-1">
+                      Choose a document to upload
                     </label>
-                    {% if err and uploadtype == 'file' and filetype not in ['pdf', 'doc', 'docx'] %}
+                    {% if err and uploadtype == 'document' and filetype not in ['pdf', 'doc', 'docx'] %}
                     <p class="govuk-error-message">
-                      <span class="govuk-visually-hidden">Error:</span> Upload a valid file
+                      <span class="govuk-visually-hidden">Error:</span> Upload a valid document
                     </p>
                     {% endif %}
-                    <input class="govuk-file-upload" id="file-upload-1" name="document" type="file">
+                    <input class="govuk-file-upload" id="document-upload-1" name="document" type="file">
                   </div>
                   <div id="location-upload-hint">
-                    <p>The file should:</p>
+                    <p>The document should:</p>
                     <ul class="govuk-list govuk-list--bullet">
                       <li>Have an extension of .pdf, .doc or .docx</li>
                       <li>Be no larger than 50 MB</li>
@@ -71,22 +71,22 @@
                 </div>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="upload-type-2" name="uploadtype" type="radio" value="uri" data-aria-controls="conditional-upload-type-2"{% if uploadtype == 'uri' %} checked{% endif %}>
+                <input class="govuk-radios__input" id="upload-type-2" name="uploadtype" type="radio" value="webpage" data-aria-controls="conditional-upload-type-2"{% if uploadtype == 'webpage' %} checked{% endif %}>
                 <label class="govuk-label govuk-radios__label" for="upload-type-2">
                   Web address
                 </label>
               </div>
               <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-upload-type-2">
                 <div class="govuk-form-group">
-                  {% if err and uploadtype == 'uri' and uri == '' %}
+                  {% if err and uploadtype == 'webpage' and url == '' %}
                   <p class="govuk-error-message">
-                    <span class="govuk-visually-hidden">Error:</span> Enter a valid url
+                    <span class="govuk-visually-hidden">Error: </span>Enter a valid URL
                   </p>
                   {% endif %}
-                  <div id="uri-hint" class="govuk-hint">
+                  <div id="url-hint" class="govuk-hint">
                     Enter a valid URL
                   </div>
-                  <textarea class="govuk-textarea" id="uri" name="uri" rows="1" aria-describedby="uri-hint">{{ uri }}</textarea>
+                  <textarea class="govuk-textarea" id="url" name="url" rows="1" aria-describedby="url-hint">{{ url }}</textarea>
                 </div>
               </div>
             </div>
@@ -100,11 +100,10 @@
             </label>
             {% if err and category == '' %}
             <p class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> Choose a category
+              <span class="govuk-visually-hidden">Error: </span>Choose a category
             </p>
             {% endif %}
             <select class="govuk-select" id="category" name="category">
-              <option></option>
               {% for category in categories %}
                 <option value="{{ category }}"{% if c == category %} selected{% endif %}>{{ category }}</option>
               {% endfor %}
