@@ -18,15 +18,15 @@
 - key: EVENTS_TOPIC_ADDRESS
   value: "coreai-mcu-events"
 - key: DOCUMENTS_API_BASE_URL
-  value: "https://coreai-mcu-documents.coreai-mcu"
+  value: "https://coreai-mcu-documents.snd3.adp.defra.gov.uk"
 - key: KNOWLEDGE_API_BASE_URL
-  value: "https://coreai-mcu-knowledge-pgv.coreai-mcu"
+  value: "https://coreai-mcu-knowledge-pgv.snd3.adp.defra.gov.uk"
 - key: RESPONSES_API_BASE_URL
-  value: "https://coreai-mcu-responses.coreai-mcu"
+  value: "https://coreai-mcu-responses.snd3.adp.defra.gov.uk"
 - key: PROMPTS_API_BASE_URL
-  value: "https://coreai-mcu-prompts.coreai-mcu"
+  value: "https://coreai-mcu-prompts.snd3.adp.defra.gov.uk"
 - key: PERSONAS_API_BASE_URL
-  value: "https://coreai-mcu-persona.coreai-mcu"
+  value: "https://coreai-mcu-personas.snd3.adp.defra.gov.uk"
 - key: NOTIFY_API_KEY
   value: "{{servicename}}-NOTIFY-API-KEY"
   type: "keyvault"
