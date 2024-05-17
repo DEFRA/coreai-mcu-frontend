@@ -8,26 +8,26 @@
   value: "{{servicename}}-COOKIE-PASSWORD"
   type: "keyvault"
 - key: KNOWLEDGE_INGESTION_TOPIC
-  value: "coreai-mcu-knowledge-ingest"
+  value: "crai-mcu-knowledge-ingest"
 - key: GENERATION_REQUEST_TOPIC
-  value: "coreai-mcu-generate-request"
+  value: "crai-mcu-generate-request"
 - key: TRIAGE_REQUEST_TOPIC
-  value: "coreai-mcu-triage"
+  value: "crai-mcu-triage"
 - key: EVENTS_SUBSCRIPTION
-  value: "coreai-mcu-frontend"
+  value: "crai-mcu-frontend"
 - key: EVENTS_TOPIC_ADDRESS
-  value: "coreai-mcu-events"
+  value: "crai-mcu-events"
 - key: DOCUMENTS_API_BASE_URL
   value: "{{servicename}}-DOCUMENTS-API-BASE-URL"
   type: "keyvault"
 - key: KNOWLEDGE_API_BASE_URL
-  value: "https://coreai-mcu-knowledge-pgv.coreai-mcu.svc.cluster.local"
+  value: "https://coreai-mcu-knowledge-pgv.crai-mcu.svc.cluster.local"
 - key: RESPONSES_API_BASE_URL
-  value: "https://coreai-mcu-responses.coreai-mcu.svc.cluster.local"
+  value: "https://coreai-mcu-responses.crai-mcu.svc.cluster.local"
 - key: PROMPTS_API_BASE_URL
-  value: "https://coreai-mcu-prompts.coreai-mcu.svc.cluster.local"
+  value: "https://coreai-mcu-prompts.crai-mcu.svc.cluster.local"
 - key: PERSONAS_API_BASE_URL
-  value: "https://coreai-mcu-persona.coreai-mcu.svc.cluster.local"
+  value: "https://coreai-mcu-persona.crai-mcu.svc.cluster.local"
 - key: NOTIFY_API_KEY
   value: "{{servicename}}-NOTIFY-API-KEY"
   type: "keyvault"
