@@ -18,16 +18,15 @@
 - key: EVENTS_TOPIC_ADDRESS
   value: "crai-mcu-events"
 - key: DOCUMENTS_API_BASE_URL
-  value: "{{servicename}}-DOCUMENTS-API-BASE-URL"
-  type: "keyvault"
+  value: "http://coreai-mcu-documents.crai-mcu.svc.cluster.local"
 - key: KNOWLEDGE_API_BASE_URL
-  value: "https://coreai-mcu-knowledge-pgv.crai-mcu.svc.cluster.local"
+  value: "http://coreai-mcu-knowledge-pgv.crai-mcu.svc.cluster.local"
 - key: RESPONSES_API_BASE_URL
-  value: "https://coreai-mcu-responses.crai-mcu.svc.cluster.local"
+  value: "http://coreai-mcu-responses.crai-mcu.svc.cluster.local"
 - key: PROMPTS_API_BASE_URL
-  value: "https://coreai-mcu-prompts.crai-mcu.svc.cluster.local"
+  value: "http://coreai-mcu-prompts.crai-mcu.svc.cluster.local"
 - key: PERSONAS_API_BASE_URL
-  value: "https://coreai-mcu-persona.crai-mcu.svc.cluster.local"
+  value: "http://coreai-mcu-personas.crai-mcu.svc.cluster.local"
 - key: NOTIFY_API_KEY
   value: "{{servicename}}-NOTIFY-API-KEY"
   type: "keyvault"
