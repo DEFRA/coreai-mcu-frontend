@@ -1,4 +1,8 @@
 namespaceTopics:
+  - name: triage
+    owner: 'no'
+    roleAssignments:  
+      - roleName: TopicSender
   - name: generate
     owner: 'no'
     roleAssignments:  
