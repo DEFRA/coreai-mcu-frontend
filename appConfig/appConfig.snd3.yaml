@@ -10,7 +10,7 @@
 - key: KNOWLEDGE_INGESTION_TOPIC
   value: "crai-mcu-knowledge-ingest"
 - key: GENERATION_REQUEST_TOPIC
-  value: "crai-mcu-generate-request"
+  value: "crai-mcu-generate"
 - key: TRIAGE_REQUEST_TOPIC
   value: "crai-mcu-triage"
 - key: EVENTS_SUBSCRIPTION
