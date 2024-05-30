@@ -1,6 +1,12 @@
 - key: APPINSIGHTS_CONNECTIONSTRING
   value: "{{servicename}}-APPINSIGHTS-CONNECTIONSTRING"
   type: "keyvault"
+- key: AZUREID_CLIENT_ID
+  value: "{{servicename}}-AZUREID-CLIENT-ID"
+  type: "keyvault"
+- key: AZUREID_CLIENT_SECRET
+  value: "{{servicename}}-AZUREID-CLIENT-SECRET"
+  type: "keyvault"
 - key: MESSAGE_QUEUE_HOST
   value: "{{servicename}}-MESSAGE-QUEUE-HOST"
   type: "keyvault"
