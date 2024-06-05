@@ -13,8 +13,6 @@ const get = async (url, json = true) => {
     json
   }
 
-  console.log(url)
-
   const { payload } = await Wreck.get(url, options)
 
   return payload
