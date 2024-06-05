@@ -21,7 +21,7 @@ const config = {
   azure: {
     clientSecret: process.env.AZUREID_CLIENT_SECRET,
     clientId: process.env.AZUREID_CLIENT_ID,
-    authority: `https://login.microsoftonline.com/${process.env.AZUREID_TENANT_ID}`
+    authority: `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID}`
   },
   cookie: {
     password: process.env.COOKIE_PASSWORD,

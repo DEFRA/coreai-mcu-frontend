@@ -4,7 +4,7 @@ const { knowledgeApi: config } = require('../config/api')
 const baseUrl = config.baseUrl
 
 const listKnowledge = async (category = '') => {
-  return get(`${baseUrl}/knowledge?category=${category}`)
+  return get(`${baseUrl}/knowledge`)
 }
 
 const uploadKnowledge = async (knowledge, contentType) => {

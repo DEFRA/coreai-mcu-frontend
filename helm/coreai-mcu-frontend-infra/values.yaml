@@ -1,1 +1,19 @@
-default:
+namespaceTopics:
+  - name: triage
+    owner: 'no'
+    roleAssignments:  
+      - roleName: TopicSender
+  - name: generate
+    owner: 'no'
+    roleAssignments:  
+      - roleName: TopicSender
+  - name: knowledge-ingest
+    owner: 'no'
+    roleAssignments:  
+      - roleName: TopicSender
+  - name: events
+    owner: 'no'
+    roleAssignments:  
+      - roleName: TopicReceiver
+    topicSubscriptions:
+      - name: frontend

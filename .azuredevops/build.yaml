@@ -3,6 +3,10 @@ parameters:
   displayName: "Deploy from Feature Branch"
   type: boolean
   default: false
+- name: deployConfigOnly
+  displayName: "Deploy App Config only"
+  type: boolean
+  default: false
 
 pr:
   branches:
@@ -32,14 +36,15 @@ resources:
       name: DEFRA/adp-pipeline-common
       endpoint: DEFRA
       type: github
-      ref: refs/heads/main
+      ref: pp/services-to-snd4
 
 extends:
   template: /pipelines/common-app-build.yaml@DEFRA-ADPPipelineCommon
   parameters:
-    projectName: "coreai-mcu-frontend"
+    teamName: crai-mcu
     serviceName: "coreai-mcu-frontend"
     deployFromFeature: ${{ parameters.deployFromFeature }}
+    deployConfigOnly: ${{ parameters.deployConfigOnly }}
     appBuildConfig:
       appFrameworkType: "nodejs"    
       projectPath: "./package.json"
@@ -52,5 +57,3 @@ extends:
       filetype: "yaml"
       variableGroups:
         - coreai-mcu-frontend-<environment>
-      variables:
-        - coreai-mcu-frontend-APPINSIGHTS-CONNECTIONSTRING

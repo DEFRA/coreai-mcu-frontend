@@ -1,4 +1,3 @@
-const Joi = require('joi')
 const { admin } = require('../auth/permissions')
 const { sendGenerationRequest } = require('../messaging/outbound/generation-request')
 const { getLatestResponse, deleteAllResponses, saveFinalResponse } = require('../services/responses')
