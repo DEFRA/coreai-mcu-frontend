@@ -27,7 +27,6 @@ const buildMetadataPayload = (payload) => {
 
   return {
     fileName,
-    uploadedBy: 'Jane Doe',
     documentType: payload.uploadtype,
     source: 'frontend',
     sourceAddress: 'dummy',
