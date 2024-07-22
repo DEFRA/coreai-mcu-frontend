@@ -40,143 +40,142 @@
         </tbody>
       </table>
 
+      <h2 class="govuk-heading-m">Document Summary</h2>
+
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Author
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ document.metadata.author }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Sentiment
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ document.metadata.sentiment }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Summary
+          </dt>
+          <dd class="govuk-summary-list__value">
+            {{ document.metadata.summary | replace('\n', '<br>') | safe }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Key points
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <ul class="govuk-list govuk-list--bullet">
+              {% for point in document.metadata.keyPoints %}
+                <li>{{ point }}</li>
+              {% endfor %}
+            </ul>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Key facts
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <ul class="govuk-list govuk-list--bullet">
+              {% for fact in document.metadata.keyFacts %}
+                <li>{{ fact }}</li>
+              {% endfor %}
+            </ul>
+          </dd>
+        </div>
+      </dl>
+
       {% if response.response %}
-        <form action="/document-response" method="get">
-          <h2 class="govuk-heading-m">Document Summary</h2>
+        <h2 class="govuk-heading-m">Response</h2>
+        <p class="govuk-body">Generated: {{ response.generatedOn }}</p>
+        <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
 
-          <dl class="govuk-summary-list">
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Author
-              </dt>
-              <dd class="govuk-summary-list__value">
-                {{ document.metadata.author }}
-              </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Sentiment
-              </dt>
-              <dd class="govuk-summary-list__value">
-                {{ document.metadata.sentiment }}
-              </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Summary
-              </dt>
-              <dd class="govuk-summary-list__value">
-                {{ document.metadata.summary | replace('\n', '<br>') | safe }}
-              </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Key points
-              </dt>
-              <dd class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                  {% for point in document.metadata.keyPoints %}
-                    <li>{{ point }}</li>
-                  {% endfor %}
-                </ul>
-              </dd>
-            </div>
-            <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-                Key facts
-              </dt>
-              <dd class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                  {% for fact in document.metadata.keyFacts %}
-                    <li>{{ fact }}</li>
-                  {% endfor %}
-                </ul>
-              </dd>
-            </div>
-          </dl>
+        <div class="govuk-!-margin-bottom-6">
+          <p class="govuk-body govuk-!-font-weight-bold">Was this response helpful?</p>
+          <button
+            class="govuk-link thumbs thumbs--up govuk-!-margin-right-2"
+            value="like"
+            type="button"
+            aria-label="like"
+          ></button>
 
-          <h2 class="govuk-heading-m">Response</h2>
-          <p class="govuk-body">Generated: {{ response.generatedOn }}</p>
-          <p class="govuk-body summary">{{ response.response | replace('\n', '<br>') | safe }}</p>
+          <button
+            class="govuk-link thumbs thumbs--down"
+            value="dislike"
+            type="button"
+            aria-label="dislike"
+          ></button>
+        </div>
 
-          <div class="govuk-!-margin-bottom-6">
-            <p class="govuk-body govuk-!-font-weight-bold">Was this response helpful?</p>
-            <button
-              class="govuk-link thumbs thumbs--up govuk-!-margin-right-2"
-              value="like"
-              type="button"
-              aria-label="like"
-            ></button>
-
-            <button
-              class="govuk-link thumbs thumbs--down"
-              value="dislike"
-              type="button"
-              aria-label="dislike"
-            ></button>
+        {% if not response.citations | length %}
+          <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+              <span class="govuk-visually-hidden">Warning</span>
+              No sources found.
+            </strong>
           </div>
+        {% endif %}
 
-          {% if not response.citations | length %}
-            <div class="govuk-warning-text">
-              <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-              <strong class="govuk-warning-text__text">
-                <span class="govuk-visually-hidden">Warning</span>
-                No sources found.
-              </strong>
-            </div>
-          {% endif %}
-          {% if response.citations | length %}
-            <details class="govuk-details govuk-details-no-border">
-              <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">
-                  Sources
-                </span>
-              </summary>
-              <div class="govuk-details__text">
-                {% for citation in response.citations %}
-                  <div class="govuk-summary-card">
-                    <div class="govuk-summary-card__title-wrapper">
-                      <h2 class="govuk-summary-card__title">
-                        Source {{ loop.index }}: {{ citation.title }}
-                      </h2>
-                    </div>
-                    <div class="govuk-summary-card__content">
-                      <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row">
-                          <dt class="govuk-summary-list__key">
-                            Source
-                          </dt>
-                          <dd class="govuk-summary-list__value">
-                            {{ citation.source }}
-                          </dd>
-                        </div>
-                        <div class="govuk-summary-list__row">
-                          <dt class="govuk-summary-list__key">
-                            Category
-                          </dt>
-                          <dd class="govuk-summary-list__value">
-                            {{ citation.category }}
-                          </dd>
-                        </div>
-                        <div class="govuk-summary-list__row">
-                          <dt class="govuk-summary-list__key">
-                          </dt>
-                          <dd class="govuk-summary-list__value">
-                          </dd>
-                          <dd class="govuk-summary-list__actions">
-                            <a href="/document/{{ document.documentId }}/response/citations" class="govuk-link" data-module="govuk-link">
-                              View Citations
-                            </a>
-                          </dd>
-                        </div>
-                      </dl>
-                    </div>
+        {% if response.citations | length %}
+          <details class="govuk-details govuk-details-no-border">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                Sources
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              {% for citation in response.citations %}
+                <div class="govuk-summary-card">
+                  <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title">
+                      Source {{ loop.index }}: {{ citation.title }}
+                    </h2>
                   </div>
-                {% endfor %}
-              </div>
-            </details>
-          {% endif %}
-        </form>
+                  <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Source
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ citation.source }}
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                          Category
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                          {{ citation.category }}
+                        </dd>
+                      </div>
+                      <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                        </dd>
+                        <dd class="govuk-summary-list__actions">
+                          <a href="/document/{{ document.documentId }}/response/citations" class="govuk-link" data-module="govuk-link">
+                            View Citations
+                          </a>
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </details>
+        {% endif %}
       {% endif %}
 
       <form id="response_form" action="/document/response" method="post">
@@ -198,6 +197,7 @@
             </div>
           </details>
         {% endif %}
+
         <div class="govuk-button-group govuk-!-margin-top-8">
           <button
             type="submit"
@@ -208,32 +208,33 @@
             data-module="govuk-button">
             <span>Generate response</span>
           </button>
+
           {% if response.response %}
-          <a
-            href="/document/{{ document.documentId }}/response/history"
-            data-prevent-double-click="true"
-            class="govuk-button govuk-button--secondary"
-            data-module="govuk-button">
-            Response history
-          </a>
-          <button
-            type="submit"
-            name="action"
-            value="finalise"
-            data-prevent-double-click="true"
-            class="govuk-button govuk-button--secondary"
-            data-module="govuk-button">
-            Finalise
-          </button>
-          <button
-            type="submit"
-            name="action"
-            value="start_over"
-            data-prevent-double-click="true"
-            class="govuk-button govuk-button--warning"
-            data-module="govuk-button">
-            Start over
-          </button>
+            <a
+              href="/document/{{ document.documentId }}/response/history"
+              data-prevent-double-click="true"
+              class="govuk-button govuk-button--secondary"
+              data-module="govuk-button">
+              Response history
+            </a>
+            <button
+              type="submit"
+              name="action"
+              value="finalise"
+              data-prevent-double-click="true"
+              class="govuk-button govuk-button--secondary"
+              data-module="govuk-button">
+              Finalise
+            </button>
+            <button
+              type="submit"
+              name="action"
+              value="start_over"
+              data-prevent-double-click="true"
+              class="govuk-button govuk-button--warning"
+              data-module="govuk-button">
+              Start over
+            </button>
           {% endif %}
         </div>
         <input type="hidden" name="documentId" value="{{ document.documentId }}">
