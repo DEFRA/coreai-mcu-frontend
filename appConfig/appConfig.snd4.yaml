@@ -2,10 +2,10 @@
   value: "{{servicename}}-APPINSIGHTS-CONNECTIONSTRING"
   type: "keyvault"
 - key: AZUREID_CLIENT_ID
-  value: "{{servicename}}-AZUREID-CLIENT-ID"
+  value: "{{servicename}}-ClientId"
   type: "keyvault"
 - key: AZUREID_CLIENT_SECRET
-  value: "{{servicename}}-AZUREID-CLIENT-SECRET"
+  value: "{{servicename}}-ClientSecret"
   type: "keyvault"
 - key: REDIRECT_URL
   value: "{{servicename}}-REDIRECT-URL"
