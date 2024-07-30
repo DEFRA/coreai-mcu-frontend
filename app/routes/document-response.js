@@ -17,6 +17,14 @@ module.exports = [{
     handler: async (request, h) => {
       const documentId = request.params.id
 
+      const modelId = getModelSession(request)
+      const promptId = getPromptSession(request)
+      const personaId = getPersonaSession(request)
+
+      if (!modelId || !promptId || !personaId) {
+        return h.redirect(`/document/${documentId}/configure`)
+      }
+
       const document = await getDocumentData(documentId)
       const contents = await getDocumentContent(documentId)
       const response = await getLatestResponse(documentId)
