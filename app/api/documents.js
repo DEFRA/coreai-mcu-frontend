@@ -3,8 +3,10 @@ const { documentsApi: config } = require('../config/api')
 
 const baseUrl = config.baseUrl
 
-const getDocuments = async () => {
-  return get(`${baseUrl}/documents`)
+const getDocuments = async (user) => {
+  const query = user ? `?uploadedBy=${user}` : ''
+
+  return get(`${baseUrl}/documents${query}`)
 }
 
 const getDocumentById = async (id) => {
@@ -19,9 +21,10 @@ const getDocumentMetadata = async (id) => {
   return get(`${baseUrl}/documents/${id}/metadata`)
 }
 
-const uploadDocument = async (document, contentType) => {
+const uploadDocument = async (document, contentType, user) => {
   const headers = {
-    'Content-Type': contentType
+    'Content-Type': contentType,
+    'x-uploaded-by': user
   }
 
   return post(`${baseUrl}/documents`, document, headers)

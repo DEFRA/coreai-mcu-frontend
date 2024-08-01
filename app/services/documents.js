@@ -1,7 +1,14 @@
 const { parseISO } = require('date-fns')
 const { formatInTimeZone } = require('date-fns-tz')
 const { LONDON } = require('../constants/time-zones')
-const { getDocuments, getDocumentContents, getDocumentMetadata } = require('../api/documents')
+const {
+  getDocuments,
+  getDocumentContents,
+  getDocumentMetadata,
+  uploadDocument,
+  updateDocumentMetadata
+} = require('../api/documents')
+const { sendTriageRequest } = require('../messaging/outbound/triage-request')
 
 const formatDocument = (document) => {
   const date = parseISO(document.properties.createdOn)
@@ -21,9 +28,9 @@ const formatDocuments = (documents) => {
   return documents.map(formatDocument)
 }
 
-const getDocumentsData = async () => {
+const getDocumentsData = async (user) => {
   try {
-    const documents = await getDocuments()
+    const documents = await getDocuments(user)
 
     return formatDocuments(documents)
   } catch (error) {
@@ -54,8 +61,24 @@ const getDocumentData = async (id) => {
   }
 }
 
+const addDocument = async (buffer, mime, metadata, user) => {
+  const { id } = await uploadDocument(buffer, mime, user)
+
+  await updateDocumentMetadata(id, metadata)
+
+  await sendTriageRequest({ documentId: id })
+}
+
+const updateStatus = async (id, status) => {
+  await updateDocumentMetadata(id, {
+    status
+  })
+}
+
 module.exports = {
   getDocumentsData,
   getDocumentContent,
-  getDocumentData
+  getDocumentData,
+  addDocument,
+  updateStatus
 }

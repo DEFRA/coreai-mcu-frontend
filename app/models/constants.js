@@ -1,7 +1,5 @@
 const categories = [
-  'Farming',
-  'Fishing',
-  'Environment'
+  'Farming'
 ]
 
 const documents = [

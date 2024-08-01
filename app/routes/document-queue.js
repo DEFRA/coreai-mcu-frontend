@@ -1,3 +1,4 @@
+const getUser = require('../auth/get-user')
 const { admin } = require('../auth/permissions')
 const { getDocumentsData, getDocumentContent } = require('../services/documents')
 const { getMessageSession, setMessageSession } = require('../session/mcu/message')
@@ -8,7 +9,9 @@ module.exports = {
   options: {
     auth: { scope: [admin] },
     handler: async (request, h) => {
-      const documents = await getDocumentsData()
+      const { username } = getUser(request)
+
+      const documents = await getDocumentsData(username)
 
       for (let i = 0; i < documents.length; i++) {
         documents[i].contents = await getDocumentContent(documents[i].documentId)
