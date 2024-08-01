@@ -69,9 +69,16 @@ const addDocument = async (buffer, mime, metadata, user) => {
   await sendTriageRequest({ documentId: id })
 }
 
+const updateStatus = async (id, status) => {
+  await updateDocumentMetadata(id, {
+    status
+  })
+}
+
 module.exports = {
   getDocumentsData,
   getDocumentContent,
   getDocumentData,
-  addDocument
+  addDocument,
+  updateStatus
 }

@@ -1,5 +1,6 @@
 const { admin } = require('../auth/permissions')
-const { getDocumentData } = require('../services/documents')
+const { COMPLETE } = require('../constants/document-status')
+const { getDocumentData, updateStatus } = require('../services/documents')
 const { getFinalResponse } = require('../services/responses')
 const { setMessageSession } = require('../session/mcu/message')
 
@@ -30,6 +31,7 @@ module.exports = [{
       }
 
       const document = await getDocumentData(documentId)
+      await updateStatus(documentId, COMPLETE)
       setMessageSession(request, `Document ${document.metadata.fileName} has been completed.`)
 
       return h.redirect('/documents/queue')

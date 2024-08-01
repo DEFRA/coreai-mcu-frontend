@@ -13,7 +13,6 @@ const routes = [].concat(
   require('../routes/document-citations'),
   require('../routes/document-finalise'),
   require('../routes/document-edit'),
-  require('../routes/document-notify'),
   require('../routes/healthy'),
   require('../routes/healthz'),
   require('../routes/static')
