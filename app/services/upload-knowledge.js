@@ -35,7 +35,7 @@ const buildMetadataPayload = (payload) => {
 const upload = async (payload) => {
   const { buffer, type } = getBuffer(payload)
 
-  const { id } = await uploadKnowledge(buffer, type, payload.document.hapi.filename)
+  const { id } = await uploadKnowledge(buffer, type)
 
   const metadataPayload = buildMetadataPayload(payload)
 

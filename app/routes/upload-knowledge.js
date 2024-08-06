@@ -44,6 +44,7 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
+      console.log(request.headers)
       const documentId = await upload(request.payload)
 
       await sendKnowledgeRequest({
