@@ -10,6 +10,7 @@ const listKnowledge = async (category = '') => {
 const uploadKnowledge = async (knowledge, contentType, fileName) => {
   const headers = {
     'Content-Type': contentType,
+    'test': 'testvalue',
     'filename': fileName
   }
 
