@@ -20,6 +20,9 @@ module.exports = [{
   path: '/upload-knowledge',
   options: {
     auth: { scope: [admin] },
+    headers: {
+      filename: 'test'
+    },
     payload: {
       maxBytes: (50 * 1024 * 1024) + 250,
       multipart: true,
