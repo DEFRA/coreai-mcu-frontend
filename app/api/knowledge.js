@@ -7,11 +7,11 @@ const listKnowledge = async (category = '') => {
   return get(`${baseUrl}/knowledge`)
 }
 
-const uploadKnowledge = async (knowledge, contentType, fileName) => {
+const uploadKnowledge = async (knowledge, contentType, fileNamevalue) => {
   const headers = {
     'Content-Type': contentType,
-    'test': 'testvalue',
-    'filename': fileName
+    test : 'testvalue',
+    filename : fileNamevalue
   }
 
   return post(`${baseUrl}/knowledge`, knowledge, headers)
