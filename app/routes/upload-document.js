@@ -1,8 +1,9 @@
+const getUser = require('../auth/get-user')
 const { admin } = require('../auth/permissions')
-const { getExtension } = require('../lib/file')
+const { getExtension, getBuffer } = require('../lib/file')
 const { categories } = require('../models/constants')
 const schema = require('../schema/upload-document')
-const { upload } = require('../services/upload-document')
+const { addDocument } = require('../services/documents')
 
 module.exports = [{
   method: 'GET',
@@ -42,7 +43,20 @@ module.exports = [{
       }
     },
     handler: async (request, h) => {
-      await upload(request.payload)
+      const { payload } = request
+
+      const metadata = {
+        fileName: payload.uploadtype === 'file' ? payload.document.hapi.filename : 'txt',
+        documentType: payload.uploadtype,
+        source: 'frontend',
+        sourceAddress: 'dummy',
+        userCategory: payload.category,
+        targetMinister: 'dummy'
+      }
+
+      const { buffer, type } = getBuffer(payload)
+
+      await addDocument(buffer, type, metadata, getUser(request).username)
 
       return h.redirect('/documents/queue')
     }
